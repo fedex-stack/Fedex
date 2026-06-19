@@ -14,18 +14,21 @@ export async function loginAdmin(username, password) {
         email = ADMIN_EMAIL;
     }
 
-    return await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-    );
+    return await signInWithEmailAndPassword(auth, email, password);
 }
 
 export function protectAdminPage() {
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            window.location.href = "admin-login.html";
-        }
+    return new Promise((resolve) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            unsubscribe();
+
+            if (!user) {
+                window.location.href = "admin-login.html";
+                return;
+            }
+
+            resolve(user);
+        });
     });
 }
 
