@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FedEx Tracker</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0f1115;
+    color:white;
+}
+
+header{
+    background:#171a21;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.hero{
+    padding:70px 20px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    color:#ccc;
+    line-height:1.7;
+    font-size:18px;
+}
+
+.track-box{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.track-box input{
+    width:320px;
+    max-width:90%;
+    padding:16px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+}
+
+.track-box button{
+    padding:16px 28px;
+    border:none;
+    border-radius:10px;
+    background:#ff6600;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.track-box button:hover{
+    opacity:0.9;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:40px 20px 60px;
+}
+
+.card{
+    background:#171a21;
+    padding:25px;
+    border-radius:16px;
+}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#bbb;
+    line-height:1.6;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    color:#888;
+    border-top:1px solid #222;
+}
+
+@media(max-width:600px){
+    .hero h1{
+        font-size:28px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .track-box{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .track-box button{
+        width:90%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>FedEx Tracker</header>
+
+<section class="hero">
+    <h1>Fast. Secure. Reliable Delivery.</h1>
+    <p>
+        Track your shipments in real time with confidence.
+        From dispatch to final delivery, stay informed every step of the way
+        with accurate tracking updates and secure shipment monitoring.
+    </p>
+
+    <div class="track-box">
+        <input id="trackingInput" placeholder="Enter Tracking Number">
+        <button onclick="trackShipment()">Track Package</button>
+    </div>
+</section>
+
+<section class="features">
+    <div class="card">
+        <h3>Real-Time Tracking</h3>
+        <p>Receive live shipment status updates from pickup to delivery.</p>
+    </div>
+
+    <div class="card">
+        <h3>Trusted Delivery</h3>
+        <p>Built for safe and reliable parcel movement across locations.</p>
+    </div>
+
+    <div class="card">
+        <h3>Admin Managed</h3>
+        <p>Shipment details are updated securely by authorized management.</p>
+    </div>
+</section>
+
+<footer>
+    © 2026 FedEx Tracker. All Rights Reserved.
+</footer>
+
+<script type="module" src="./js/script.js"></script>
+
+</body>
+</html>
