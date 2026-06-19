@@ -7,23 +7,28 @@ import {
     collection,
     doc,
     setDoc,
-    onSnapshot
+    onSnapshot,
+    updateDoc,
+    arrayUnion
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 protectAdminPage();
 
-const path = window.location.pathname;
+let activeShipmentCode = null;
+let allShipments = [];
 
-/* ---------------- Logout ---------------- */
 const logoutBtn = document.getElementById("logoutBtn");
+const createBtn = document.getElementById("createBtn");
+const shipmentsContainer = document.getElementById("shipmentsContainer");
+const searchInput = document.getElementById("searchInput");
+
+const editModal = document.getElementById("editModal");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const saveUpdateBtn = document.getElementById("saveUpdateBtn");
 
 if (logoutBtn) {
     logoutBtn.addEventListener("click", logoutAdmin);
 }
-
-/* ------------- Admin Dashboard ------------ */
-const shipmentsContainer = document.getElementById("shipmentsContainer");
-const createBtn = document.getElementById("createBtn");
 
 if (createBtn) {
     createBtn.addEventListener("click", () => {
@@ -31,45 +36,105 @@ if (createBtn) {
     });
 }
 
-if (shipmentsContainer) {
-    onSnapshot(collection(db, "shipments"), (snapshot) => {
-        shipmentsContainer.innerHTML = "";
-
-        if (snapshot.empty) {
-            shipmentsContainer.innerHTML =
-                "<div id='emptyState'>No shipments yet</div>";
-            return;
-        }
-
-        snapshot.forEach((docSnap) => {
-            const shipment = docSnap.data();
-
-            const card = document.createElement("div");
-            card.className = "shipment-card";
-
-            card.innerHTML = `
-                <h3>${shipment.trackingCode}</h3>
-                <p>Status: ${shipment.status}</p>
-                <p>Location: ${shipment.currentLocation}</p>
-
-                <div class="card-actions">
-                    <button class="copy-btn">Copy Code</button>
-                </div>
-            `;
-
-            const copyBtn = card.querySelector(".copy-btn");
-
-            copyBtn.addEventListener("click", () => {
-                copyText(shipment.trackingCode);
-                showToast("Tracking code copied");
-            });
-
-            shipmentsContainer.appendChild(card);
-        });
+if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+        editModal.style.display = "none";
     });
 }
 
-/* ----------- Create Shipment Page ---------- */
+function renderShipments(list) {
+    shipmentsContainer.innerHTML = "";
+
+    if (!list.length) {
+        shipmentsContainer.innerHTML =
+            "<div id='emptyState'>No shipments found</div>";
+        return;
+    }
+
+    list.forEach((shipment) => {
+        const card = document.createElement("div");
+        card.className = "shipment-card";
+
+        card.innerHTML = `
+            <h3>${shipment.trackingCode}</h3>
+            <p>Status: ${shipment.status}</p>
+            <p>Location: ${shipment.currentLocation}</p>
+            <div class="card-actions">
+                <button class="edit-btn">Edit</button>
+                <button class="copy-btn">Copy Code</button>
+            </div>
+        `;
+
+        const copyBtn = card.querySelector(".copy-btn");
+        const editBtn = card.querySelector(".edit-btn");
+
+        copyBtn.addEventListener("click", () => {
+            copyText(shipment.trackingCode);
+            showToast("Tracking code copied");
+        });
+
+        editBtn.addEventListener("click", () => {
+            activeShipmentCode = shipment.trackingCode;
+            document.getElementById("editStatus").value = shipment.status;
+            document.getElementById("editLocation").value = shipment.currentLocation;
+            editModal.style.display = "flex";
+        });
+
+        shipmentsContainer.appendChild(card);
+    });
+}
+
+if (shipmentsContainer) {
+    onSnapshot(collection(db, "shipments"), (snapshot) => {
+        allShipments = [];
+        snapshot.forEach((docSnap) => {
+            allShipments.push(docSnap.data());
+        });
+        renderShipments(allShipments);
+    });
+}
+
+if (searchInput) {
+    searchInput.addEventListener("input", () => {
+        const keyword = searchInput.value.trim().toUpperCase();
+        const filtered = allShipments.filter(s =>
+            s.trackingCode.includes(keyword)
+        );
+        renderShipments(filtered);
+    });
+}
+
+if (saveUpdateBtn) {
+    saveUpdateBtn.addEventListener("click", async () => {
+        const status = document.getElementById("editStatus").value;
+        const location = document.getElementById("editLocation").value.trim();
+
+        if (!activeShipmentCode || !location) {
+            showToast("Missing update data");
+            return;
+        }
+
+        try {
+            await updateDoc(doc(db, "shipments", activeShipmentCode), {
+                status,
+                currentLocation: location,
+                updatedAt: serverTimestamp(),
+                timeline: arrayUnion({
+                    status,
+                    location,
+                    createdAt: Date.now()
+                })
+            });
+
+            showToast("Shipment updated");
+            editModal.style.display = "none";
+        } catch (error) {
+            console.error(error);
+            showToast("Update failed");
+        }
+    });
+}
+
 const createShipmentBtn = document.getElementById("createShipmentBtn");
 
 if (createShipmentBtn) {
@@ -81,14 +146,7 @@ if (createShipmentBtn) {
         const shipmentType = document.getElementById("shipmentType").value.trim();
         const weight = document.getElementById("weight").value.trim();
 
-        if (
-            !sender ||
-            !receiver ||
-            !destination ||
-            !location ||
-            !shipmentType ||
-            !weight
-        ) {
+        if (!sender || !receiver || !destination || !location || !shipmentType || !weight) {
             showToast("Please fill all fields");
             return;
         }
@@ -108,26 +166,22 @@ if (createShipmentBtn) {
             timeline: [
                 {
                     status: STATUS.PENDING,
-                    location: location,
+                    location,
                     createdAt: Date.now()
                 }
             ]
         };
 
         try {
-            await setDoc(
-                doc(db, "shipments", trackingCode),
-                shipmentData
-            );
-
+            await setDoc(doc(db, "shipments", trackingCode), shipmentData);
             showToast("Shipment created");
 
             setTimeout(() => {
                 window.location.href = "admin.html";
-            }, 1200);
+            }, 1000);
         } catch (error) {
             console.error(error);
-            showToast("Failed to create shipment");
+            showToast("Creation failed");
         }
     });
 }
