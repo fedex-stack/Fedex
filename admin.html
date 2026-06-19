@@ -118,6 +118,62 @@ main{
     margin-top:50px;
 }
 
+#editModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:9999;
+}
+
+.modal-content{
+    background:#171a21;
+    width:100%;
+    max-width:450px;
+    padding:25px;
+    border-radius:16px;
+}
+
+.modal-content h2{
+    margin-bottom:20px;
+}
+
+.modal-content label{
+    display:block;
+    margin-bottom:8px;
+}
+
+.modal-content input,
+.modal-content select{
+    width:100%;
+    padding:14px;
+    margin-bottom:18px;
+    border:none;
+    border-radius:10px;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.modal-buttons button{
+    flex:1;
+}
+
+#saveUpdateBtn{
+    background:#ff6600;
+    color:white;
+}
+
+#closeModalBtn{
+    background:#333;
+    color:white;
+}
+
 @media(max-width:600px){
     header{
         flex-direction:column;
@@ -155,6 +211,33 @@ main{
         <div id="emptyState">Loading shipments...</div>
     </div>
 </main>
+
+<div id="editModal">
+    <div class="modal-content">
+        <h2>Update Shipment</h2>
+
+        <label>Status</label>
+        <select id="editStatus">
+            <option>Pending</option>
+            <option>Picked Up</option>
+            <option>Processing</option>
+            <option>In Transit</option>
+            <option>Out For Delivery</option>
+            <option>Delivered</option>
+            <option>Delayed</option>
+            <option>Held</option>
+            <option>Cancelled</option>
+        </select>
+
+        <label>Current Location</label>
+        <input id="editLocation">
+
+        <div class="modal-buttons">
+            <button id="saveUpdateBtn">Save</button>
+            <button id="closeModalBtn">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <script type="module" src="./js/admin.js"></script>
 
