@@ -24,6 +24,8 @@ header{
     text-align:center;
     font-size:28px;
     font-weight:bold;
+    cursor:pointer;
+    user-select:none;
 }
 
 .hero{
@@ -128,7 +130,7 @@ footer{
 
 <body>
 
-<header>FedEx Tracker</header>
+<header id="secretLogo">FedEx Tracker</header>
 
 <section class="hero">
     <h1>Fast. Secure. Reliable Delivery.</h1>
@@ -165,7 +167,26 @@ footer{
     © 2026 FedEx Tracker. All Rights Reserved.
 </footer>
 
+<script>
+let tapCount = 0;
+let tapTimer;
+
+document.getElementById("secretLogo").addEventListener("click", () => {
+    tapCount++;
+
+    clearTimeout(tapTimer);
+
+    tapTimer = setTimeout(() => {
+        tapCount = 0;
+    }, 3000);
+
+    if (tapCount >= 5) {
+        window.location.href = "admin-login.html";
+    }
+});
+</script>
+
 <script type="module" src="./js/script.js"></script>
-<!-- redeploy -->
+
 </body>
 </html>
