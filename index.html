@@ -31,19 +31,26 @@ header span{
 }
 
 .hero{
-    width:95%;
-    margin:auto;
-    border-radius:28px;
-    overflow:hidden;
-    min-height:560px;
-    display:flex;
-    align-items:center;
-    padding:60px;
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    padding: 60px;
+
     background:
-        linear-gradient(90deg, rgba(3,8,25,0.96) 0%, rgba(3,8,25,0.85) 35%, rgba(3,8,25,0.15) 70%),
+        linear-gradient(
+            90deg,
+            rgba(3,8,25,0.96) 0%,
+            rgba(3,8,25,0.85) 35%,
+            rgba(3,8,25,0.15) 70%
+        ),
         url('./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png');
-    background-size:cover;
-    background-position:center;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero-content{
