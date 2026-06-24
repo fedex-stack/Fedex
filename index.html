@@ -10,71 +10,63 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 body{
-    background:#0f1115;
+    background:#050816;
     color:white;
 }
 
 header{
-    background:#11141b;
-    padding:22px;
     text-align:center;
+    padding:24px 20px;
     font-size:42px;
-    font-weight:bold;
+    font-weight:800;
     cursor:pointer;
-    user-select:none;
 }
 
 header span{
-    color:#ff6600;
+    color:#ff7a00;
 }
 
 .hero{
-    position:relative;
+    width:95%;
+    margin:auto;
+    border-radius:28px;
+    overflow:hidden;
     min-height:560px;
     display:flex;
     align-items:center;
-    justify-content:center;
-    padding:90px 20px;
-    background-image:url("./images/1BEF88A1-8A57-432E-B83F-5453F22BB83B.png");
+    padding:60px;
+    background:
+        linear-gradient(90deg, rgba(3,8,25,0.96) 0%, rgba(3,8,25,0.85) 35%, rgba(3,8,25,0.15) 70%),
+        url('./images/banner.jpg');
     background-size:cover;
     background-position:center;
 }
 
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.55);
-}
-
 .hero-content{
-    position:relative;
-    z-index:2;
-    width:100%;
-    max-width:1100px;
+    max-width:650px;
 }
 
 .hero h1{
-    font-size:64px;
-    margin-bottom:24px;
-    max-width:800px;
+    font-size:72px;
+    line-height:1.05;
+    margin-bottom:28px;
+    font-weight:800;
 }
 
 .hero p{
-    font-size:24px;
-    color:#ddd;
+    font-size:22px;
     line-height:1.6;
-    max-width:850px;
+    color:#e0e0e0;
+    margin-bottom:35px;
 }
 
 .track-box{
-    margin-top:40px;
     display:flex;
-    gap:16px;
+    gap:14px;
     flex-wrap:wrap;
 }
 
@@ -83,86 +75,81 @@ header span{
     min-width:280px;
     padding:22px;
     border:none;
-    border-radius:16px;
-    font-size:20px;
+    border-radius:18px;
+    font-size:22px;
 }
 
 .track-box button{
-    padding:22px 34px;
+    padding:22px 36px;
+    background:linear-gradient(135deg,#ff9b1a,#ff6b00);
     border:none;
-    border-radius:16px;
-    background:#ff6600;
+    border-radius:18px;
     color:white;
+    font-size:24px;
+    font-weight:700;
     cursor:pointer;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.track-box button:hover{
-    opacity:0.92;
 }
 
 .features{
+    width:95%;
+    margin:40px auto;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:28px;
-    padding:50px 20px 70px;
-    max-width:1400px;
-    margin:auto;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
 }
 
 .card{
-    background:#171a21;
-    padding:35px 25px;
-    border-radius:20px;
-    border:1px solid #242832;
+    background:linear-gradient(145deg,#0c1127,#11192f);
+    border:1px solid rgba(255,255,255,0.08);
+    padding:35px;
+    border-radius:24px;
 }
 
 .card h3{
-    font-size:32px;
-    margin-bottom:16px;
+    font-size:34px;
+    margin-bottom:18px;
 }
 
 .card p{
-    color:#bbb;
-    line-height:1.8;
-    font-size:19px;
+    color:#d2d2d2;
+    font-size:21px;
+    line-height:1.7;
 }
 
 footer{
     text-align:center;
-    padding:30px;
-    color:#888;
-    border-top:1px solid #222;
-    font-size:18px;
+    padding:40px 20px;
+    color:#aaa;
+    font-size:24px;
 }
 
-@media(max-width:900px){
-    header{
-        font-size:34px;
+@media(max-width:1100px){
+    .hero{
+        padding:40px;
     }
 
     .hero h1{
-        font-size:42px;
+        font-size:52px;
     }
 
-    .hero p{
-        font-size:19px;
+    .features{
+        grid-template-columns:1fr;
     }
 }
 
-@media(max-width:600px){
+@media(max-width:700px){
     header{
-        font-size:30px;
+        font-size:28px;
     }
 
     .hero{
         min-height:auto;
-        padding:70px 20px;
+        padding:35px 22px;
+        border-radius:20px;
     }
 
     .hero h1{
-        font-size:34px;
+        font-size:38px;
     }
 
     .hero p{
@@ -173,8 +160,11 @@ footer{
         flex-direction:column;
     }
 
+    .track-box input,
     .track-box button{
         width:100%;
+        font-size:18px;
+        padding:18px;
     }
 
     .card h3{
@@ -184,25 +174,26 @@ footer{
     .card p{
         font-size:16px;
     }
+
+    footer{
+        font-size:16px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header id="secretLogo">
-    FedEx <span>Tracker</span>
-</header>
+<header id="secretLogo">FedEx <span>Tracker</span></header>
 
 <section class="hero">
     <div class="hero-content">
-        <h1>Fast. Secure. Reliable Delivery.</h1>
+        <h1>Fast. Secure.<br>Reliable Delivery.</h1>
 
         <p>
             Track your shipments in real time with confidence.
             From dispatch to final delivery, stay informed every step
-            of the way with accurate tracking updates and secure
-            shipment monitoring.
+            with accurate tracking updates and secure shipment monitoring.
         </p>
 
         <div class="track-box">
@@ -215,23 +206,17 @@ footer{
 <section class="features">
     <div class="card">
         <h3>Real-Time Tracking</h3>
-        <p>
-            Receive live shipment status updates from pickup to delivery.
-        </p>
+        <p>Receive live shipment status updates from pickup to delivery.</p>
     </div>
 
     <div class="card">
         <h3>Trusted Delivery</h3>
-        <p>
-            Built for safe and reliable parcel movement across locations.
-        </p>
+        <p>Built for safe and reliable parcel movement across locations.</p>
     </div>
 
     <div class="card">
         <h3>Admin Managed</h3>
-        <p>
-            Shipment details are updated securely by authorized management.
-        </p>
+        <p>Shipment details are updated securely by authorized management.</p>
     </div>
 </section>
 
@@ -245,7 +230,6 @@ let tapTimer;
 
 document.getElementById("secretLogo").addEventListener("click", () => {
     tapCount++;
-
     clearTimeout(tapTimer);
 
     tapTimer = setTimeout(() => {
