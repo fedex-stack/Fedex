@@ -14,67 +14,225 @@
 }
 
 body{
-    background:#0f1115;
-    color:white;
-    padding:20px;
+    background:#f4f6f8;
+    color:#111;
+    padding:18px;
 }
 
 .container{
-    max-width:900px;
+    max-width:950px;
     margin:auto;
 }
 
 h1{
     text-align:center;
-    margin-bottom:30px;
-}
-
-.live-badge{
-    text-align:center;
     margin-bottom:25px;
-    color:#00d26a;
-    font-weight:bold;
+    color:#222;
 }
 
 .card{
-    background:#171a21;
+    background:white;
     padding:24px;
-    border-radius:18px;
-    margin-bottom:20px;
+    border-radius:22px;
+    margin-bottom:22px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
 }
 
+#loading{
+    text-align:center;
+    margin-top:60px;
+    color:#666;
+}
+
+#error{
+    text-align:center;
+    margin-top:60px;
+    color:red;
+}
+
+/* progress */
+.progress-bar{
+    width:100%;
+    height:10px;
+    background:#ddd;
+    border-radius:20px;
+    position:relative;
+    margin:20px 0;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#00b35f,#00dd7b);
+    border-radius:20px;
+    transition:1s ease;
+}
+
+#truck{
+    position:absolute;
+    top:-20px;
+    left:0%;
+    font-size:28px;
+    transition:1s ease;
+}
+
+.status-title{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.live-badge{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#00b35f;
+    font-weight:bold;
+}
+
+.radar{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#00d26a;
+    position:relative;
+}
+
+.radar::after{
+    content:"";
+    position:absolute;
+    inset:-8px;
+    border:2px solid #00d26a;
+    border-radius:50%;
+    animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+    from{
+        transform:scale(1);
+        opacity:1;
+    }
+    to{
+        transform:scale(2);
+        opacity:0;
+    }
+}
+
+/* mini map */
+#miniMap{
+    height:240px;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    background:
+    linear-gradient(90deg,#dfe7ef 1px,transparent 1px),
+    linear-gradient(#dfe7ef 1px,transparent 1px),
+    #eef3f7;
+    background-size:40px 40px;
+}
+
+.route-line{
+    position:absolute;
+    top:50%;
+    left:12%;
+    width:75%;
+    height:4px;
+    background:#ff6600;
+}
+
+.map-pin{
+    position:absolute;
+    top:45%;
+    right:8%;
+    font-size:34px;
+}
+
+#mapTruck{
+    position:absolute;
+    top:42%;
+    left:12%;
+    font-size:30px;
+    transition:1s ease;
+}
+
+/* info */
 .card h2{
     margin-bottom:16px;
 }
 
 .card p{
-    color:#ccc;
+    color:#444;
     margin-bottom:12px;
     line-height:1.6;
 }
 
+/* timeline */
+.timeline{
+    position:relative;
+    padding-left:32px;
+}
+
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:9px;
+    top:0;
+    bottom:0;
+    width:4px;
+    background:#ddd;
+}
+
 .timeline-item{
-    padding:16px;
-    border-left:3px solid #ff6600;
-    margin-bottom:16px;
-    background:#1b1f28;
-    border-radius:10px;
+    position:relative;
+    margin-bottom:24px;
+    background:#fafafa;
+    padding:18px;
+    border-radius:16px;
+}
+
+.timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-29px;
+    top:20px;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#00b35f;
 }
 
 .timeline-item h4{
     margin-bottom:8px;
 }
 
-#loading{
-    text-align:center;
-    color:#888;
-    margin-top:50px;
+.tick{
+    color:#00b35f;
+    font-size:24px;
+    animation:pop .5s ease;
 }
 
-#error{
-    text-align:center;
-    color:#ff7070;
-    margin-top:50px;
+@keyframes pop{
+    from{
+        transform:scale(.3);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+small{
+    color:#888;
+}
+
+@media(max-width:600px){
+    .status-title{
+        font-size:22px;
+    }
+
+    #miniMap{
+        height:180px;
+    }
 }
 </style>
 </head>
@@ -82,27 +240,50 @@ h1{
 <body>
 
 <div class="container">
-    <h1>Shipment Tracking</h1>
-
-    <div class="live-badge">● Live Tracking Active</div>
+    <h1>Track Shipment</h1>
 
     <div id="loading">Loading shipment...</div>
     <div id="error"></div>
 
     <div id="shipmentView" style="display:none;">
+
+        <div class="card">
+            <div class="live-badge">
+                <div class="radar"></div>
+                Live Tracking Active
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <div id="truck">🚚</div>
+            </div>
+
+            <div class="status-title" id="status"></div>
+            <p>Estimated Delivery: <strong>By End of Day</strong></p>
+        </div>
+
+        <div class="card">
+            <h2>Live Route Map</h2>
+
+            <div id="miniMap">
+                <div class="route-line"></div>
+                <div id="mapTruck">🚚</div>
+                <div class="map-pin">📍</div>
+            </div>
+        </div>
+
         <div class="card">
             <h2>Shipment Details</h2>
 
             <p><strong>Tracking Code:</strong> <span id="trackingCode"></span></p>
-            <p><strong>Status:</strong> <span id="status"></span></p>
             <p><strong>Current Location:</strong> <span id="location"></span></p>
             <p><strong>Destination:</strong> <span id="destination"></span></p>
             <p><strong>Receiver:</strong> <span id="receiver"></span></p>
         </div>
 
         <div class="card">
-            <h2>Tracking Timeline</h2>
-            <div id="timeline"></div>
+            <h2>Shipment Progress</h2>
+            <div id="timeline" class="timeline"></div>
         </div>
     </div>
 </div>
