@@ -10,228 +10,236 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
 
 body{
-    background:#f4f6f8;
-    color:#111;
-    padding:18px;
+    background:#060b14;
+    color:white;
+    padding:20px;
 }
 
 .container{
-    max-width:950px;
+    max-width:1400px;
     margin:auto;
 }
 
 h1{
-    text-align:center;
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#97a2bb;
     margin-bottom:25px;
-    color:#222;
 }
 
 .card{
-    background:white;
-    padding:24px;
-    border-radius:22px;
-    margin-bottom:22px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    background:#0f1726;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;
+    padding:26px;
+    margin-bottom:20px;
 }
 
-#loading{
-    text-align:center;
-    margin-top:60px;
-    color:#666;
+.live-card{
+    background:linear-gradient(145deg,#101b2e,#0b1322);
 }
 
-#error{
-    text-align:center;
-    margin-top:60px;
-    color:red;
-}
-
-/* progress */
-.progress-bar{
-    width:100%;
-    height:10px;
-    background:#ddd;
-    border-radius:20px;
-    position:relative;
-    margin:20px 0;
-}
-
-.progress-fill{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#00b35f,#00dd7b);
-    border-radius:20px;
-    transition:1s ease;
-}
-
-#truck{
-    position:absolute;
-    top:-20px;
-    left:0%;
-    font-size:28px;
-    transition:1s ease;
-}
-
-.status-title{
-    font-size:28px;
-    font-weight:bold;
-}
-
-.live-badge{
+.live-top{
     display:flex;
+    gap:20px;
     align-items:center;
-    gap:12px;
-    color:#00b35f;
-    font-weight:bold;
 }
 
-.radar{
-    width:16px;
-    height:16px;
+.pulse{
+    width:64px;
+    height:64px;
     border-radius:50%;
-    background:#00d26a;
-    position:relative;
-}
-
-.radar::after{
-    content:"";
-    position:absolute;
-    inset:-8px;
-    border:2px solid #00d26a;
-    border-radius:50%;
-    animation:pulse 1.4s infinite;
+    background:#1eff78;
+    animation:pulse 1.8s infinite;
 }
 
 @keyframes pulse{
-    from{
-        transform:scale(1);
-        opacity:1;
-    }
-    to{
-        transform:scale(2);
-        opacity:0;
-    }
+    0%{box-shadow:0 0 0 0 rgba(30,255,120,.7);}
+    100%{box-shadow:0 0 0 24px rgba(30,255,120,0);}
 }
 
-/* mini map */
-#miniMap{
-    height:240px;
-    border-radius:18px;
-    overflow:hidden;
+.live-title{
+    color:#1eff78;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.live-desc{
+    color:#a9b3ca;
+}
+
+.progress-bar{
+    margin-top:30px;
+    height:8px;
+    background:#2b3446;
+    border-radius:999px;
     position:relative;
-    background:
-    linear-gradient(90deg,#dfe7ef 1px,transparent 1px),
-    linear-gradient(#dfe7ef 1px,transparent 1px),
-    #eef3f7;
-    background-size:40px 40px;
 }
 
-.route-line{
+.progress-fill{
     position:absolute;
-    top:50%;
-    left:12%;
-    width:75%;
-    height:4px;
-    background:#ff6600;
+    height:100%;
+    width:60%;
+    background:linear-gradient(90deg,#7f4bff,#d35eff);
+    border-radius:999px;
 }
 
-.map-pin{
+.truck{
     position:absolute;
-    top:45%;
-    right:8%;
+    left:60%;
+    top:-20px;
+    transform:translateX(-50%);
     font-size:34px;
 }
 
-#mapTruck{
-    position:absolute;
-    top:42%;
-    left:12%;
-    font-size:30px;
-    transition:1s ease;
+.stages{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+    font-size:14px;
+    color:#9fa9be;
 }
 
-/* info */
-.card h2{
-    margin-bottom:16px;
+.status-center{
+    text-align:center;
+    margin-top:25px;
 }
 
-.card p{
-    color:#444;
-    margin-bottom:12px;
-    line-height:1.6;
+.status-center h2{
+    font-size:38px;
 }
 
-/* timeline */
-.timeline{
+.status-center p{
+    color:#b5bfd2;
+    margin-top:8px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:20px;
+}
+
+.map-card{
+    height:430px;
     position:relative;
-    padding-left:32px;
+    overflow:hidden;
 }
 
-.timeline::before{
+.fake-map{
+    position:absolute;
+    inset:0;
+    border-radius:20px;
+    background:
+    radial-gradient(circle at 30% 30%,#16335f 0%,transparent 25%),
+    radial-gradient(circle at 70% 50%,#14304d 0%,transparent 30%),
+    linear-gradient(135deg,#081321,#101f35);
+}
+
+.fake-map::before{
     content:"";
     position:absolute;
-    left:9px;
-    top:0;
-    bottom:0;
-    width:4px;
-    background:#ddd;
+    inset:0;
+    background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:70px 70px;
+}
+
+.route{
+    position:absolute;
+    left:12%;
+    top:55%;
+    width:70%;
+    height:4px;
+    background:linear-gradient(90deg,#7f4bff,#d35eff);
+    box-shadow:0 0 18px rgba(164,92,255,.8);
+}
+
+.map-truck{
+    position:absolute;
+    left:50%;
+    top:48%;
+    font-size:36px;
+}
+
+.destination-pin{
+    position:absolute;
+    right:12%;
+    top:47%;
+    width:20px;
+    height:20px;
+    background:#ff4d6d;
+    border-radius:50%;
+    box-shadow:0 0 20px rgba(255,77,109,.8);
+}
+
+.details p{
+    margin-bottom:16px;
+    color:#c1cadc;
+    line-height:1.7;
+}
+
+.details strong{
+    color:white;
 }
 
 .timeline-item{
-    position:relative;
-    margin-bottom:24px;
-    background:#fafafa;
     padding:18px;
-    border-radius:16px;
-}
-
-.timeline-item::before{
-    content:"";
-    position:absolute;
-    left:-29px;
-    top:20px;
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    background:#00b35f;
+    border-left:4px solid #8a5dff;
+    background:#141e2e;
+    margin-bottom:18px;
+    border-radius:14px;
 }
 
 .timeline-item h4{
     margin-bottom:8px;
 }
 
-.tick{
-    color:#00b35f;
-    font-size:24px;
-    animation:pop .5s ease;
+#loading{
+    text-align:center;
+    margin-top:50px;
+    color:#9ea8bc;
 }
 
-@keyframes pop{
-    from{
-        transform:scale(.3);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
+#error{
+    text-align:center;
+    margin-top:50px;
+    color:#ff5f75;
 }
 
-small{
-    color:#888;
+.support-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:none;
+    background:#25D366;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
 }
 
-@media(max-width:600px){
-    .status-title{
-        font-size:22px;
+@media(max-width:900px){
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    #miniMap{
-        height:180px;
+    h1{
+        font-size:28px;
+    }
+
+    .status-center h2{
+        font-size:28px;
     }
 }
 </style>
@@ -240,58 +248,70 @@ small{
 <body>
 
 <div class="container">
-    <h1>Track Shipment</h1>
+<h1>Track Shipment</h1>
+<p class="subtitle">Real-time logistics visibility</p>
 
-    <div id="loading">Loading shipment...</div>
-    <div id="error"></div>
+<div id="loading">Loading shipment...</div>
+<div id="error"></div>
 
-    <div id="shipmentView" style="display:none;">
+<div id="shipmentView" style="display:none;">
 
-        <div class="card">
-            <div class="live-badge">
-                <div class="radar"></div>
-                Live Tracking Active
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-                <div id="truck">🚚</div>
-            </div>
-
-            <div class="status-title" id="status"></div>
-            <p>Estimated Delivery: <strong>By End of Day</strong></p>
-        </div>
-
-        <div class="card">
-            <h2>Live Route Map</h2>
-
-            <div id="miniMap">
-                <div class="route-line"></div>
-                <div id="mapTruck">🚚</div>
-                <div class="map-pin">📍</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Shipment Details</h2>
-
-            <p><strong>Tracking Code:</strong> <span id="trackingCode"></span></p>
-            <p><strong>Current Location:</strong> <span id="location"></span></p>
-            <p><strong>Destination:</strong> <span id="destination"></span></p>
-            <p><strong>Receiver:</strong> <span id="receiver"></span></p>
-            <p><strong>Sender:</strong> <span id="sender"></span></p>
-<p><strong>Shipment Type:</strong> <span id="shipmentType"></span></p>
-<p><strong>Weight:</strong> <span id="weight"></span></p>
-        </div>
-
-        <div class="card">
-            <h2>Shipment Progress</h2>
-            <div id="timeline" class="timeline"></div>
-        </div>
-    </div>
+<div class="card live-card">
+<div class="live-top">
+<div class="pulse"></div>
+<div>
+<div class="live-title">Live Tracking Active</div>
+<div class="live-desc">Shipment monitored in real time</div>
+</div>
 </div>
 
-<script type="module" src="./js/track.js"></script>
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+<div class="truck" id="truck">🚚</div>
+</div>
 
+<div class="stages">
+<span>Picked Up</span>
+<span>Transit</span>
+<span>Delivery</span>
+<span>Delivered</span>
+</div>
+
+<div class="status-center">
+<h2 id="status">Loading...</h2>
+<p>Estimated Delivery: <span>End of Day (USA)</span></p>
+</div>
+</div>
+
+<div class="grid">
+
+<div class="card map-card">
+<div class="fake-map"></div>
+<div class="route"></div>
+<div class="map-truck" id="mapTruck">🚚</div>
+<div class="destination-pin"></div>
+</div>
+
+<div class="card details">
+<h2>Shipment Details</h2>
+<p><strong>Tracking Code:</strong> <span id="trackingCode"></span></p>
+<p><strong>Current Location:</strong> <span id="location"></span></p>
+<p><strong>Destination:</strong> <span id="destination"></span></p>
+<p><strong>Receiver:</strong> <span id="receiver"></span></p>
+</div>
+
+</div>
+
+<div class="card">
+<h2>Tracking Timeline</h2>
+<div id="timeline"></div>
+</div>
+
+</div>
+</div>
+
+<button class="support-btn">?</button>
+
+<script type="module" src="./js/track.js"></script>
 </body>
 </html>
