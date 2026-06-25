@@ -141,5 +141,6 @@ if (supportBtn) {
         window.open(
             "https://wa.me/2340000000000",
             "_blank"
+         );
             });
 }
