@@ -118,6 +118,14 @@ if (!trackingCode) {
 
         document.getElementById("receiver").innerText =
             shipment.receiver || "N/A";
+        document.getElementById("sender").innerText =
+    shipment.sender || "N/A";
+
+document.getElementById("shipmentType").innerText =
+    shipment.shipmentType || "N/A";
+
+document.getElementById("weight").innerText =
+    shipment.weight || "N/A";
 
         updateVisuals(shipment.status);
 
