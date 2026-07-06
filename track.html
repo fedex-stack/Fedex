@@ -216,18 +216,42 @@ small{
     color:#888;
 }
 
-.support-btn{
+.support-buttons{
     position:fixed;
-    bottom:25px;
     right:25px;
-    width:64px;
-    height:64px;
+    bottom:25px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    z-index:999;
+}
+
+.telegram-btn,
+.email-btn{
+    width:58px;
+    height:58px;
     border-radius:50%;
-    border:none;
-    background:#25D366;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
     color:white;
-    font-size:28px;
-    cursor:pointer;
+    font-size:26px;
+    box-shadow:0 8px 18px rgba(0,0,0,.35);
+    transition:.25s;
+}
+
+.telegram-btn{
+    background:#2AABEE;
+}
+
+.email-btn{
+    background:#ff6600;
+}
+
+.telegram-btn:hover,
+.email-btn:hover{
+    transform:scale(1.08);
 }
 
 @media(max-width:600px){
@@ -296,8 +320,20 @@ small{
 
     </div>
 </div>
+    <div class="support-buttons">
 
-<button class="support-btn">?</button>
+    <a href="https://t.me/fedexstack"
+       target="_blank"
+       class="telegram-btn">
+       ✈️
+    </a>
+
+    <a href="mailto:fedexstacklogistics@gmail.com"
+       class="email-btn">
+       ✉️
+    </a>
+
+</div>
 
 <script type="module" src="./js/track.js"></script>
 </body>
