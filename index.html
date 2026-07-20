@@ -3,187 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FedEx Tracker</title>
+<title>Shipment Tracker</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+/* 1. Global Reset & iOS Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-body{
-    background:#050816;
-    color:white;
+body {
+    background: radial-gradient(circle at 50% 0%, #1c2438 0%, #0b0f17 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+    padding: 16px 14px 60px 14px;
+    min-height: 100vh;
 }
 
-header{
-    text-align:center;
-    padding:24px 20px;
-    font-size:42px;
-    font-weight:800;
-    cursor:pointer;
+.container {
+    max-width: 950px;
+    margin: auto;
 }
 
-header span{
-    color:#ff7a00;
+/* 2. Header & Branding */
+header {
+    text-align: center;
+    padding: 16px 0 24px 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+    cursor: pointer;
+    user-select: none;
 }
 
-.hero{
+header span {
+    color: #0A84FF; /* iOS System Blue */
+}
+
+/* 3. Hero Section (Compact & Responsive) */
+.hero {
     position: relative;
-    border-radius: 28px;
+    border-radius: 24px;
     overflow: hidden;
-    min-height: 560px;
+    min-height: 380px; /* Reduced height to fit desktop & mobile cleanly */
     display: flex;
     align-items: center;
-    padding: 60px;
-
+    padding: 36px 28px;
     background:
         linear-gradient(
-            90deg,
-            rgba(3,8,25,0.96) 0%,
-            rgba(3,8,25,0.85) 35%,
-            rgba(3,8,25,0.15) 70%
+            135deg,
+            rgba(11, 15, 23, 0.92) 0%,
+            rgba(11, 15, 23, 0.75) 50%,
+            rgba(11, 15, 23, 0.3) 100%
         ),
         url('./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png');
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
 }
 
-.hero-content{
-    max-width:650px;
+.hero-content {
+    max-width: 580px;
+    z-index: 2;
 }
 
-.hero h1{
-    font-size:72px;
-    line-height:1.05;
-    margin-bottom:28px;
-    font-weight:800;
+.hero h1 {
+    font-size: 38px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
 
-.hero p{
-    font-size:22px;
-    line-height:1.6;
-    color:#e0e0e0;
-    margin-bottom:35px;
+.hero p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 24px;
 }
 
-.track-box{
-    display:flex;
-    gap:14px;
-    flex-wrap:wrap;
+/* Live Activity Pill inside Hero */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(10, 132, 255, 0.15);
+    border: 1px solid rgba(10, 132, 255, 0.3);
+    color: #64D2FF;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 16px;
 }
 
-.track-box input{
-    flex:1;
-    min-width:280px;
-    padding:22px;
-    border:none;
-    border-radius:18px;
-    font-size:22px;
+/* 4. Tracking Input Glass Box */
+.track-box {
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding: 6px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.track-box button{
-    padding:22px 36px;
-    background:linear-gradient(135deg,#ff9b1a,#ff6b00);
-    border:none;
-    border-radius:18px;
-    color:white;
-    font-size:24px;
-    font-weight:700;
-    cursor:pointer;
+.track-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: white;
+    outline: none;
 }
 
-.features{
-    width:95%;
-    margin:40px auto;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
+.track-box input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
 }
 
-.card{
-    background:linear-gradient(145deg,#0c1127,#11192f);
-    border:1px solid rgba(255,255,255,0.08);
-    padding:35px;
-    border-radius:24px;
+.track-box button {
+    padding: 12px 24px;
+    background: #0A84FF;
+    border: none;
+    border-radius: 14px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+    box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3);
 }
 
-.card h3{
-    font-size:34px;
-    margin-bottom:18px;
+.track-box button:active {
+    transform: scale(0.96);
+    background: #0071e3;
 }
 
-.card p{
-    color:#d2d2d2;
-    font-size:21px;
-    line-height:1.7;
+/* 5. Glassmorphic Feature Cards */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
-footer{
-    text-align:center;
-    padding:40px 20px;
-    color:#aaa;
-    font-size:24px;
+.card {
+    background: rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 22px;
+    border-radius: 20px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transition: transform 0.2s ease;
 }
 
-@media(max-width:1100px){
-    .hero{
-        padding:40px;
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+.card p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+/* 6. Footer */
+footer {
+    text-align: center;
+    padding: 24px 20px;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+}
+
+/* Mobile Responsive Tweaks */
+@media(max-width: 768px) {
+    header {
+        font-size: 24px;
     }
 
-    .hero h1{
-        font-size:52px;
+    .hero {
+        min-height: auto;
+        padding: 24px 18px;
+        border-radius: 20px;
     }
 
-    .features{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(max-width:700px){
-    header{
-        font-size:28px;
+    .hero h1 {
+        font-size: 28px;
     }
 
-    .hero{
-        min-height:auto;
-        padding:35px 22px;
-        border-radius:20px;
+    .hero p {
+        font-size: 14px;
+        margin-bottom: 18px;
     }
 
-    .hero h1{
-        font-size:38px;
+    .track-box {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 10px;
     }
 
-    .hero p{
-        font-size:17px;
+    .track-box input {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 14px;
+        width: 100%;
     }
 
-    .track-box{
-        flex-direction:column;
+    .track-box button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 14px;
     }
 
-    .track-box input,
-    .track-box button{
-        width:100%;
-        font-size:18px;
-        padding:18px;
+    .features {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
-
-    .card h3{
-        font-size:24px;
-    }
-
-    .card p{
-        font-size:16px;
-    }
-
-    footer{
-        font-size:16px;
+    
+    .card {
+        padding: 18px;
     }
 }
 </style>
@@ -191,45 +262,55 @@ footer{
 
 <body>
 
-<header id="secretLogo">FedEx <span>Tracker</span></header>
+<div class="container">
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>Fast. Secure.<br>Reliable Delivery.</h1>
+    <header id="secretLogo">Global <span>Tracker</span></header>
 
-        <p>
-            Track your shipments in real time with confidence.
-            From dispatch to final delivery, stay informed every step
-            with accurate tracking updates and secure shipment monitoring.
-        </p>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>⚡</span> Real-Time Network Active
+            </div>
 
-        <div class="track-box">
-            <input id="trackingInput" placeholder="Enter Tracking Number">
-            <button onclick="trackShipment()">Track Package</button>
+            <h1>Fast. Secure.<br>Reliable Delivery.</h1>
+
+            <p>
+                Track your shipments seamlessly. Stay informed at every step 
+                with accurate live updates and verified route monitoring.
+            </p>
+
+            <div class="track-box">
+                <input id="trackingInput" placeholder="Enter Tracking Number (e.g. TRK-8820)">
+                <button onclick="trackShipment()">Track Package</button>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="features">
-    <div class="card">
-        <h3>Real-Time Tracking</h3>
-        <p>Receive live shipment status updates from pickup to delivery.</p>
-    </div>
+    <section class="features">
+        <div class="card">
+            <div class="card-icon">📍</div>
+            <h3>Real-Time Tracking</h3>
+            <p>Receive immediate status updates from origin scan to final door step delivery.</p>
+        </div>
 
-    <div class="card">
-        <h3>Trusted Delivery</h3>
-        <p>Built for safe and reliable parcel movement across locations.</p>
-    </div>
+        <div class="card">
+            <div class="card-icon">🛡️</div>
+            <h3>Trusted Delivery</h3>
+            <p>Engineered for safe and transparent package transit across all destinations.</p>
+        </div>
 
-    <div class="card">
-        <h3>Admin Managed</h3>
-        <p>Shipment details are updated securely by authorized management.</p>
-    </div>
-</section>
+        <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3>Admin Managed</h3>
+            <p>Shipment logs and routing changes are updated directly by authorized dispatchers.</p>
+        </div>
+    </section>
 
-<footer>
-    © 2026 FedEx Tracker. All Rights Reserved.
-</footer>
+    <footer>
+        © 2026 Logistics Tracking Portal. All Rights Reserved.
+    </footer>
+
+</div>
 
 <script>
 let tapCount = 0;
@@ -247,6 +328,13 @@ document.getElementById("secretLogo").addEventListener("click", () => {
         window.location.href = "admin-login.html";
     }
 });
+
+function trackShipment() {
+    const input = document.getElementById("trackingInput").value.trim();
+    if (input) {
+        window.location.href = `track.html?code=${encodeURIComponent(input)}`;
+    }
+}
 </script>
 
 <script type="module" src="./js/script.js"></script>
