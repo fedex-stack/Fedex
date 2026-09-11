@@ -2,397 +2,1154 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
 <title>Track Shipment</title>
 
 <style>
-/* 1. Global Reset & iOS Typography */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
     -webkit-font-smoothing: antialiased;
 }
 
 body {
-    /* Ambient iOS Dark Mode Gradient Background */
-    background: radial-gradient(circle at 50% 0%, #1c2438 0%, #0b0f17 100%);
-    background-attachment: fixed;
-    color: #ffffff;
-    padding: 20px 14px 100px 14px;
     min-height: 100vh;
+    color: #172554;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #dce7ff 0%,
+            #f4f7fc 38%,
+            #f8f9fb 100%
+        );
+
+    padding: 0 14px 40px;
 }
 
 .container {
-    max-width: 850px;
+    max-width: 900px;
     margin: auto;
 }
 
-h1 {
-    text-align: center;
-    margin: 24px 0 28px 0;
-    color: #ffffff;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: -0.8px;
-}
 
-/* 2. Glassmorphic Card Container */
-.card {
-    background: rgba(255, 255, 255, 0.07);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 22px;
-    border-radius: 24px;
-    margin-bottom: 20px;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
+/* =========================
+   HEADER
+========================= */
 
-.card h2 {
-    margin-bottom: 16px;
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.4px;
-}
+.header {
+    height: 75px;
 
-.card p {
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 12px;
-    line-height: 1.5;
-    font-size: 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 10px;
+    justify-content: space-between;
 }
 
-.card p:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+.back-btn {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.85);
+
+    background: rgba(255,255,255,.72);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    color: #172b86;
+
+    cursor: pointer;
 }
 
-.card p strong {
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 500;
+.back-btn svg {
+    width: 22px;
+    height: 22px;
 }
 
-/* 3. Status Badges & Radar */
+.header-title {
+    text-align: center;
+}
+
+.header-title strong {
+    display: block;
+
+    color: #172b86;
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+.header-title span {
+    display: block;
+
+    color: #8791a7;
+
+    font-size: 10px;
+
+    margin-top: 3px;
+
+    letter-spacing: .6px;
+}
+
+.header-space {
+    width: 44px;
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.card {
+    background:
+        rgba(255,255,255,.73);
+
+    border: 1px solid rgba(255,255,255,.9);
+
+    border-radius: 25px;
+
+    padding: 22px;
+
+    margin-bottom: 16px;
+
+    box-shadow:
+        0 15px 40px rgba(28,48,100,.08);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================
+   STATUS CARD
+========================= */
+
+.status-card {
+    overflow: hidden;
+
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.92),
+            rgba(238,243,255,.76)
+        );
+}
+
+.status-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -80px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(71,71,220,.12),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
 .live-badge {
     display: inline-flex;
+
     align-items: center;
-    gap: 10px;
-    color: #30D158; /* iOS System Green */
-    background: rgba(48, 209, 88, 0.12);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    border: 1px solid rgba(48, 209, 88, 0.25);
-    margin-bottom: 16px;
+
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(43,197,103,.10);
+
+    border: 1px solid rgba(43,197,103,.20);
+
+    color: #159447;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    margin-bottom: 14px;
 }
 
-.radar {
-    width: 10px;
-    height: 10px;
+.live-dot {
+    width: 7px;
+    height: 7px;
+
     border-radius: 50%;
-    background: #30D158;
-    position: relative;
-}
 
-.radar::after {
-    content: "";
-    position: absolute;
-    inset: -6px;
-    border: 2px solid #30D158;
-    border-radius: 50%;
-    animation: pulse 1.6s infinite ease-out;
-}
+    background: #21c56a;
 
-@keyframes pulse {
-    from {
-        transform: scale(0.8);
-        opacity: 1;
-    }
-    to {
-        transform: scale(2.2);
-        opacity: 0;
-    }
+    box-shadow:
+        0 0 0 4px rgba(33,197,106,.12);
 }
 
 .status-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
+    position: relative;
+    z-index: 2;
+
+    color: #17255c;
+
+    font-size: 27px;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 16px;
 }
 
-/* 4. Progress Bar */
-.progress-bar {
-    width: 100%;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+.status-code {
+    color: #79839a;
+
+    font-size: 12px;
+
+    margin-bottom: 20px;
+}
+
+.status-code strong {
+    color: #3d4a69;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-wrapper {
     position: relative;
-    margin: 24px 0 20px 0;
-    overflow: visible;
+
+    padding-top: 25px;
+}
+
+.progress-bar {
+    height: 8px;
+
+    width: 100%;
+
+    background: #e3e7ef;
+
+    border-radius: 20px;
+
+    position: relative;
 }
 
 .progress-fill {
     width: 0%;
+
     height: 100%;
-    background: linear-gradient(90deg, #0A84FF, #30D158);
+
     border-radius: 20px;
-    transition: width 1s ease;
-    box-shadow: 0 0 12px rgba(48, 209, 88, 0.4);
+
+    background:
+        linear-gradient(
+            90deg,
+            #3d36d8,
+            #2f8bea,
+            #29c878
+        );
+
+    transition:
+        width 1s ease;
+
+    box-shadow:
+        0 0 14px rgba(54,103,220,.25);
 }
 
 #truck {
     position: absolute;
-    top: -18px;
+
+    top: 3px;
+
     left: 0%;
-    font-size: 24px;
-    transition: left 1s ease;
-    transform: scaleX(-1);
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 2px solid #433bd3;
+
+    box-shadow:
+        0 6px 16px rgba(40,50,130,.18);
+
+    transition:
+        left 1s ease;
+
+    transform:
+        translateX(-50%);
 }
 
-/* 5. Mini Map Component */
-#miniMap {
-    height: 160px;
-    border-radius: 18px;
-    overflow: hidden;
+#truck svg {
+    width: 19px;
+    height: 19px;
+
+    color: #3730b7;
+}
+
+.progress-labels {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 12px;
+
+    color: #8992a5;
+
+    font-size: 9px;
+
+    font-weight: 650;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.card-title {
+    color: #1a285f;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    margin-bottom: 16px;
+}
+
+.detail-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid rgba(28,43,90,.07);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+
+    padding-bottom: 0;
+}
+
+.detail-label {
+    color: #8a93a7;
+
+    font-size: 12px;
+}
+
+.detail-value {
+    color: #27345f;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+/* =========================
+   MAP
+========================= */
+
+.map {
     position: relative;
-    background: 
-        radial-gradient(circle at 50% 50%, rgba(10, 132, 255, 0.08), transparent 70%),
-        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
-        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-        #121721;
-    background-size: 100% 100%, 28px 28px, 28px 28px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    height: 180px;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e9effd,
+            #f7f9fd
+        );
+
+    border:
+        1px solid rgba(53,76,145,.08);
 }
 
-.route-line {
+.map::before,
+.map::after {
+    content: "";
+
     position: absolute;
+
+    background: rgba(83,103,160,.09);
+}
+
+.map::before {
+    width: 100%;
+    height: 1px;
+
+    top: 32%;
+}
+
+.map::after {
+    height: 100%;
+    width: 1px;
+
+    left: 45%;
+}
+
+.road {
+    position: absolute;
+
+    left: 10%;
+    right: 10%;
+
     top: 50%;
-    left: 12%;
-    width: 75%;
-    height: 3px;
-    background: dashed linear-gradient(90deg, #0A84FF, #FF9F0A);
-    border-top: 2px dashed rgba(255, 255, 255, 0.4);
+
+    height: 2px;
+
+    border-top:
+        2px dashed rgba(71,84,150,.28);
+
+    transform:
+        rotate(-7deg);
 }
 
-.map-pin {
+.origin-dot,
+.destination-dot {
     position: absolute;
-    top: 40%;
-    right: 8%;
-    font-size: 26px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+
+    width: 15px;
+    height: 15px;
+
+    border-radius: 50%;
+
+    z-index: 3;
+}
+
+.origin-dot {
+    left: 9%;
+    top: 62%;
+
+    background: #4436d7;
+
+    box-shadow:
+        0 0 0 6px rgba(68,54,215,.12);
+}
+
+.destination-dot {
+    right: 9%;
+    top: 36%;
+
+    background: #23b86b;
+
+    box-shadow:
+        0 0 0 6px rgba(35,184,107,.12);
 }
 
 #mapTruck {
     position: absolute;
-    top: 40%;
-    left: 12%;
-    font-size: 24px;
-    transition: left 1s ease;
-    transform: scaleX(-1);
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+
+    top: 47%;
+    left: 10%;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    border: 2px solid #4436d7;
+
+    z-index: 4;
+
+    transition:
+        left 1s ease,
+        top 1s ease;
+
+    box-shadow:
+        0 7px 16px rgba(40,50,130,.15);
 }
 
-/* 6. Timeline Progress */
+#mapTruck svg {
+    width: 18px;
+    height: 18px;
+
+    color: #4436d7;
+}
+
+.map-label {
+    position: absolute;
+
+    z-index: 5;
+
+    background: rgba(255,255,255,.78);
+
+    padding: 6px 9px;
+
+    border-radius: 9px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    color: #465170;
+
+    backdrop-filter: blur(10px);
+}
+
+.origin-label {
+    left: 7%;
+    bottom: 12%;
+}
+
+.destination-label {
+    right: 5%;
+    top: 12%;
+}
+
+
+/* =========================
+   TIMELINE
+========================= */
+
 .timeline {
     position: relative;
-    padding-left: 28px;
-    margin-top: 10px;
+
+    padding-left: 27px;
 }
 
 .timeline::before {
     content: "";
+
     position: absolute;
-    left: 7px;
-    top: 10px;
-    bottom: 10px;
+
+    left: 6px;
+
+    top: 8px;
+
+    bottom: 8px;
+
     width: 2px;
-    background: rgba(255, 255, 255, 0.12);
+
+    background: #e1e5ed;
 }
 
 .timeline-item {
     position: relative;
-    margin-bottom: 16px;
-    background: rgba(255, 255, 255, 0.04);
-    padding: 16px;
+
+    margin-bottom: 13px;
+
+    padding: 15px;
+
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    background: rgba(242,245,251,.74);
+
+    border:
+        1px solid rgba(40,60,120,.06);
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
 }
 
 .timeline-item::before {
     content: "";
+
     position: absolute;
+
     left: -27px;
+
     top: 20px;
+
     width: 12px;
     height: 12px;
+
     border-radius: 50%;
-    background: #0A84FF;
-    box-shadow: 0 0 10px #0A84FF;
+
+    background: #4436d7;
+
+    border: 3px solid #f7f9fd;
+
+    box-shadow:
+        0 0 0 2px #4436d7;
 }
 
 .timeline-item h4 {
-    margin-bottom: 4px;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 600;
+    color: #293766;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    margin-bottom: 5px;
 }
 
-/* 7. Loading & Error States */
-#loading, #error {
+.timeline-location {
+    color: #78829a;
+
+    font-size: 11px;
+
+    margin-bottom: 5px;
+}
+
+.timeline-time {
+    color: #9aa2b3;
+
+    font-size: 10px;
+}
+
+.tick {
+    color: #20ad61;
+
+    margin-left: 5px;
+}
+
+
+/* =========================
+   LOADING / ERROR
+========================= */
+
+#loading {
     text-align: center;
-    padding: 40px 0;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+
+    padding: 70px 20px;
+
+    color: #7d879b;
+
+    font-size: 14px;
 }
 
 #error {
-    color: #FF453A;
+    display: none;
+
+    text-align: center;
+
+    padding: 35px 20px;
+
+    color: #d33c4b;
+
+    background: rgba(255,255,255,.7);
+
+    border-radius: 20px;
+
+    margin-bottom: 20px;
 }
 
-/* 8. Floating Support Dock */
-.support-buttons {
-    position: fixed;
-    right: 20px;
-    bottom: 24px;
+
+/* =========================
+   SUPPORT
+========================= */
+
+.support-bar {
     display: flex;
+
     gap: 10px;
-    padding: 8px;
-    border-radius: 35px;
-    background: rgba(255, 255, 255, 0.1);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    z-index: 999;
+
+    margin-top: 10px;
 }
 
-.telegram-btn,
-.email-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+.support-btn {
+    flex: 1;
+
+    height: 50px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    text-decoration: none;
+
+    gap: 8px;
+
+    border-radius: 15px;
+
     color: white;
-    font-size: 20px;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 20px rgba(40,60,130,.12);
 }
 
 .telegram-btn {
-    background: #2AABEE;
+    background: #229ed9;
 }
 
 .email-btn {
-    background: #FF9F0A;
+    background: #5369cf;
 }
 
-.telegram-btn:active,
-.email-btn:active {
-    transform: scale(0.9);
+.support-btn svg {
+    width: 18px;
+    height: 18px;
 }
 
-/* Mobile Adjustments */
-@media(max-width: 600px) {
-    h1 {
-        font-size: 26px;
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px) {
+
+    body {
+        padding: 0 10px 25px;
     }
-    
+
+    .header {
+        height: 68px;
+    }
+
     .card {
         padding: 18px;
-        border-radius: 20px;
+
+        border-radius: 21px;
     }
 
     .status-title {
-        font-size: 19px;
+        font-size: 23px;
     }
 
-    #miniMap {
-        height: 130px;
+    .map {
+        height: 145px;
+    }
+
+    .detail-row {
+        align-items: flex-start;
+    }
+
+    .detail-label {
+        max-width: 42%;
+    }
+
+    .detail-value {
+        max-width: 58%;
+    }
+
+    .support-bar {
+        position: sticky;
+
+        bottom: 10px;
+
+        z-index: 50;
     }
 }
 </style>
 </head>
 
+
 <body>
 
 <div class="container">
-    <h1>Track Shipment</h1>
 
-    <div id="loading">Loading shipment...</div>
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <button
+            class="back-btn"
+            onclick="history.back()"
+            aria-label="Go back">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M19 12H5"/>
+                <path d="m12 19-7-7 7-7"/>
+
+            </svg>
+
+        </button>
+
+
+        <div class="header-title">
+
+            <strong>Track Shipment</strong>
+
+            <span>LIVE SHIPMENT MONITORING</span>
+
+        </div>
+
+
+        <div class="header-space"></div>
+
+    </header>
+
+
+    <div id="loading">
+        Loading shipment...
+    </div>
+
+
     <div id="error"></div>
 
-    <div id="shipmentView" style="display:none;">
 
-        <div class="card">
+    <main id="shipmentView" style="display:none;">
+
+
+        <!-- STATUS -->
+
+        <section class="card status-card">
+
             <div class="live-badge">
-                <div class="radar"></div>
+
+                <span class="live-dot"></span>
+
                 Live Tracking Active
+
             </div>
 
-            <div class="status-title" id="status"></div>
-            <p><strong>Estimated Delivery</strong> <span style="color: #ffffff; font-weight: 600;">⏳ Awaiting Confirmation</span></p>
 
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-                <div id="truck">🚚</div>
+            <div
+                class="status-title"
+                id="status">
             </div>
-        </div>
 
-        <div class="card">
-            <h2>Live Route Map</h2>
 
-            <div id="miniMap">
-                <div class="route-line"></div>
-                <div id="mapTruck">🚚</div>
-                <div class="map-pin">📍</div>
+            <div class="status-code">
+
+                Tracking:
+
+                <strong id="trackingCode">
+                    —
+                </strong>
+
             </div>
-        </div>
 
-        <div class="card">
-            <h2>Shipment Details</h2>
 
-            <p><strong>Tracking Code</strong> <span id="trackingCode"></span></p>
-            <p><strong>Current Location</strong> <span id="location"></span></p>
-            <p><strong>Destination</strong> <span id="destination"></span></p>
-            <p><strong>Receiver</strong> <span id="receiver"></span></p>
-            <p><strong>Sender</strong> <span id="sender"></span></p>
-            <p><strong>Sender Contact</strong> <span id="senderPhone"></span></p>
-            <p><strong>Receiver Contact</strong> <span id="receiverPhone"></span></p>
-        </div>
+            <div class="progress-wrapper">
 
-        <div class="card">
-            <h2>Shipment Progress</h2>
-            <div id="timeline" class="timeline"></div>
-        </div>
+                <div class="progress-bar">
 
-    </div>
+                    <div
+                        class="progress-fill"
+                        id="progressFill">
+                    </div>
+
+                    <div id="truck">
+
+                        <svg viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="1.8"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+
+                            <path d="M3 6h11v10H3z"/>
+                            <path d="M14 9h4l3 3v4h-7z"/>
+                            <circle cx="7" cy="18" r="2"/>
+                            <circle cx="18" cy="18" r="2"/>
+
+                        </svg>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress-labels">
+
+                    <span>Shipment</span>
+                    <span>In Transit</span>
+                    <span>Destination</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAP -->
+
+        <section class="card">
+
+            <div class="card-title">
+                Live Route
+            </div>
+
+            <div class="map">
+
+                <div class="road"></div>
+
+                <div class="origin-dot"></div>
+
+                <div class="destination-dot"></div>
+
+                <div
+                    class="map-label origin-label"
+                    id="mapOrigin">
+                    Origin
+                </div>
+
+                <div
+                    class="map-label destination-label"
+                    id="mapDestination">
+                    Destination
+                </div>
+
+                <div id="mapTruck">
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <path d="M3 6h11v10H3z"/>
+                        <path d="M14 9h4l3 3v4h-7z"/>
+                        <circle cx="7" cy="18" r="2"/>
+                        <circle cx="18" cy="18" r="2"/>
+
+                    </svg>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DETAILS -->
+
+        <section class="card">
+
+            <div class="card-title">
+                Shipment Details
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Tracking Code
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="trackingCode2">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Current Location
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="location">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Destination
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="destination">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Receiver
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="receiver">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Sender
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="sender">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Sender Contact
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="senderPhone">
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="detail-row">
+
+                <span class="detail-label">
+                    Receiver Contact
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="receiverPhone">
+                    —
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- TIMELINE -->
+
+        <section class="card">
+
+            <div class="card-title">
+                Shipment Progress
+            </div>
+
+            <div
+                id="timeline"
+                class="timeline">
+            </div>
+
+        </section>
+
+
+        <!-- SUPPORT -->
+
+        <section class="support-bar">
+
+            <a
+                href="https://t.me/fedexstack"
+                target="_blank"
+                rel="noopener"
+                class="support-btn telegram-btn">
+
+                <svg viewBox="0 0 24 24"
+                     fill="currentColor">
+
+                    <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
+
+                </svg>
+
+                Telegram Support
+
+            </a>
+
+
+            <a
+                href="mailto:fedexstacklogistics@gmail.com"
+                class="support-btn email-btn">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <path d="m3 7 9 6 9-6"/>
+
+                </svg>
+
+                Email Support
+
+            </a>
+
+        </section>
+
+    </main>
+
 </div>
 
-<div class="support-buttons">
-    <a href="https://t.me/fedexstack" target="_blank" class="telegram-btn" aria-label="Telegram Support">
-       ✈️
-    </a>
-    <a href="mailto:fedexstacklogistics@gmail.com" class="email-btn" aria-label="Email Support">
-       ✉️
-    </a>
-</div>
 
-<script type="module" src="./js/track.js"></script>
+<script
+    type="module"
+    src="./js/track.js">
+</script>
+
 </body>
 </html>
