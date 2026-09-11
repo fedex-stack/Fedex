@@ -1,62 +1,170 @@
 export function normalizeTrackingCode(code) {
+
     if (!code) return "";
-    return code.trim().toUpperCase();
+
+    return code
+        .trim()
+        .toUpperCase();
 }
 
+
 export function generateTrackingCode() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
     let random = "";
 
+
     for (let i = 0; i < 8; i++) {
-        random += chars[Math.floor(Math.random() * chars.length)];
+
+        random +=
+            chars[
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            ];
     }
+
 
     return `TRK-LAG-${random}`;
 }
 
+
+/* =========================================================
+   DATE / TIME
+   U.S. EASTERN TIME
+========================================================= */
+
 export function formatDate(value) {
+
     if (!value) return "N/A";
 
-    if (typeof value.toDate === "function") {
-        return value.toDate().toLocaleString();
+
+    let date;
+
+
+    if (
+        typeof value.toDate === "function"
+    ) {
+
+        date = value.toDate();
+
+    } else {
+
+        date = new Date(value);
     }
 
-    return new Date(value).toLocaleString();
+
+    if (isNaN(date.getTime())) {
+
+        return "N/A";
+    }
+
+
+    return new Intl.DateTimeFormat(
+        "en-US",
+        {
+            timeZone: "America/New_York",
+
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+
+            hour: "numeric",
+            minute: "2-digit",
+
+            hour12: true,
+
+            timeZoneName: "short"
+        }
+    ).format(date);
 }
 
+
+/* =========================================================
+   TOAST
+========================================================= */
+
 export function showToast(message) {
-    let toast = document.getElementById("toast");
+
+    let toast =
+        document.getElementById("toast");
+
 
     if (!toast) {
-        toast = document.createElement("div");
-        toast.id = "toast";
 
-        toast.style.position = "fixed";
-        toast.style.bottom = "20px";
-        toast.style.right = "20px";
-        toast.style.background = "#171a21";
-        toast.style.color = "white";
-        toast.style.padding = "16px 20px";
-        toast.style.borderRadius = "12px";
-        toast.style.zIndex = "99999";
-        toast.style.boxShadow = "0 4px 20px rgba(0,0,0,0.4)";
+        toast =
+            document.createElement("div");
+
+        toast.id =
+            "toast";
+
+
+        toast.style.position =
+            "fixed";
+
+        toast.style.bottom =
+            "20px";
+
+        toast.style.right =
+            "20px";
+
+        toast.style.background =
+            "#171a21";
+
+        toast.style.color =
+            "white";
+
+        toast.style.padding =
+            "16px 20px";
+
+        toast.style.borderRadius =
+            "12px";
+
+        toast.style.zIndex =
+            "99999";
+
+        toast.style.boxShadow =
+            "0 4px 20px rgba(0,0,0,0.4)";
+
 
         document.body.appendChild(toast);
     }
 
-    toast.innerText = message;
-    toast.style.display = "block";
+
+    toast.innerText =
+        message;
+
+    toast.style.display =
+        "block";
+
 
     setTimeout(() => {
-        toast.style.display = "none";
+
+        toast.style.display =
+            "none";
+
     }, 3000);
 }
 
+
+/* =========================================================
+   COPY
+========================================================= */
+
 export function copyText(text) {
+
     if (!navigator.clipboard) {
-        prompt("Copy this:", text);
+
+        prompt(
+            "Copy this:",
+            text
+        );
+
         return;
     }
+
 
     navigator.clipboard.writeText(text);
 }
