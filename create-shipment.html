@@ -3,110 +3,724 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Create Shipment</title>
 
 <style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing:antialiased;
 }
 
 body{
-    background:#0f1115;
-    color:white;
-    padding:20px;
+
+    min-height:100vh;
+
+    color:#ffffff;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #24324d 0%,
+            #111827 35%,
+            #080b12 78%,
+            #05070b 100%
+        );
+
+    padding:
+        20px 14px 50px;
 }
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
 
 .container{
-    max-width:700px;
+
+    width:100%;
+
+    max-width:650px;
+
     margin:auto;
-    background:#171a21;
-    padding:30px;
-    border-radius:18px;
 }
 
-h1{
-    margin-bottom:25px;
+
+/* =========================================================
+   TOP NAV
+========================================================= */
+
+.topbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+}
+
+.back-btn{
+
+    width:44px;
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:14px;
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.07);
+
+    color:#ffffff;
+
+    cursor:pointer;
+
+    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.back-btn:active{
+    transform:scale(.95);
+}
+
+.back-btn svg{
+
+    width:20px;
+    height:20px;
+}
+
+.top-title{
+
     text-align:center;
 }
 
+.top-title strong{
+
+    display:block;
+
+    font-size:13px;
+
+    font-weight:750;
+
+    letter-spacing:.2px;
+}
+
+.top-title span{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:
+        rgba(255,255,255,.40);
+
+    font-size:9px;
+
+    letter-spacing:.7px;
+}
+
+.top-space{
+
+    width:44px;
+}
+
+
+/* =========================================================
+   MAIN GLASS CARD
+========================================================= */
+
+.form-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:27px;
+
+    border-radius:27px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.045)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    -webkit-backdrop-filter:
+        blur(30px) saturate(170%);
+
+    backdrop-filter:
+        blur(30px) saturate(170%);
+
+    box-shadow:
+        0 22px 55px rgba(0,0,0,.38),
+        inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+
+/* decorative glow */
+
+.form-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:190px;
+    height:190px;
+
+    right:-100px;
+    top:-100px;
+
+    border-radius:50%;
+
+    background:
+        rgba(10,132,255,.14);
+
+    filter:blur(40px);
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.heading{
+
+    position:relative;
+
+    margin-bottom:27px;
+}
+
+.heading h1{
+
+    font-size:27px;
+
+    font-weight:780;
+
+    letter-spacing:-.8px;
+
+    margin-bottom:7px;
+}
+
+.heading p{
+
+    color:
+        rgba(255,255,255,.48);
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
 .form-group{
+
+    position:relative;
+
     margin-bottom:18px;
 }
 
 label{
+
     display:block;
+
     margin-bottom:8px;
-    color:#ccc;
+
+    color:
+        rgba(255,255,255,.62);
+
+    font-size:12px;
+
+    font-weight:650;
 }
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
 
 input{
+
     width:100%;
-    padding:16px;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
+
+    min-height:50px;
+
+    padding:
+        14px 15px;
+
+    border-radius:14px;
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    outline:none;
+
+    color:#ffffff;
+
+    background:
+        rgba(255,255,255,.065);
+
+    font-size:15px;
+
+    -webkit-appearance:none;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
 }
 
-button{
+input::placeholder{
+
+    color:
+        rgba(255,255,255,.28);
+}
+
+input:focus{
+
+    background:
+        rgba(255,255,255,.085);
+
+    border-color:
+        rgba(10,132,255,.60);
+
+    box-shadow:
+        0 0 0 3px rgba(10,132,255,.10);
+}
+
+
+/* =========================================================
+   TWO COLUMN ROW
+========================================================= */
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+}
+
+
+/* =========================================================
+   CREATE BUTTON
+========================================================= */
+
+#createShipmentBtn{
+
+    position:relative;
+
     width:100%;
-    padding:16px;
+
+    min-height:54px;
+
+    margin-top:7px;
+
     border:none;
-    border-radius:10px;
-    background:#ff6600;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
+
+    border-radius:16px;
+
+    color:#ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7a18,
+            #ff5b00
+        );
+
+    font-size:15px;
+
+    font-weight:750;
+
     cursor:pointer;
+
+    box-shadow:
+        0 10px 25px rgba(255,102,0,.24);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
 }
 
-button:hover{
-    opacity:0.95;
+#createShipmentBtn:hover{
+
+    box-shadow:
+        0 13px 30px rgba(255,102,0,.30);
 }
+
+#createShipmentBtn:active{
+
+    transform:scale(.98);
+
+    box-shadow:
+        0 6px 16px rgba(255,102,0,.20);
+}
+
+
+/* =========================================================
+   INFO NOTE
+========================================================= */
+
+.form-note{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:9px;
+
+    margin-top:18px;
+
+    padding:13px;
+
+    border-radius:14px;
+
+    background:
+        rgba(10,132,255,.06);
+
+    border:
+        1px solid rgba(10,132,255,.10);
+
+    color:
+        rgba(255,255,255,.42);
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+.info-icon{
+
+    flex:none;
+
+    width:19px;
+    height:19px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        rgba(10,132,255,.15);
+
+    color:#64b5ff;
+
+    font-size:11px;
+
+    font-weight:800;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:600px){
+
+    body{
+
+        padding:
+            13px 10px 35px;
+    }
+
+    .form-card{
+
+        padding:20px;
+
+        border-radius:23px;
+    }
+
+    .heading h1{
+
+        font-size:24px;
+    }
+
+    .form-row{
+
+        grid-template-columns:1fr;
+
+        gap:0;
+    }
+
+    input{
+
+        min-height:51px;
+    }
+
+    #createShipmentBtn{
+
+        min-height:53px;
+    }
+}
+
 </style>
 </head>
 
+
 <body>
 
+
 <div class="container">
-    <h1>Create Shipment</h1>
 
-    <div class="form-group">
-        <label>Sender Name</label>
-        <input id="sender">
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <div class="topbar">
+
+
+        <button
+            class="back-btn"
+            onclick="history.back()"
+            aria-label="Go back">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+
+                <path d="M19 12H5"/>
+                <path d="m12 19-7-7 7-7"/>
+
+            </svg>
+
+        </button>
+
+
+        <div class="top-title">
+
+            <strong>Create Shipment</strong>
+
+            <span>LOGISTICS CONTROL CENTER</span>
+
+        </div>
+
+
+        <div class="top-space"></div>
+
     </div>
 
-    <div class="form-group">
-        <label>Receiver Name</label>
-        <input id="receiver">
+
+
+    <!-- =====================================================
+         FORM
+    ====================================================== -->
+
+    <div class="form-card">
+
+
+        <div class="heading">
+
+            <h1>
+                New Shipment
+            </h1>
+
+            <p>
+                Enter the shipment information below
+                to create a new tracking record.
+            </p>
+
+        </div>
+
+
+
+        <!-- SENDER -->
+
+        <div class="form-group">
+
+            <label for="sender">
+                Sender Name
+            </label>
+
+            <input
+                id="sender"
+                type="text"
+                placeholder="Enter sender name"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- RECEIVER -->
+
+        <div class="form-group">
+
+            <label for="receiver">
+                Receiver Name
+            </label>
+
+            <input
+                id="receiver"
+                type="text"
+                placeholder="Enter receiver name"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- DESTINATION -->
+
+        <div class="form-group">
+
+            <label for="destination">
+                Destination
+            </label>
+
+            <input
+                id="destination"
+                type="text"
+                placeholder="City, State, Country"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- CURRENT LOCATION -->
+
+        <div class="form-group">
+
+            <label for="location">
+                Current Location
+            </label>
+
+            <input
+                id="location"
+                type="text"
+                placeholder="Current shipment location"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- SHIPMENT TYPE -->
+
+        <div class="form-group">
+
+            <label for="shipmentType">
+                Shipment Type
+            </label>
+
+            <input
+                id="shipmentType"
+                type="text"
+                placeholder="Parcel / Document / Box"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- WEIGHT -->
+
+        <div class="form-group">
+
+            <label for="weight">
+                Weight
+            </label>
+
+            <input
+                id="weight"
+                type="text"
+                placeholder="e.g. 12kg"
+                autocomplete="off">
+
+        </div>
+
+
+
+        <!-- CREATE -->
+
+        <button id="createShipmentBtn">
+
+            Create Shipment
+
+        </button>
+
+
+
+        <!-- NOTE -->
+
+        <div class="form-note">
+
+            <div class="info-icon">
+                i
+            </div>
+
+            <div>
+                A unique tracking number will be generated
+                automatically when this shipment is created.
+            </div>
+
+        </div>
+
+
     </div>
 
-    <div class="form-group">
-        <label>Destination</label>
-        <input id="destination">
-    </div>
-
-    <div class="form-group">
-        <label>Current Location</label>
-        <input id="location">
-    </div>
-
-    <div class="form-group">
-        <label>Shipment Type</label>
-        <input id="shipmentType" placeholder="Parcel / Document / Box">
-    </div>
-
-    <div class="form-group">
-        <label>Weight</label>
-        <input id="weight" placeholder="e.g 12kg">
-    </div>
-
-    <button id="createShipmentBtn">Create Shipment</button>
 </div>
 
-<script type="module" src="./js/admin.js"></script>
+
+
+<!-- =========================================================
+     EXISTING ADMIN JAVASCRIPT
+========================================================= -->
+
+<script
+    type="module"
+    src="./js/admin.js">
+</script>
+
 
 </body>
 </html>
