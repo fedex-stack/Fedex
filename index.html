@@ -2,342 +2,1650 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shipment Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>FedEx Tracker</title>
 
 <style>
-/* 1. Global Reset & iOS Typography */
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+
     -webkit-font-smoothing: antialiased;
 }
 
-body {
-    background: radial-gradient(circle at 50% 0%, #1c2438 0%, #0b0f17 100%);
-    background-attachment: fixed;
-    color: #ffffff;
-    padding: 16px 14px 60px 14px;
-    min-height: 100vh;
+html {
+    scroll-behavior: smooth;
 }
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            #dfe8ff 0%,
+            #f4f7fb 35%,
+            #f7f8fa 75%
+        );
+
+    color: #172554;
+    padding-bottom: 85px;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
 .container {
-    max-width: 950px;
-    margin: auto;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 18px;
 }
 
-/* 2. Header & Branding */
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 header {
-    text-align: center;
-    padding: 16px 0 24px 0;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.6px;
-    cursor: pointer;
-    user-select: none;
-}
+    height: 76px;
 
-header span {
-    color: #0A84FF; /* iOS System Blue */
-}
-
-/* 3. Hero Section (Compact & Responsive) */
-.hero {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    min-height: 380px; /* Reduced height to fit desktop & mobile cleanly */
     display: flex;
     align-items: center;
-    padding: 36px 28px;
+    justify-content: space-between;
+
+    cursor: pointer;
+    user-select: none;
+
+    padding: 0 4px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.logo-icon {
+    width: 47px;
+    height: 47px;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background:
         linear-gradient(
             135deg,
-            rgba(11, 15, 23, 0.92) 0%,
-            rgba(11, 15, 23, 0.75) 50%,
-            rgba(11, 15, 23, 0.3) 100%
+            #162b91,
+            #244bc7
+        );
+
+    color: white;
+
+    box-shadow:
+        0 7px 18px rgba(25, 55, 170, 0.22);
+}
+
+.logo-icon svg {
+    width: 31px;
+    height: 31px;
+}
+
+.logo-text {
+    line-height: 1;
+}
+
+.logo-text strong {
+    display: block;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+
+    color: #172b86;
+}
+
+.logo-text strong span {
+    color: #f57c00;
+}
+
+.logo-text small {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #293b70;
+    letter-spacing: 0.2px;
+}
+
+.menu-button {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(20, 40, 100, 0.1);
+
+    background: rgba(255,255,255,0.75);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #172b86;
+
+    box-shadow:
+        0 6px 18px rgba(20, 40, 100, 0.08);
+
+    cursor: pointer;
+}
+
+.menu-button svg {
+    width: 23px;
+    height: 23px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 530px;
+
+    border-radius: 30px;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: flex-end;
+
+    margin-bottom: 22px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 24, 77, 0.12) 0%,
+            rgba(8, 22, 76, 0.25) 35%,
+            rgba(7, 19, 67, 0.93) 100%
         ),
-        url('./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png');
+        url("./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png");
+
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
-    margin-bottom: 20px;
+
+    border: 1px solid rgba(255,255,255,0.55);
+
+    box-shadow:
+        0 24px 55px rgba(25, 44, 100, 0.20);
 }
+
+
+/* soft glass reflection */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            125deg,
+            rgba(255,255,255,0.16),
+            transparent 35%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
 
 .hero-content {
-    max-width: 580px;
+    position: relative;
     z-index: 2;
+
+    width: 100%;
+
+    padding: 42px 42px 38px;
 }
 
-.hero h1 {
-    font-size: 38px;
-    line-height: 1.15;
-    margin-bottom: 14px;
-    font-weight: 700;
-    letter-spacing: -1px;
-}
-
-.hero p {
-    font-size: 15px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 24px;
-}
-
-/* Live Activity Pill inside Hero */
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(10, 132, 255, 0.15);
-    border: 1px solid rgba(10, 132, 255, 0.3);
-    color: #64D2FF;
-    padding: 6px 12px;
-    border-radius: 20px;
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.14);
+
+    border: 1px solid rgba(255,255,255,0.22);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    color: white;
+
     font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-weight: 700;
+
+    margin-bottom: 17px;
 }
 
-/* 4. Tracking Input Glass Box */
-.track-box {
+.live-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #35e38a;
+
+    box-shadow:
+        0 0 0 4px rgba(53,227,138,0.14);
+}
+
+.hero h1 {
+    color: white;
+
+    font-size: clamp(34px, 5vw, 58px);
+
+    line-height: 1.02;
+
+    letter-spacing: -2px;
+
+    font-weight: 800;
+
+    max-width: 650px;
+
+    margin-bottom: 17px;
+}
+
+.hero p {
+    max-width: 550px;
+
+    color: rgba(255,255,255,0.82);
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   TRACKING BOX
+========================================================= */
+
+.track-panel {
+    max-width: 650px;
+
+    padding: 7px;
+
     display: flex;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    padding: 6px;
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    gap: 7px;
+
+    background: rgba(255,255,255,0.16);
+
+    border: 1px solid rgba(255,255,255,0.25);
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.15);
 }
 
-.track-box input {
+.input-wrap {
     flex: 1;
-    background: transparent;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    background: rgba(255,255,255,0.94);
+
+    border-radius: 15px;
+
+    padding: 0 14px;
+}
+
+.input-icon {
+    flex-shrink: 0;
+
+    width: 22px;
+    height: 22px;
+
+    color: #263d9a;
+
+    margin-right: 8px;
+}
+
+.track-panel input {
+    width: 100%;
+
     border: none;
-    padding: 12px 16px;
-    font-size: 15px;
-    color: white;
     outline: none;
+
+    background: transparent;
+
+    color: #172554;
+
+    font-size: 14px;
+
+    padding: 14px 5px;
 }
 
-.track-box input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+.track-panel input::placeholder {
+    color: #8791a8;
 }
 
-.track-box button {
-    padding: 12px 24px;
-    background: #0A84FF;
+.track-button {
+    flex-shrink: 0;
+
     border: none;
-    border-radius: 14px;
+
+    border-radius: 15px;
+
+    padding: 0 23px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4030d5,
+            #6736dc
+        );
+
     color: white;
-    font-size: 15px;
-    font-weight: 600;
+
+    font-weight: 750;
+
+    font-size: 14px;
+
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease;
-    box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3);
+
+    box-shadow:
+        0 7px 18px rgba(76, 50, 215, 0.34);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-.track-box button:active {
-    transform: scale(0.96);
-    background: #0071e3;
+.track-button:active {
+    transform: scale(0.97);
 }
 
-/* 5. Glassmorphic Feature Cards */
+.track-button svg {
+    vertical-align: middle;
+
+    width: 17px;
+    height: 17px;
+
+    margin-right: 5px;
+}
+
+.example-code {
+    color: rgba(255,255,255,0.62);
+
+    font-size: 11px;
+
+    margin-top: 9px;
+
+    padding-left: 5px;
+}
+
+
+/* =========================================================
+   QUICK FEATURES
+========================================================= */
+
 .features {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 22px;
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.06);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 22px;
-    border-radius: 20px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    transition: transform 0.2s ease;
+    position: relative;
+
+    background: rgba(255,255,255,0.72);
+
+    border: 1px solid rgba(255,255,255,0.85);
+
+    border-radius: 22px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 12px 30px rgba(28, 50, 100, 0.08);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 18px 38px rgba(28, 50, 100, 0.12);
 }
 
 .card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.08);
+    width: 42px;
+    height: 42px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    margin-bottom: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border-radius: 13px;
+
+    background: #edf2ff;
+
+    color: #273e9d;
+
+    margin-bottom: 13px;
+}
+
+.card-icon svg {
+    width: 22px;
+    height: 22px;
 }
 
 .card h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    font-weight: 600;
-    letter-spacing: -0.3px;
+    color: #18255a;
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+
+    font-weight: 750;
 }
 
 .card p {
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 14px;
-    line-height: 1.45;
+    color: #75809a;
+
+    font-size: 12px;
+
+    line-height: 1.5;
 }
 
-/* 6. Footer */
+
+/* =========================================================
+   NEED HELP / TELEGRAM
+========================================================= */
+
+.help-card {
+    position: relative;
+
+    min-height: 150px;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    padding: 26px;
+
+    margin-bottom: 25px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #e9efff,
+            #f7f8ff
+        );
+
+    border: 1px solid rgba(255,255,255,0.9);
+
+    box-shadow:
+        0 14px 35px rgba(30, 50, 110, 0.08);
+}
+
+.help-card h2 {
+    color: #172b86;
+
+    font-size: 21px;
+
+    margin-bottom: 6px;
+}
+
+.help-card p {
+    max-width: 500px;
+
+    color: #6d7892;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+}
+
+.telegram-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 17px;
+
+    border-radius: 13px;
+
+    background: #229ed9;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    box-shadow:
+        0 7px 17px rgba(34,158,217,0.25);
+
+    transition:
+        transform 0.15s ease;
+}
+
+.telegram-button:active {
+    transform: scale(0.96);
+}
+
+.telegram-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================================
+   DECORATIVE DELIVERY SHAPES
+========================================================= */
+
+.help-decoration {
+    position: absolute;
+
+    right: 28px;
+    bottom: -10px;
+
+    width: 170px;
+    height: 110px;
+
+    opacity: 0.7;
+
+    pointer-events: none;
+}
+
+.box {
+    position: absolute;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8e2ff,
+            #bfcdf5
+        );
+
+    border: 1px solid rgba(72,95,160,0.12);
+
+    box-shadow:
+        0 10px 25px rgba(48,65,120,0.10);
+}
+
+.box.one {
+    width: 72px;
+    height: 52px;
+
+    right: 50px;
+    bottom: 12px;
+
+    transform: rotate(-4deg);
+}
+
+.box.two {
+    width: 55px;
+    height: 42px;
+
+    right: 0;
+    bottom: 17px;
+
+    transform: rotate(5deg);
+}
+
+.box.three {
+    width: 42px;
+    height: 34px;
+
+    right: 71px;
+    bottom: 57px;
+
+    transform: rotate(3deg);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
 footer {
     text-align: center;
-    padding: 24px 20px;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 13px;
+
+    color: #9ba4b8;
+
+    font-size: 11px;
+
+    padding: 8px 0 15px;
 }
 
-/* Mobile Responsive Tweaks */
-@media(max-width: 768px) {
-    header {
-        font-size: 24px;
+
+/* =========================================================
+   MOBILE BOTTOM NAV
+========================================================= */
+
+.bottom-nav {
+    position: fixed;
+
+    z-index: 100;
+
+    left: 50%;
+    bottom: 12px;
+
+    transform: translateX(-50%);
+
+    width: calc(100% - 24px);
+
+    max-width: 480px;
+
+    height: 66px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    align-items: center;
+
+    background: rgba(255,255,255,0.88);
+
+    border: 1px solid rgba(255,255,255,0.95);
+
+    border-radius: 23px;
+
+    box-shadow:
+        0 15px 45px rgba(25,40,90,0.18);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.nav-item {
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    color: #78839c;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+.nav-item svg {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-item.active {
+    color: #4332d6;
+}
+
+.nav-item.active svg {
+    filter:
+        drop-shadow(
+            0 4px 7px rgba(67,50,214,0.25)
+        );
+}
+
+
+/* =========================================================
+   DESKTOP NAV
+========================================================= */
+
+@media(min-width: 769px) {
+
+    .bottom-nav {
+        display: none;
     }
 
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width: 900px) {
+
+    .features {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width: 768px) {
+
+    body {
+        padding-top: 0;
+        padding-bottom: 92px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    header {
+        height: 72px;
+
+        padding: 0 4px;
+    }
+
+    .logo-icon {
+        width: 43px;
+        height: 43px;
+    }
+
+    .logo-text strong {
+        font-size: 19px;
+    }
+
+    .logo-text small {
+        font-size: 10px;
+    }
+
+    .menu-button {
+        width: 41px;
+        height: 41px;
+    }
+
+
+    /* HERO */
+
     .hero {
-        min-height: auto;
-        padding: 24px 18px;
-        border-radius: 20px;
+        min-height: 590px;
+
+        border-radius: 25px;
+
+        align-items: flex-end;
+
+        background-position:
+            60% center;
+    }
+
+    .hero-content {
+        padding: 28px 18px 21px;
+    }
+
+    .hero-badge {
+        font-size: 10px;
+
+        padding: 7px 10px;
+
+        margin-bottom: 13px;
     }
 
     .hero h1 {
-        font-size: 28px;
+        font-size: 35px;
+
+        line-height: 1.04;
+
+        letter-spacing: -1.4px;
+
+        margin-bottom: 13px;
     }
 
     .hero p {
-        font-size: 14px;
+        font-size: 13px;
+
+        line-height: 1.5;
+
         margin-bottom: 18px;
     }
 
-    .track-box {
-        flex-direction: column;
+
+    /* TRACK BOX */
+
+    .track-panel {
+        display: block;
+
         background: transparent;
+
         border: none;
+
         padding: 0;
+
+        box-shadow: none;
+    }
+
+    .input-wrap {
+        width: 100%;
+
+        min-height: 52px;
+
+        border-radius: 15px;
+
+        margin-bottom: 9px;
+
+        box-shadow:
+            0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .track-panel input {
+        font-size: 13px;
+
+        padding: 14px 4px;
+    }
+
+    .track-button {
+        width: 100%;
+
+        height: 52px;
+
+        border-radius: 15px;
+
+        font-size: 14px;
+    }
+
+    .example-code {
+        font-size: 10px;
+
+        text-align: center;
+
+        padding-left: 0;
+
+        margin-top: 8px;
+    }
+
+
+    /* FEATURES */
+
+    .features {
+        grid-template-columns:
+            repeat(2, 1fr);
+
         gap: 10px;
     }
 
-    .track-box input {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        padding: 14px;
-        width: 100%;
-    }
-
-    .track-box button {
-        width: 100%;
-        padding: 14px;
-        border-radius: 14px;
-    }
-
-    .features {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    
     .card {
-        padding: 18px;
+        padding: 17px;
+
+        border-radius: 18px;
     }
+
+    .card-icon {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 11px;
+
+        margin-bottom: 10px;
+    }
+
+    .card-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .card h3 {
+        font-size: 13px;
+    }
+
+    .card p {
+        font-size: 10.5px;
+    }
+
+
+    /* HELP */
+
+    .help-card {
+        min-height: 165px;
+
+        padding: 21px;
+
+        border-radius: 21px;
+    }
+
+    .help-card h2 {
+        font-size: 19px;
+    }
+
+    .help-card p {
+        max-width: 235px;
+
+        font-size: 11px;
+    }
+
+    .help-decoration {
+        right: -5px;
+
+        transform: scale(0.72);
+
+        transform-origin:
+            right bottom;
+    }
+
+
+    footer {
+        font-size: 10px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media(max-width: 370px) {
+
+    .hero {
+        min-height: 610px;
+    }
+
+    .hero h1 {
+        font-size: 31px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .card h3 {
+        font-size: 12px;
+    }
+
+    .card p {
+        font-size: 10px;
+    }
+
 }
 </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
-    <header id="secretLogo">FedExStack <span>Tracker</span></header>
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header id="secretLogo">
+
+        <div class="logo-area">
+
+            <div class="logo-icon">
+
+                <!-- Truck -->
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M3 6h11v10H3z"/>
+                    <path d="M14 9h4l3 3v4h-7z"/>
+                    <circle cx="7" cy="18" r="2"/>
+                    <circle cx="18" cy="18" r="2"/>
+                    <path d="M14 16h2"/>
+                </svg>
+
+            </div>
+
+            <div class="logo-text">
+
+                <strong>
+                    Fed<span>Ex</span>
+                </strong>
+
+                <small>
+                    TRACKER
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button class="menu-button"
+                type="button"
+                aria-label="Menu">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round">
+
+                <path d="M4 6h16"/>
+                <path d="M4 12h16"/>
+                <path d="M4 18h16"/>
+
+            </svg>
+
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
     <section class="hero">
+
         <div class="hero-content">
+
             <div class="hero-badge">
-                <span>⚡</span> Real-Time Network Active
+
+                <span class="live-dot"></span>
+
+                Real-Time Network Active
+
             </div>
 
-            <h1>Fast. Secure.<br>Reliable Delivery.</h1>
+
+            <h1>
+                Track Your<br>
+                Shipment
+            </h1>
+
 
             <p>
-                Track your shipments seamlessly. Stay informed at every step 
-                with accurate live updates and verified route monitoring.
+                Enter your tracking number to get the latest
+                shipment status, delivery updates and route
+                information.
             </p>
 
-            <div class="track-box">
-                <input id="trackingInput" placeholder="Enter Tracking Number (e.g. TRK-8820)">
-                <button onclick="trackShipment()">Track Package</button>
+
+            <!-- TRACKING FORM -->
+
+            <div class="track-panel">
+
+                <div class="input-wrap">
+
+                    <svg class="input-icon"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <rect x="3" y="5" width="18" height="14" rx="2"/>
+
+                        <path d="M7 9v6"/>
+                        <path d="M9 9v6"/>
+                        <path d="M12 9v6"/>
+                        <path d="M15 9v6"/>
+                        <path d="M17 9v6"/>
+
+                    </svg>
+
+
+                    <input
+                        id="trackingInput"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Enter tracking number"
+                        aria-label="Tracking number"
+                    >
+
+                </div>
+
+
+                <button
+                    class="track-button"
+                    type="button"
+                    onclick="trackShipment()"
+                >
+
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m20 20-4-4"/>
+
+                    </svg>
+
+                    Track Shipment
+
+                </button>
+
             </div>
+
+
+            <div class="example-code">
+                Example: TRK-LAG-NC00XQ70
+            </div>
+
         </div>
+
     </section>
+
+
+    <!-- =====================================================
+         FEATURES
+    ====================================================== -->
 
     <section class="features">
-        <div class="card">
-            <div class="card-icon">📍</div>
-            <h3>Real-Time Tracking</h3>
-            <p>Receive immediate status updates from origin scan to final door step delivery.</p>
-        </div>
+
+
+        <!-- REAL TIME -->
 
         <div class="card">
-            <div class="card-icon">🛡️</div>
-            <h3>Trusted Delivery</h3>
-            <p>Engineered for safe and transparent package transit across all destinations.</p>
+
+            <div class="card-icon">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M12 7v5l3 2"/>
+
+                </svg>
+
+            </div>
+
+            <h3>
+                Real-Time Updates
+            </h3>
+
+            <p>
+                Stay informed with current shipment
+                status and delivery progress.
+            </p>
+
         </div>
 
+
+        <!-- SECURE -->
+
         <div class="card">
-            <div class="card-icon">🔐</div>
-            <h3>Admin Managed</h3>
-            <p>Shipment logs and routing changes are updated directly by authorized dispatchers.</p>
+
+            <div class="card-icon">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>
+                    <path d="m9 12 2 2 4-4"/>
+
+                </svg>
+
+            </div>
+
+            <h3>
+                Secure Tracking
+            </h3>
+
+            <p>
+                Shipment information is securely
+                managed and monitored.
+            </p>
+
         </div>
+
+
+        <!-- GLOBAL -->
+
+        <div class="card">
+
+            <div class="card-icon">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/>
+                    <circle cx="12" cy="9" r="2.3"/>
+
+                </svg>
+
+            </div>
+
+            <h3>
+                Global Coverage
+            </h3>
+
+            <p>
+                Follow shipments across international
+                routes and destinations.
+            </p>
+
+        </div>
+
+
+        <!-- SUPPORT -->
+
+        <div class="card">
+
+            <div class="card-icon">
+
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     stroke-linecap="round"
+                     stroke-linejoin="round">
+
+                    <path d="M4 13a8 8 0 0 1 16 0"/>
+                    <rect x="3" y="12" width="4" height="7" rx="2"/>
+                    <rect x="17" y="12" width="4" height="7" rx="2"/>
+                    <path d="M7 19h2"/>
+                    <path d="M15 19h2"/>
+
+                </svg>
+
+            </div>
+
+            <h3>
+                Customer Support
+            </h3>
+
+            <p>
+                Get assistance when you need help
+                with your shipment.
+            </p>
+
+        </div>
+
     </section>
 
+
+    <!-- =====================================================
+         NEED HELP
+    ====================================================== -->
+
+    <section class="help-card">
+
+        <h2>
+            Need Help?
+        </h2>
+
+        <p>
+            Our support team is available to assist
+            you with shipment questions and tracking.
+        </p>
+
+
+        <!--
+            IMPORTANT:
+            Replace YOUR_TELEGRAM_USERNAME below
+            with your real Telegram username.
+        -->
+
+        <a
+            class="telegram-button"
+            href="https://t.me/YOUR_TELEGRAM_USERNAME"
+            target="_blank"
+            rel="noopener"
+        >
+
+            <svg viewBox="0 0 24 24"
+                 fill="currentColor">
+
+                <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
+
+            </svg>
+
+            Chat on Telegram
+
+        </a>
+
+
+        <div class="help-decoration">
+
+            <div class="box one"></div>
+            <div class="box two"></div>
+            <div class="box three"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
     <footer>
-        © 2020 Logistics Tracking Portal. All Rights Reserved.
+
+        © 2026 Logistics Tracking Portal.
+        All Rights Reserved.
+
     </footer>
 
 </div>
 
+
+<!-- =========================================================
+     MOBILE BOTTOM NAVIGATION
+========================================================= -->
+
+<nav class="bottom-nav">
+
+
+    <div class="nav-item active"
+         onclick="window.scrollTo({top:0,behavior:'smooth'})">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="m3 11 9-8 9 8"/>
+            <path d="M5 10v10h14V10"/>
+            <path d="M9 20v-6h6v6"/>
+
+        </svg>
+
+        <span>Home</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="focusTracking()">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m20 20-4-4"/>
+
+        </svg>
+
+        <span>Track</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="focusTracking()">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <path d="M3 7h18"/>
+            <path d="M5 7v12h14V7"/>
+            <path d="M8 7V4h8v3"/>
+
+        </svg>
+
+        <span>Ship</span>
+
+    </div>
+
+
+    <div class="nav-item"
+         onclick="openTelegram()">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12h8"/>
+            <path d="m13 8 4 4-4 4"/>
+
+        </svg>
+
+        <span>More</span>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
+
+/* =========================================================
+   HIDDEN ADMIN LOGIN
+   5 QUICK TAPS ON THE LOGO
+========================================================= */
+
 let tapCount = 0;
 let tapTimer;
 
-document.getElementById("secretLogo").addEventListener("click", () => {
-    tapCount++;
-    clearTimeout(tapTimer);
+document
+    .getElementById("secretLogo")
+    .addEventListener("click", function () {
 
-    tapTimer = setTimeout(() => {
-        tapCount = 0;
-    }, 3000);
+        tapCount++;
 
-    if (tapCount >= 5) {
-        window.location.href = "admin-login.html";
-    }
-});
+        clearTimeout(tapTimer);
+
+        tapTimer = setTimeout(function () {
+            tapCount = 0;
+        }, 3000);
+
+
+        if (tapCount >= 5) {
+
+            tapCount = 0;
+
+            window.location.href = "admin-login.html";
+
+        }
+
+    });
+
+
+/* =========================================================
+   TRACK SHIPMENT
+========================================================= */
 
 function trackShipment() {
-    const input = document.getElementById("trackingInput").value.trim();
-    if (input) {
-        window.location.href = `track.html?code=${encodeURIComponent(input)}`;
+
+    const input =
+        document
+            .getElementById("trackingInput")
+            .value
+            .trim();
+
+
+    if (!input) {
+
+        alert("Please enter your tracking number.");
+
+        document
+            .getElementById("trackingInput")
+            .focus();
+
+        return;
+
     }
+
+
+    window.location.href =
+        "track.html?code=" +
+        encodeURIComponent(input);
+
 }
+
+
+/* =========================================================
+   ENTER KEY SUPPORT
+========================================================= */
+
+document
+    .getElementById("trackingInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+
+            trackShipment();
+
+        }
+
+    });
+
+
+/* =========================================================
+   BOTTOM TRACK BUTTON
+========================================================= */
+
+function focusTracking() {
+
+    const input =
+        document.getElementById("trackingInput");
+
+    input.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    setTimeout(function() {
+
+        input.focus();
+
+    }, 500);
+
+}
+
+
+/* =========================================================
+   TELEGRAM
+========================================================= */
+
+function openTelegram() {
+
+    window.open(
+        "https://t.me/YOUR_TELEGRAM_USERNAME",
+        "_blank"
+    );
+
+}
+
 </script>
 
-<script type="module" src="./js/script.js"></script>
+
+<!-- =========================================================
+     EXISTING PROJECT JAVASCRIPT
+========================================================= -->
+
+<script
+    type="module"
+    src="./js/script.js">
+</script>
+
 
 </body>
 </html>
