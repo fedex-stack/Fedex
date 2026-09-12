@@ -11,16 +11,18 @@ import {
    GET TRACKING CODE
    Supports:
 
-   fedexstack.com/TRK-LAG-NC00XQ70
+   https://fedexstack.com/TRK-LAG-NC00XQ70
 
-   AND the old:
+   GitHub Pages:
+   https://fedex-stack.github.io/Fedex/TRK-LAG-NC00XQ70
 
+   AND old:
    track.html?code=TRK-LAG-NC00XQ70
 ========================================================= */
 
 function getTrackingCode() {
 
-    /* First check the clean URL */
+    /* Check clean URL first */
 
     const path =
         window.location.pathname
@@ -138,6 +140,62 @@ function getProgress(status) {
 
 
 /* =========================================================
+   TIMESTAMP HELPER
+========================================================= */
+
+function getTimestamp(value) {
+
+    if (!value) return 0;
+
+
+    if (
+        typeof value.toMillis === "function"
+    ) {
+
+        return value.toMillis();
+    }
+
+
+    if (
+        typeof value.toDate === "function"
+    ) {
+
+        return value.toDate().getTime();
+    }
+
+
+    if (typeof value === "number") {
+
+        return value;
+    }
+
+
+    const parsed =
+        new Date(value).getTime();
+
+
+    return isNaN(parsed)
+        ? 0
+        : parsed;
+}
+
+
+/* =========================================================
+   BASIC HTML ESCAPING
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
    TIMELINE
 ========================================================= */
 
@@ -243,62 +301,6 @@ function renderTimeline(entries) {
 
 
 /* =========================================================
-   TIMESTAMP HELPER
-========================================================= */
-
-function getTimestamp(value) {
-
-    if (!value) return 0;
-
-
-    if (
-        typeof value.toMillis === "function"
-    ) {
-
-        return value.toMillis();
-    }
-
-
-    if (
-        typeof value.toDate === "function"
-    ) {
-
-        return value.toDate().getTime();
-    }
-
-
-    if (typeof value === "number") {
-
-        return value;
-    }
-
-
-    const parsed =
-        new Date(value).getTime();
-
-
-    return isNaN(parsed)
-        ? 0
-        : parsed;
-}
-
-
-/* =========================================================
-   BASIC HTML ESCAPING
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =========================================================
    VISUAL PROGRESS
 ========================================================= */
 
@@ -334,18 +336,66 @@ function updateVisuals(status) {
 
 
 /* =========================================================
+   CLEAN URL
+========================================================= */
+
+/*
+   When GitHub Pages sends:
+
+   /Fedex/TRK-LAG-C969J9SO
+
+   the 404.html file redirects internally to:
+
+   /Fedex/track.html?code=TRK-LAG-C969J9SO
+
+   This changes the browser address back to:
+
+   /Fedex/TRK-LAG-C969J9SO
+
+   without reloading the page.
+*/
+
+function restoreCleanURL(code) {
+
+    if (!code) return;
+
+
+    const cleanPath =
+        "/Fedex/" +
+        encodeURIComponent(code);
+
+
+    if (
+        window.location.pathname !== cleanPath ||
+        window.location.search
+    ) {
+
+        window.history.replaceState(
+            {},
+            "",
+            cleanPath
+        );
+    }
+}
+
+
+/* =========================================================
    LOAD SHIPMENT
 ========================================================= */
 
 if (!trackingCode) {
 
     if (loading) {
-        loading.style.display = "none";
+
+        loading.style.display =
+            "none";
     }
+
 
     if (error) {
 
-        error.style.display = "block";
+        error.style.display =
+            "block";
 
         error.innerText =
             "Tracking code missing.";
@@ -359,11 +409,20 @@ if (!trackingCode) {
             .toUpperCase();
 
 
+    /* Restore clean URL */
+
+    restoreCleanURL(
+        normalizedCode
+    );
+
+
     /* Update browser tab */
 
     document.title =
         `FedExStack Tracker — ${normalizedCode}`;
 
+
+    /* Firestore shipment */
 
     const shipmentRef =
         doc(
@@ -380,7 +439,9 @@ if (!trackingCode) {
         (docSnap) => {
 
             if (loading) {
-                loading.style.display = "none";
+
+                loading.style.display =
+                    "none";
             }
 
 
@@ -469,7 +530,8 @@ if (!trackingCode) {
             if (statusElement) {
 
                 statusElement.innerText =
-                    shipment.status || "N/A";
+                    shipment.status ||
+                    "N/A";
             }
 
 
