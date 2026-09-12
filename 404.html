@@ -48,9 +48,12 @@
             width: 48px;
             height: 48px;
             margin: 0 auto 18px;
+
             border: 4px solid rgba(0, 102, 204, 0.15);
             border-top-color: #0066cc;
+
             border-radius: 50%;
+
             animation: spin .8s linear infinite;
         }
 
@@ -95,16 +98,18 @@
     <script>
 
         /*
-         * GitHub Pages clean tracking URL handler
+         * FedExStack clean tracking URL handler
          *
-         * Example:
-         * /TRK-LAG-NC00XQ70
+         * Site:
+         * /Fedex/
          *
-         * becomes:
-         * /track.html?code=TRK-LAG-NC00XQ70
+         * Clean tracking URL:
+         * /Fedex/TRK-LAG-NC00XQ70
          *
-         * track.js then displays the shipment.
+         * This redirects internally to:
+         * /Fedex/track.html?code=TRK-LAG-NC00XQ70
          */
+
 
         (function () {
 
@@ -114,15 +119,18 @@
                     .replace(/\/+$/, "");
 
 
-            if (!path) {
-
-                window.location.replace(
-                    "/"
-                );
-
-                return;
-            }
-
+            /*
+             * Remove the GitHub Pages
+             * project folder.
+             *
+             * Example:
+             *
+             * Fedex/TRK-LAG-C969J9SO
+             *
+             * becomes:
+             *
+             * TRK-LAG-C969J9SO
+             */
 
             const parts =
                 path.split("/")
@@ -138,8 +146,23 @@
 
 
             /*
-             * Only treat TRK-LAG codes as
-             * shipment URLs.
+             * If there is no tracking code,
+             * return to the FedEx home page.
+             */
+
+            if (!trackingCode) {
+
+                window.location.replace(
+                    "/Fedex/"
+                );
+
+                return;
+            }
+
+
+            /*
+             * Check that it is a valid
+             * FedExStack tracking number.
              */
 
             if (
@@ -149,7 +172,7 @@
             ) {
 
                 window.location.replace(
-                    "/"
+                    "/Fedex/"
                 );
 
                 return;
@@ -157,12 +180,11 @@
 
 
             /*
-             * Send the browser to the real
-             * tracker page.
+             * Open the actual tracker page.
              */
 
             window.location.replace(
-                "/track.html?code=" +
+                "/Fedex/track.html?code=" +
                 encodeURIComponent(
                     trackingCode
                 )
