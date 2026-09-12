@@ -227,8 +227,10 @@ header {
         ),
         url("./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png");
 
-    background-size: cover;
+    /* FULL IMAGE FITS INSIDE THE BOX */
+    background-size: 100% 100%;
     background-position: center;
+    background-repeat: no-repeat;
 
     border: 1px solid rgba(255,255,255,0.55);
 
@@ -830,9 +832,6 @@ footer {
         min-height: 570px;
 
         border-radius: 25px;
-
-        background-position:
-            60% center;
     }
 
     .hero-content {
@@ -1638,17 +1637,6 @@ function trackShipment() {
     }
 
 
-    /*
-     * Clean tracking URL
-     *
-     * Example:
-     *
-     * fedexstack.com/TRK-LAG-NC00XQ70
-     *
-     * GitHub Pages 404.html will catch
-     * the path and send it to track.html.
-     */
-
     const code =
         input
             .toUpperCase();
@@ -1667,8 +1655,19 @@ function trackShipment() {
     }
 
 
+    /*
+     * CLEAN TRACKING URL
+     *
+     * The site is hosted inside the /Fedex/
+     * GitHub Pages folder.
+     *
+     * Example:
+     *
+     * fedex-stack.github.io/Fedex/TRK-LAG-NC00XQ70
+     */
+
     window.location.href =
-        "/" +
+        "/Fedex/" +
         encodeURIComponent(code);
 
 }
