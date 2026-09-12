@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Admin Dashboard</title>
 
@@ -12,10 +17,10 @@
    GLOBAL
 ========================================================= */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
     font-family:
         -apple-system,
@@ -26,17 +31,17 @@
         Arial,
         sans-serif;
 
-    -webkit-font-smoothing:antialiased;
+    -webkit-font-smoothing: antialiased;
 }
 
-html{
-    min-height:100%;
+html {
+    min-height: 100%;
 }
 
-body{
-    min-height:100vh;
+body {
+    min-height: 100vh;
 
-    color:#ffffff;
+    color: #ffffff;
 
     background:
         radial-gradient(
@@ -47,9 +52,29 @@ body{
             #05070b 100%
         );
 
-    background-attachment:fixed;
+    padding-bottom: 40px;
+}
 
-    padding-bottom:40px;
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+    transform: scale(.98);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 
@@ -57,53 +82,54 @@ body{
    TOP HEADER
 ========================================================= */
 
-header{
+header {
+    position: sticky;
+    top: 0;
 
-    position:sticky;
-    top:0;
+    z-index: 1000;
 
-    z-index:1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    gap: 18px;
 
-    gap:18px;
+    padding: 16px 24px;
 
-    padding:18px 24px;
+    /*
+     * Removed heavy backdrop-filter.
+     * Solid translucent background is much faster.
+     */
 
-    background:
-        rgba(10,14,22,0.72);
-
-    -webkit-backdrop-filter:
-        blur(28px) saturate(180%);
-
-    backdrop-filter:
-        blur(28px) saturate(180%);
+    background: rgba(10,14,22,0.97);
 
     border-bottom:
-        1px solid rgba(255,255,255,0.10);
+        1px solid rgba(255,255,255,0.08);
 
     box-shadow:
-        0 10px 35px rgba(0,0,0,0.25);
+        0 6px 20px rgba(0,0,0,0.20);
 }
 
-.header-brand{
-    display:flex;
-    align-items:center;
-    gap:13px;
+.header-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
 }
 
-.brand-icon{
+.brand-icon {
+    width: 44px;
+    height: 44px;
 
-    width:44px;
-    height:44px;
+    flex-shrink: 0;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:14px;
+    border-radius: 13px;
 
     background:
         linear-gradient(
@@ -113,29 +139,27 @@ header{
         );
 
     box-shadow:
-        0 8px 22px rgba(255,102,0,0.25);
+        0 5px 14px rgba(255,102,0,0.20);
 
-    font-size:19px;
-    font-weight:800;
+    font-size: 19px;
+    font-weight: 800;
 }
 
-header h1{
+header h1 {
+    font-size: 21px;
 
-    font-size:21px;
+    font-weight: 750;
 
-    font-weight:750;
-
-    letter-spacing:-0.5px;
+    letter-spacing: -0.5px;
 }
 
-.header-subtitle{
-
-    margin-top:3px;
+.header-subtitle {
+    margin-top: 3px;
 
     color:
         rgba(255,255,255,0.48);
 
-    font-size:12px;
+    font-size: 12px;
 }
 
 
@@ -143,40 +167,24 @@ header h1{
    HEADER ACTIONS
 ========================================================= */
 
-.actions{
+.actions {
+    display: flex;
 
-    display:flex;
+    gap: 10px;
 
-    gap:10px;
-
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 
-button{
-
-    border:none;
-
-    cursor:pointer;
-
-    font-weight:650;
-
-    transition:
-        transform .18s ease,
-        opacity .18s ease,
-        box-shadow .18s ease;
+button {
+    font-weight: 650;
 }
 
-button:active{
-    transform:scale(.96);
-}
+#createBtn {
+    padding: 12px 18px;
 
-#createBtn{
+    border-radius: 13px;
 
-    padding:12px 18px;
-
-    border-radius:14px;
-
-    color:#ffffff;
+    color: #ffffff;
 
     background:
         linear-gradient(
@@ -186,34 +194,31 @@ button:active{
         );
 
     box-shadow:
-        0 7px 20px rgba(255,102,0,0.25);
+        0 5px 14px rgba(255,102,0,0.20);
 
-    font-size:14px;
+    font-size: 14px;
 }
 
-#logoutBtn{
+#logoutBtn {
+    padding: 12px 18px;
 
-    padding:12px 18px;
+    border-radius: 13px;
 
-    border-radius:14px;
-
-    color:rgba(255,255,255,0.86);
+    color:
+        rgba(255,255,255,0.86);
 
     background:
         rgba(255,255,255,0.07);
 
     border:
-        1px solid rgba(255,255,255,0.12);
+        1px solid rgba(255,255,255,0.10);
 
-    -webkit-backdrop-filter:blur(15px);
-    backdrop-filter:blur(15px);
-
-    font-size:14px;
+    font-size: 14px;
 }
 
-#logoutBtn:hover{
+#logoutBtn:hover {
     background:
-        rgba(255,255,255,0.11);
+        rgba(255,255,255,0.10);
 }
 
 
@@ -221,15 +226,14 @@ button:active{
    MAIN CONTENT
 ========================================================= */
 
-main{
+main {
+    width: 100%;
 
-    width:100%;
+    max-width: 1100px;
 
-    max-width:1100px;
+    margin: 0 auto;
 
-    margin:0 auto;
-
-    padding:30px 20px 60px;
+    padding: 30px 20px 60px;
 }
 
 
@@ -237,28 +241,25 @@ main{
    DASHBOARD INTRO
 ========================================================= */
 
-.dashboard-intro{
-
-    margin-bottom:22px;
+.dashboard-intro {
+    margin-bottom: 22px;
 }
 
-.dashboard-intro h2{
+.dashboard-intro h2 {
+    font-size: 27px;
 
-    font-size:27px;
+    font-weight: 750;
 
-    font-weight:750;
+    letter-spacing: -0.8px;
 
-    letter-spacing:-0.8px;
-
-    margin-bottom:7px;
+    margin-bottom: 7px;
 }
 
-.dashboard-intro p{
-
+.dashboard-intro p {
     color:
         rgba(255,255,255,0.52);
 
-    font-size:14px;
+    font-size: 14px;
 }
 
 
@@ -266,77 +267,68 @@ main{
    SEARCH
 ========================================================= */
 
-.search-box{
+.search-box {
+    position: relative;
 
-    position:relative;
-
-    margin-bottom:22px;
+    margin-bottom: 22px;
 }
 
-.search-box::before{
+.search-box::before {
+    content: "⌕";
 
-    content:"⌕";
+    position: absolute;
 
-    position:absolute;
+    left: 17px;
+    top: 50%;
 
-    left:17px;
-    top:50%;
-
-    transform:translateY(-52%);
+    transform: translateY(-52%);
 
     color:
         rgba(255,255,255,0.45);
 
-    font-size:23px;
+    font-size: 23px;
 
-    z-index:2;
+    z-index: 2;
 }
 
-.search-box input{
+.search-box input {
+    width: 100%;
 
-    width:100%;
+    padding: 16px 18px 16px 48px;
 
-    padding:16px 18px 16px 48px;
+    border-radius: 16px;
 
-    border-radius:17px;
-
-    outline:none;
+    outline: none;
 
     border:
-        1px solid rgba(255,255,255,0.11);
+        1px solid rgba(255,255,255,0.10);
 
-    color:#ffffff;
+    color: #ffffff;
+
+    /*
+     * No blur here.
+     */
 
     background:
         rgba(255,255,255,0.065);
 
-    -webkit-backdrop-filter:
-        blur(25px) saturate(160%);
-
-    backdrop-filter:
-        blur(25px) saturate(160%);
-
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.07),
-        0 10px 28px rgba(0,0,0,0.16);
+        inset 0 1px 0 rgba(255,255,255,0.05);
 
-    font-size:15px;
+    font-size: 15px;
 }
 
-.search-box input::placeholder{
-
+.search-box input::placeholder {
     color:
         rgba(255,255,255,0.38);
 }
 
-.search-box input:focus{
-
+.search-box input:focus {
     border-color:
         rgba(10,132,255,0.55);
 
     box-shadow:
-        0 0 0 3px rgba(10,132,255,0.10),
-        0 12px 30px rgba(0,0,0,0.20);
+        0 0 0 3px rgba(10,132,255,0.09);
 }
 
 
@@ -344,14 +336,13 @@ main{
    SHIPMENT GRID
 ========================================================= */
 
-#shipmentsContainer{
-
-    display:grid;
+#shipmentsContainer {
+    display: grid;
 
     grid-template-columns:
         repeat(2,minmax(0,1fr));
 
-    gap:17px;
+    gap: 17px;
 }
 
 
@@ -359,15 +350,14 @@ main{
    SHIPMENT CARD
 ========================================================= */
 
-.shipment-card{
+.shipment-card {
+    position: relative;
 
-    position:relative;
+    overflow: hidden;
 
-    overflow:hidden;
+    padding: 21px;
 
-    padding:21px;
-
-    border-radius:22px;
+    border-radius: 21px;
 
     background:
         linear-gradient(
@@ -377,83 +367,53 @@ main{
         );
 
     border:
-        1px solid rgba(255,255,255,0.11);
+        1px solid rgba(255,255,255,0.10);
 
-    -webkit-backdrop-filter:
-        blur(25px) saturate(170%);
-
-    backdrop-filter:
-        blur(25px) saturate(170%);
+    /*
+     * Heavy backdrop-filter removed.
+     */
 
     box-shadow:
-        0 15px 35px rgba(0,0,0,0.28),
-        inset 0 1px 0 rgba(255,255,255,0.10);
-
-    transition:
-        transform .2s ease,
-        border-color .2s ease;
+        0 10px 25px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-.shipment-card:hover{
-
-    transform:translateY(-2px);
-
+.shipment-card:hover {
     border-color:
-        rgba(255,255,255,0.18);
+        rgba(255,255,255,0.16);
 }
 
 
-/* little blue glass glow */
+/*
+ * Removed blurred pseudo-element glow.
+ * It looked nice but was unnecessary GPU work.
+ */
 
-.shipment-card::before{
+.shipment-card h3 {
+    position: relative;
 
-    content:"";
+    margin-bottom: 13px;
 
-    position:absolute;
+    color: #ffffff;
 
-    width:130px;
-    height:130px;
+    font-size: 18px;
 
-    top:-70px;
-    right:-50px;
+    font-weight: 700;
 
-    border-radius:50%;
-
-    background:
-        rgba(10,132,255,0.13);
-
-    filter:blur(30px);
-
-    pointer-events:none;
+    letter-spacing: -0.3px;
 }
 
-.shipment-card h3{
-
-    position:relative;
-
-    margin-bottom:13px;
-
-    color:#ffffff;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    letter-spacing:-0.3px;
-}
-
-.shipment-card p{
-
-    position:relative;
+.shipment-card p {
+    position: relative;
 
     color:
         rgba(255,255,255,0.62);
 
-    margin-bottom:9px;
+    margin-bottom: 9px;
 
-    line-height:1.45;
+    line-height: 1.45;
 
-    font-size:14px;
+    font-size: 14px;
 }
 
 
@@ -461,34 +421,31 @@ main{
    CARD ACTIONS
 ========================================================= */
 
-.card-actions{
+.card-actions {
+    display: flex;
 
-    display:flex;
+    gap: 9px;
 
-    gap:9px;
+    margin-top: 17px;
 
-    margin-top:17px;
-
-    padding-top:15px;
+    padding-top: 15px;
 
     border-top:
         1px solid rgba(255,255,255,0.07);
 }
 
-.card-actions button{
+.card-actions button {
+    flex: 1;
 
-    flex:1;
+    min-height: 43px;
 
-    min-height:43px;
+    border-radius: 13px;
 
-    border-radius:13px;
-
-    font-size:13px;
+    font-size: 13px;
 }
 
-.edit-btn{
-
-    color:#ffffff;
+.edit-btn {
+    color: #ffffff;
 
     background:
         linear-gradient(
@@ -498,11 +455,10 @@ main{
         );
 
     box-shadow:
-        0 6px 18px rgba(255,102,0,0.18);
+        0 5px 14px rgba(255,102,0,0.16);
 }
 
-.copy-btn{
-
+.copy-btn {
     color:
         rgba(255,255,255,0.85);
 
@@ -518,18 +474,17 @@ main{
    EMPTY STATE
 ========================================================= */
 
-#emptyState{
+#emptyState {
+    grid-column: 1 / -1;
 
-    grid-column:1 / -1;
-
-    text-align:center;
+    text-align: center;
 
     color:
         rgba(255,255,255,0.42);
 
-    padding:70px 20px;
+    padding: 70px 20px;
 
-    border-radius:22px;
+    border-radius: 21px;
 
     background:
         rgba(255,255,255,0.035);
@@ -543,29 +498,22 @@ main{
    EDIT MODAL
 ========================================================= */
 
-#editModal{
+#editModal {
+    display: none;
 
-    display:none;
+    position: fixed;
 
-    position:fixed;
+    inset: 0;
 
-    inset:0;
+    z-index: 9999;
 
-    z-index:9999;
+    padding: 20px;
 
-    padding:20px;
-
-    align-items:center;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
     background:
-        rgba(0,0,0,0.72);
-
-    -webkit-backdrop-filter:
-        blur(8px);
-
-    backdrop-filter:
-        blur(8px);
+        rgba(0,0,0,0.78);
 }
 
 
@@ -573,129 +521,100 @@ main{
    MODAL
 ========================================================= */
 
-.modal-content{
+.modal-content {
+    position: relative;
 
-    position:relative;
+    width: 100%;
 
-    width:100%;
-
-    max-width:460px;
+    max-width: 460px;
 
     max-height:
         calc(100vh - 40px);
 
-    overflow-y:auto;
+    overflow-y: auto;
 
-    padding:25px;
+    padding: 25px;
 
-    border-radius:25px;
+    border-radius: 23px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(30,38,54,0.96),
-            rgba(12,16,24,0.97)
+            #1e2636,
+            #0c1018
         );
 
     border:
-        1px solid rgba(255,255,255,0.13);
-
-    -webkit-backdrop-filter:
-        blur(30px) saturate(180%);
-
-    backdrop-filter:
-        blur(30px) saturate(180%);
+        1px solid rgba(255,255,255,0.12);
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,0.60),
-        inset 0 1px 0 rgba(255,255,255,0.10);
+        0 25px 60px rgba(0,0,0,0.55),
+        inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
-.modal-content::before{
 
-    content:"";
+/*
+ * Removed modal blurred blue glow.
+ */
 
-    position:absolute;
+.modal-content h2 {
+    position: relative;
 
-    width:150px;
-    height:150px;
+    margin-bottom: 23px;
 
-    right:-70px;
-    top:-80px;
+    font-size: 22px;
 
-    border-radius:50%;
+    font-weight: 750;
 
-    background:
-        rgba(10,132,255,0.15);
-
-    filter:blur(35px);
-
-    pointer-events:none;
+    letter-spacing: -0.5px;
 }
 
-.modal-content h2{
+.modal-content label {
+    display: block;
 
-    position:relative;
-
-    margin-bottom:23px;
-
-    font-size:22px;
-
-    font-weight:750;
-
-    letter-spacing:-0.5px;
-}
-
-.modal-content label{
-
-    display:block;
-
-    margin-bottom:8px;
+    margin-bottom: 8px;
 
     color:
         rgba(255,255,255,0.62);
 
-    font-size:13px;
+    font-size: 13px;
 
-    font-weight:600;
+    font-weight: 600;
 }
 
 .modal-content input,
-.modal-content select{
+.modal-content select {
+    width: 100%;
 
-    width:100%;
+    padding: 14px 15px;
 
-    padding:14px 15px;
+    margin-bottom: 18px;
 
-    margin-bottom:18px;
-
-    border-radius:13px;
+    border-radius: 13px;
 
     border:
         1px solid rgba(255,255,255,0.10);
 
-    outline:none;
+    outline: none;
 
-    color:#ffffff;
+    color: #ffffff;
 
     background:
         rgba(255,255,255,0.075);
 
-    font-size:15px;
+    font-size: 15px;
 
-    -webkit-appearance:none;
+    -webkit-appearance: none;
 }
 
-.modal-content select option{
+.modal-content select option {
+    background: #171c27;
 
-    background:#171c27;
-
-    color:#ffffff;
+    color: #ffffff;
 }
 
 .modal-content input:focus,
-.modal-content select:focus{
-
+.modal-content select:focus {
     border-color:
         rgba(10,132,255,0.55);
 
@@ -708,29 +627,26 @@ main{
    MODAL BUTTONS
 ========================================================= */
 
-.modal-buttons{
+.modal-buttons {
+    display: flex;
 
-    display:flex;
+    gap: 10px;
 
-    gap:10px;
-
-    margin-top:4px;
+    margin-top: 4px;
 }
 
-.modal-buttons button{
+.modal-buttons button {
+    flex: 1;
 
-    flex:1;
+    min-height: 47px;
 
-    min-height:47px;
+    border-radius: 14px;
 
-    border-radius:14px;
-
-    font-size:14px;
+    font-size: 14px;
 }
 
-#saveUpdateBtn{
-
-    color:#ffffff;
+#saveUpdateBtn {
+    color: #ffffff;
 
     background:
         linear-gradient(
@@ -740,11 +656,10 @@ main{
         );
 
     box-shadow:
-        0 7px 20px rgba(255,102,0,0.20);
+        0 6px 16px rgba(255,102,0,0.18);
 }
 
-#closeModalBtn{
-
+#closeModalBtn {
     color:
         rgba(255,255,255,0.82);
 
@@ -760,84 +675,78 @@ main{
    MOBILE
 ========================================================= */
 
-@media(max-width:768px){
+@media(max-width:768px) {
 
-    header{
-
+    header {
         padding:
             15px 16px;
 
-        align-items:flex-start;
+        align-items: flex-start;
+
+        flex-direction: column;
     }
 
-    .header-brand{
-        min-width:0;
+    .header-brand {
+        width: 100%;
     }
 
-    .brand-icon{
+    .brand-icon {
+        width: 40px;
+        height: 40px;
 
-        width:40px;
-        height:40px;
-
-        border-radius:12px;
+        border-radius: 12px;
     }
 
-    header h1{
-        font-size:18px;
+    header h1 {
+        font-size: 18px;
     }
 
-    .header-subtitle{
-        font-size:11px;
+    .header-subtitle {
+        font-size: 11px;
     }
 
-    .actions{
+    .actions {
+        width: 100%;
 
-        width:100%;
+        flex-direction: column;
 
-        flex-direction:column;
-
-        gap:8px;
+        gap: 8px;
     }
 
     #createBtn,
-    #logoutBtn{
+    #logoutBtn {
+        width: 100%;
 
-        width:100%;
-
-        padding:12px;
+        padding: 12px;
     }
 
-    main{
-
+    main {
         padding:
             24px 14px 50px;
     }
 
-    .dashboard-intro h2{
-        font-size:23px;
+    .dashboard-intro h2 {
+        font-size: 23px;
     }
 
-    #shipmentsContainer{
+    #shipmentsContainer {
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1fr;
-
-        gap:13px;
+        gap: 13px;
     }
 
-    .shipment-card{
+    .shipment-card {
+        padding: 18px;
 
-        padding:18px;
-
-        border-radius:20px;
+        border-radius: 19px;
     }
 
-    .modal-content{
+    .modal-content {
+        padding: 21px;
 
-        padding:21px;
-
-        border-radius:22px;
+        border-radius: 21px;
     }
+
 }
 
 
@@ -845,29 +754,16 @@ main{
    VERY SMALL PHONES
 ========================================================= */
 
-@media(max-width:390px){
+@media(max-width:390px) {
 
-    header{
-
-        flex-direction:column;
+    .card-actions {
+        flex-direction: column;
     }
 
-    .header-brand{
-        width:100%;
+    .card-actions button {
+        width: 100%;
     }
 
-    .actions{
-        width:100%;
-    }
-
-    .card-actions{
-
-        flex-direction:column;
-    }
-
-    .card-actions button{
-        width:100%;
-    }
 }
 
 </style>
@@ -891,7 +787,9 @@ main{
 
         <div>
 
-            <h1>Shipment Dashboard</h1>
+            <h1>
+                Shipment Dashboard
+            </h1>
 
             <div class="header-subtitle">
                 Logistics Control Center
@@ -924,17 +822,17 @@ main{
 
 <main>
 
-
     <div class="dashboard-intro">
 
-        <h2>Shipments</h2>
+        <h2>
+            Shipments
+        </h2>
 
         <p>
             Manage, monitor and update active shipments.
         </p>
 
     </div>
-
 
 
     <!-- SEARCH -->
@@ -951,7 +849,6 @@ main{
     </div>
 
 
-
     <!-- SHIPMENTS -->
 
     <div id="shipmentsContainer">
@@ -961,7 +858,6 @@ main{
         </div>
 
     </div>
-
 
 </main>
 
@@ -986,23 +882,41 @@ main{
 
         <select id="editStatus">
 
-            <option>Pending</option>
+            <option>
+                Pending
+            </option>
 
-            <option>Picked Up</option>
+            <option>
+                Picked Up
+            </option>
 
-            <option>Processing</option>
+            <option>
+                Processing
+            </option>
 
-            <option>In Transit</option>
+            <option>
+                In Transit
+            </option>
 
-            <option>Out For Delivery</option>
+            <option>
+                Out For Delivery
+            </option>
 
-            <option>Delivered</option>
+            <option>
+                Delivered
+            </option>
 
-            <option>Delayed</option>
+            <option>
+                Delayed
+            </option>
 
-            <option>Held</option>
+            <option>
+                Held
+            </option>
 
-            <option>Cancelled</option>
+            <option>
+                Cancelled
+            </option>
 
         </select>
 
@@ -1043,8 +957,8 @@ main{
 
 <script
     type="module"
-    src="./js/admin.js">
-</script>
+    src="./js/admin.js"
+></script>
 
 
 </body>
