@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FedExStack Tracker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #f4f6f8;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #111827;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loader-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 18px;
+            border: 4px solid rgba(0, 102, 204, 0.15);
+            border-top-color: #0066cc;
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        .loader-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .loader-text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="loader">
+
+        <div class="loader-icon"></div>
+
+        <div class="loader-title">
+            Loading shipment
+        </div>
+
+        <div class="loader-text">
+            Please wait...
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * GitHub Pages clean tracking URL handler
+         *
+         * Example:
+         * /TRK-LAG-NC00XQ70
+         *
+         * becomes:
+         * /track.html?code=TRK-LAG-NC00XQ70
+         *
+         * track.js then displays the shipment.
+         */
+
+        (function () {
+
+            const path =
+                window.location.pathname
+                    .replace(/^\/+/, "")
+                    .replace(/\/+$/, "");
+
+
+            if (!path) {
+
+                window.location.replace(
+                    "/"
+                );
+
+                return;
+            }
+
+
+            const parts =
+                path.split("/")
+                    .filter(Boolean);
+
+
+            const trackingCode =
+                decodeURIComponent(
+                    parts[parts.length - 1] || ""
+                )
+                .trim()
+                .toUpperCase();
+
+
+            /*
+             * Only treat TRK-LAG codes as
+             * shipment URLs.
+             */
+
+            if (
+                !/^TRK-LAG-[A-Z0-9]+$/i.test(
+                    trackingCode
+                )
+            ) {
+
+                window.location.replace(
+                    "/"
+                );
+
+                return;
+            }
+
+
+            /*
+             * Send the browser to the real
+             * tracker page.
+             */
+
+            window.location.replace(
+                "/track.html?code=" +
+                encodeURIComponent(
+                    trackingCode
+                )
+            );
+
+        })();
+
+    </script>
+
+</body>
+</html>
