@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
 <title>FedEx Tracker</title>
 
 <style>
+
 /* =========================================================
    GLOBAL
 ========================================================= */
@@ -15,6 +21,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -33,6 +40,7 @@ html {
 
 body {
     min-height: 100vh;
+
     background:
         radial-gradient(
             circle at 50% -10%,
@@ -42,6 +50,7 @@ body {
         );
 
     color: #172554;
+
     padding-bottom: 85px;
 }
 
@@ -67,7 +76,9 @@ a {
 .container {
     width: 100%;
     max-width: 1100px;
+
     margin: 0 auto;
+
     padding: 0 18px;
 }
 
@@ -92,6 +103,7 @@ header {
 .logo-area {
     display: flex;
     align-items: center;
+
     gap: 11px;
 }
 
@@ -115,7 +127,7 @@ header {
     color: white;
 
     box-shadow:
-        0 7px 18px rgba(25, 55, 170, 0.22);
+        0 5px 14px rgba(25,55,170,0.17);
 }
 
 .logo-icon svg {
@@ -151,8 +163,14 @@ header {
     font-weight: 700;
 
     color: #293b70;
+
     letter-spacing: 0.2px;
 }
+
+
+/* =========================================================
+   MENU
+========================================================= */
 
 .menu-button {
     width: 44px;
@@ -160,12 +178,9 @@ header {
 
     border-radius: 14px;
 
-    border: 1px solid rgba(20, 40, 100, 0.1);
+    border: 1px solid rgba(20,40,100,0.1);
 
-    background: rgba(255,255,255,0.75);
-
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.9);
 
     display: flex;
     align-items: center;
@@ -174,7 +189,7 @@ header {
     color: #172b86;
 
     box-shadow:
-        0 6px 18px rgba(20, 40, 100, 0.08);
+        0 5px 14px rgba(20,40,100,0.07);
 
     cursor: pointer;
 }
@@ -192,7 +207,7 @@ header {
 .hero {
     position: relative;
 
-    min-height: 530px;
+    min-height: 500px;
 
     border-radius: 30px;
 
@@ -206,9 +221,9 @@ header {
     background:
         linear-gradient(
             180deg,
-            rgba(10, 24, 77, 0.12) 0%,
-            rgba(8, 22, 76, 0.25) 35%,
-            rgba(7, 19, 67, 0.93) 100%
+            rgba(10,24,77,0.10) 0%,
+            rgba(8,22,76,0.24) 35%,
+            rgba(7,19,67,0.93) 100%
         ),
         url("./images/9F7A5E93-FB6D-4CE4-9C5A-F5E7146D32EC.png");
 
@@ -218,11 +233,13 @@ header {
     border: 1px solid rgba(255,255,255,0.55);
 
     box-shadow:
-        0 24px 55px rgba(25, 44, 100, 0.20);
+        0 18px 40px rgba(25,44,100,0.15);
 }
 
 
-/* soft glass reflection */
+/* =========================================================
+   HERO REFLECTION
+========================================================= */
 
 .hero::before {
     content: "";
@@ -233,7 +250,7 @@ header {
     background:
         linear-gradient(
             125deg,
-            rgba(255,255,255,0.16),
+            rgba(255,255,255,0.12),
             transparent 35%
         );
 
@@ -247,6 +264,7 @@ header {
 
 .hero-content {
     position: relative;
+
     z-index: 2;
 
     width: 100%;
@@ -257,6 +275,7 @@ header {
 .hero-badge {
     display: inline-flex;
     align-items: center;
+
     gap: 8px;
 
     padding: 8px 13px;
@@ -266,9 +285,6 @@ header {
     background: rgba(255,255,255,0.14);
 
     border: 1px solid rgba(255,255,255,0.22);
-
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
 
     color: white;
 
@@ -287,13 +303,13 @@ header {
     background: #35e38a;
 
     box-shadow:
-        0 0 0 4px rgba(53,227,138,0.14);
+        0 0 0 4px rgba(53,227,138,0.12);
 }
 
 .hero h1 {
     color: white;
 
-    font-size: clamp(34px, 5vw, 58px);
+    font-size: clamp(34px,5vw,58px);
 
     line-height: 1.02;
 
@@ -338,11 +354,8 @@ header {
 
     border-radius: 20px;
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-
     box-shadow:
-        0 12px 35px rgba(0,0,0,0.15);
+        0 9px 25px rgba(0,0,0,0.12);
 }
 
 .input-wrap {
@@ -353,7 +366,7 @@ header {
     display: flex;
     align-items: center;
 
-    background: rgba(255,255,255,0.94);
+    background: rgba(255,255,255,0.96);
 
     border-radius: 15px;
 
@@ -415,15 +428,11 @@ header {
     cursor: pointer;
 
     box-shadow:
-        0 7px 18px rgba(76, 50, 215, 0.34);
-
-    transition:
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+        0 6px 15px rgba(76,50,215,0.27);
 }
 
 .track-button:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
 }
 
 .track-button svg {
@@ -447,14 +456,14 @@ header {
 
 
 /* =========================================================
-   QUICK FEATURES
+   FEATURES
 ========================================================= */
 
 .features {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     gap: 14px;
 
@@ -464,30 +473,16 @@ header {
 .card {
     position: relative;
 
-    background: rgba(255,255,255,0.72);
+    background: rgba(255,255,255,0.82);
 
-    border: 1px solid rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.9);
 
     border-radius: 22px;
 
     padding: 20px;
 
     box-shadow:
-        0 12px 30px rgba(28, 50, 100, 0.08);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 18px 38px rgba(28, 50, 100, 0.12);
+        0 9px 24px rgba(28,50,100,0.07);
 }
 
 .card-icon {
@@ -532,7 +527,7 @@ header {
 
 
 /* =========================================================
-   NEED HELP / TELEGRAM
+   HELP CARD
 ========================================================= */
 
 .help-card {
@@ -558,7 +553,7 @@ header {
     border: 1px solid rgba(255,255,255,0.9);
 
     box-shadow:
-        0 14px 35px rgba(30, 50, 110, 0.08);
+        0 10px 27px rgba(30,50,110,0.07);
 }
 
 .help-card h2 {
@@ -601,14 +596,11 @@ header {
     font-weight: 750;
 
     box-shadow:
-        0 7px 17px rgba(34,158,217,0.25);
-
-    transition:
-        transform 0.15s ease;
+        0 6px 15px rgba(34,158,217,0.20);
 }
 
 .telegram-button:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
 }
 
 .telegram-button svg {
@@ -618,7 +610,7 @@ header {
 
 
 /* =========================================================
-   DECORATIVE DELIVERY SHAPES
+   HELP DECORATION
 ========================================================= */
 
 .help-decoration {
@@ -648,7 +640,7 @@ header {
     border: 1px solid rgba(72,95,160,0.12);
 
     box-shadow:
-        0 10px 25px rgba(48,65,120,0.10);
+        0 8px 20px rgba(48,65,120,0.08);
 }
 
 .box.one {
@@ -720,21 +712,18 @@ footer {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     align-items: center;
 
-    background: rgba(255,255,255,0.88);
+    background: rgba(255,255,255,0.94);
 
     border: 1px solid rgba(255,255,255,0.95);
 
     border-radius: 23px;
 
     box-shadow:
-        0 15px 45px rgba(25,40,90,0.18);
-
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+        0 12px 35px rgba(25,40,90,0.15);
 }
 
 .nav-item {
@@ -767,19 +756,12 @@ footer {
     color: #4332d6;
 }
 
-.nav-item.active svg {
-    filter:
-        drop-shadow(
-            0 4px 7px rgba(67,50,214,0.25)
-        );
-}
-
 
 /* =========================================================
-   DESKTOP NAV
+   DESKTOP
 ========================================================= */
 
-@media(min-width: 769px) {
+@media(min-width:769px) {
 
     .bottom-nav {
         display: none;
@@ -792,11 +774,11 @@ footer {
    TABLET
 ========================================================= */
 
-@media(max-width: 900px) {
+@media(max-width:900px) {
 
     .features {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
     }
 
 }
@@ -806,7 +788,7 @@ footer {
    MOBILE
 ========================================================= */
 
-@media(max-width: 768px) {
+@media(max-width:768px) {
 
     body {
         padding-top: 0;
@@ -845,11 +827,9 @@ footer {
     /* HERO */
 
     .hero {
-        min-height: 590px;
+        min-height: 570px;
 
         border-radius: 25px;
-
-        align-items: flex-end;
 
         background-position:
             60% center;
@@ -910,7 +890,7 @@ footer {
         margin-bottom: 9px;
 
         box-shadow:
-            0 6px 20px rgba(0,0,0,0.12);
+            0 5px 16px rgba(0,0,0,0.10);
     }
 
     .track-panel input {
@@ -944,7 +924,7 @@ footer {
 
     .features {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
 
         gap: 10px;
     }
@@ -1011,6 +991,7 @@ footer {
     footer {
         font-size: 10px;
     }
+
 }
 
 
@@ -1018,10 +999,10 @@ footer {
    VERY SMALL PHONES
 ========================================================= */
 
-@media(max-width: 370px) {
+@media(max-width:370px) {
 
     .hero {
-        min-height: 610px;
+        min-height: 590px;
     }
 
     .hero h1 {
@@ -1041,6 +1022,7 @@ footer {
     }
 
 }
+
 </style>
 </head>
 
@@ -1049,391 +1031,443 @@ footer {
 
 <div class="container">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
 
-    <header id="secretLogo">
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
-        <div class="logo-area">
+<header id="secretLogo">
 
-            <div class="logo-icon">
+    <div class="logo-area">
 
-                <!-- Truck -->
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="1.8"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
+        <div class="logo-icon">
 
-                    <path d="M3 6h11v10H3z"/>
-                    <path d="M14 9h4l3 3v4h-7z"/>
-                    <circle cx="7" cy="18" r="2"/>
-                    <circle cx="18" cy="18" r="2"/>
-                    <path d="M14 16h2"/>
-                </svg>
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
 
-            </div>
-
-            <div class="logo-text">
-
-                <strong>
-                    Fed<span>Ex</span>
-                </strong>
-
-                <small>
-                    TRACKER
-                </small>
-
-            </div>
-
-        </div>
-
-
-        <button class="menu-button"
-                type="button"
-                aria-label="Menu">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round">
-
-                <path d="M4 6h16"/>
-                <path d="M4 12h16"/>
-                <path d="M4 18h16"/>
+                <path d="M3 6h11v10H3z"/>
+                <path d="M14 9h4l3 3v4h-7z"/>
+                <circle cx="7" cy="18" r="2"/>
+                <circle cx="18" cy="18" r="2"/>
+                <path d="M14 16h2"/>
 
             </svg>
 
-        </button>
-
-    </header>
+        </div>
 
 
-    <!-- =====================================================
-         HERO
-    ====================================================== -->
+        <div class="logo-text">
 
-    <section class="hero">
+            <strong>
+                Fed<span>Ex</span>
+            </strong>
 
-        <div class="hero-content">
-
-            <div class="hero-badge">
-
-                <span class="live-dot"></span>
-
-                Real-Time Network Active
-
-            </div>
-
-
-            <h1>
-                Track Your<br>
-                Shipment
-            </h1>
-
-
-            <p>
-                Enter your tracking number to get the latest
-                shipment status, delivery updates and route
-                information.
-            </p>
-
-
-            <!-- TRACKING FORM -->
-
-            <div class="track-panel">
-
-                <div class="input-wrap">
-
-                    <svg class="input-icon"
-                         viewBox="0 0 24 24"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="1.8"
-                         stroke-linecap="round"
-                         stroke-linejoin="round">
-
-                        <rect x="3" y="5" width="18" height="14" rx="2"/>
-
-                        <path d="M7 9v6"/>
-                        <path d="M9 9v6"/>
-                        <path d="M12 9v6"/>
-                        <path d="M15 9v6"/>
-                        <path d="M17 9v6"/>
-
-                    </svg>
-
-
-                    <input
-                        id="trackingInput"
-                        type="text"
-                        autocomplete="off"
-                        placeholder="Enter tracking number"
-                        aria-label="Tracking number"
-                    >
-
-                </div>
-
-
-                <button
-                    class="track-button"
-                    type="button"
-                    onclick="trackShipment()"
-                >
-
-                    <svg viewBox="0 0 24 24"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="2"
-                         stroke-linecap="round"
-                         stroke-linejoin="round">
-
-                        <circle cx="11" cy="11" r="7"/>
-                        <path d="m20 20-4-4"/>
-
-                    </svg>
-
-                    Track Shipment
-
-                </button>
-
-            </div>
-
-
-            <div class="example-code">
-                Example: TRK-LAG-NC00XQ70
-            </div>
+            <small>
+                TRACKER
+            </small>
 
         </div>
 
-    </section>
+    </div>
 
 
-    <!-- =====================================================
-         FEATURES
-    ====================================================== -->
+    <button
+        class="menu-button"
+        type="button"
+        aria-label="Menu"
+    >
 
-    <section class="features">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+        >
+
+            <path d="M4 6h16"/>
+            <path d="M4 12h16"/>
+            <path d="M4 18h16"/>
+
+        </svg>
+
+    </button>
+
+</header>
 
 
-        <!-- REAL TIME -->
+<!-- =====================================================
+     HERO
+====================================================== -->
 
-        <div class="card">
+<section class="hero">
 
-            <div class="card-icon">
+    <div class="hero-content">
 
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="1.8"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
+        <div class="hero-badge">
 
-                    <circle cx="12" cy="12" r="9"/>
-                    <path d="M12 7v5l3 2"/>
+            <span class="live-dot"></span>
 
-                </svg>
-
-            </div>
-
-            <h3>
-                Real-Time Updates
-            </h3>
-
-            <p>
-                Stay informed with current shipment
-                status and delivery progress.
-            </p>
+            Real-Time Network Active
 
         </div>
 
 
-        <!-- SECURE -->
+        <h1>
+            Track Your<br>
+            Shipment
+        </h1>
 
-        <div class="card">
-
-            <div class="card-icon">
-
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="1.8"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-
-                    <path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>
-                    <path d="m9 12 2 2 4-4"/>
-
-                </svg>
-
-            </div>
-
-            <h3>
-                Secure Tracking
-            </h3>
-
-            <p>
-                Shipment information is securely
-                managed and monitored.
-            </p>
-
-        </div>
-
-
-        <!-- GLOBAL -->
-
-        <div class="card">
-
-            <div class="card-icon">
-
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="1.8"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-
-                    <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/>
-                    <circle cx="12" cy="9" r="2.3"/>
-
-                </svg>
-
-            </div>
-
-            <h3>
-                Global Coverage
-            </h3>
-
-            <p>
-                Follow shipments across international
-                routes and destinations.
-            </p>
-
-        </div>
-
-
-        <!-- SUPPORT -->
-
-        <div class="card">
-
-            <div class="card-icon">
-
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="1.8"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
-
-                    <path d="M4 13a8 8 0 0 1 16 0"/>
-                    <rect x="3" y="12" width="4" height="7" rx="2"/>
-                    <rect x="17" y="12" width="4" height="7" rx="2"/>
-                    <path d="M7 19h2"/>
-                    <path d="M15 19h2"/>
-
-                </svg>
-
-            </div>
-
-            <h3>
-                Customer Support
-            </h3>
-
-            <p>
-                Get assistance when you need help
-                with your shipment.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         NEED HELP
-    ====================================================== -->
-
-    <section class="help-card">
-
-        <h2>
-            Need Help?
-        </h2>
 
         <p>
-            Our support team is available to assist
-            you with shipment questions and tracking.
+            Enter your tracking number to get the latest
+            shipment status, delivery updates and route
+            information.
         </p>
 
 
-        <!--
-            IMPORTANT:
-            Replace YOUR_TELEGRAM_USERNAME below
-            with your real Telegram username.
-        -->
+        <div class="track-panel">
 
-        <a
-            class="telegram-button"
-            href="https://t.me/YOUR_TELEGRAM_USERNAME"
-            target="_blank"
-            rel="noopener"
-        >
+            <div class="input-wrap">
 
-            <svg viewBox="0 0 24 24"
-                 fill="currentColor">
+                <svg
+                    class="input-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
 
-                <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"
+                    />
 
-            </svg>
+                    <path d="M7 9v6"/>
+                    <path d="M9 9v6"/>
+                    <path d="M12 9v6"/>
+                    <path d="M15 9v6"/>
+                    <path d="M17 9v6"/>
 
-            Chat on Telegram
-
-        </a>
+                </svg>
 
 
-        <div class="help-decoration">
+                <input
+                    id="trackingInput"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Enter tracking number"
+                    aria-label="Tracking number"
+                >
 
-            <div class="box one"></div>
-            <div class="box two"></div>
-            <div class="box three"></div>
+            </div>
+
+
+            <button
+                class="track-button"
+                type="button"
+                onclick="trackShipment()"
+            >
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+
+                    <circle cx="11" cy="11" r="7"/>
+
+                    <path d="m20 20-4-4"/>
+
+                </svg>
+
+                Track Shipment
+
+            </button>
 
         </div>
 
-    </section>
+
+        <div class="example-code">
+            Example: TRK-LAG-NC00XQ70
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+<!-- =====================================================
+     FEATURES
+====================================================== -->
 
-    <footer>
+<section class="features">
 
-        © 2026 Logistics Tracking Portal.
-        All Rights Reserved.
 
-    </footer>
+    <!-- REAL TIME -->
+
+    <div class="card">
+
+        <div class="card-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <circle cx="12" cy="12" r="9"/>
+
+                <path d="M12 7v5l3 2"/>
+
+            </svg>
+
+        </div>
+
+
+        <h3>
+            Real-Time Updates
+        </h3>
+
+
+        <p>
+            Stay informed with current shipment
+            status and delivery progress.
+        </p>
+
+    </div>
+
+
+    <!-- SECURE -->
+
+    <div class="card">
+
+        <div class="card-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path d="M12 3 20 6v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>
+
+                <path d="m9 12 2 2 4-4"/>
+
+            </svg>
+
+        </div>
+
+
+        <h3>
+            Secure Tracking
+        </h3>
+
+
+        <p>
+            Shipment information is securely
+            managed and monitored.
+        </p>
+
+    </div>
+
+
+    <!-- GLOBAL -->
+
+    <div class="card">
+
+        <div class="card-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/>
+
+                <circle cx="12" cy="9" r="2.3"/>
+
+            </svg>
+
+        </div>
+
+
+        <h3>
+            Global Coverage
+        </h3>
+
+
+        <p>
+            Follow shipments across international
+            routes and destinations.
+        </p>
+
+    </div>
+
+
+    <!-- SUPPORT -->
+
+    <div class="card">
+
+        <div class="card-icon">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+
+                <path d="M4 13a8 8 0 0 1 16 0"/>
+
+                <rect
+                    x="3"
+                    y="12"
+                    width="4"
+                    height="7"
+                    rx="2"
+                />
+
+                <rect
+                    x="17"
+                    y="12"
+                    width="4"
+                    height="7"
+                    rx="2"
+                />
+
+                <path d="M7 19h2"/>
+                <path d="M15 19h2"/>
+
+            </svg>
+
+        </div>
+
+
+        <h3>
+            Customer Support
+        </h3>
+
+
+        <p>
+            Get assistance when you need help
+            with your shipment.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEED HELP
+====================================================== -->
+
+<section class="help-card">
+
+    <h2>
+        Need Help?
+    </h2>
+
+
+    <p>
+        Our support team is available to assist
+        you with shipment questions and tracking.
+    </p>
+
+
+    <a
+        class="telegram-button"
+        href="https://t.me/rfedexstack"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+
+        <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+        >
+
+            <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
+
+        </svg>
+
+        Chat on Telegram
+
+    </a>
+
+
+    <div class="help-decoration">
+
+        <div class="box one"></div>
+        <div class="box two"></div>
+        <div class="box three"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    © 2026 Logistics Tracking Portal.
+    All Rights Reserved.
+
+</footer>
 
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
      MOBILE BOTTOM NAVIGATION
-========================================================= -->
+====================================================== -->
 
 <nav class="bottom-nav">
 
 
-    <div class="nav-item active"
-         onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div
+        class="nav-item active"
+        onclick="window.scrollTo({top:0,behavior:'smooth'})"
+    >
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
 
             <path d="m3 11 9-8 9 8"/>
             <path d="M5 10v10h14V10"/>
@@ -1446,15 +1480,19 @@ footer {
     </div>
 
 
-    <div class="nav-item"
-         onclick="focusTracking()">
+    <div
+        class="nav-item"
+        onclick="focusTracking()"
+    >
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
 
             <circle cx="11" cy="11" r="7"/>
             <path d="m20 20-4-4"/>
@@ -1466,15 +1504,19 @@ footer {
     </div>
 
 
-    <div class="nav-item"
-         onclick="focusTracking()">
+    <div
+        class="nav-item"
+        onclick="focusTracking()"
+    >
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
 
             <path d="M3 7h18"/>
             <path d="M5 7v12h14V7"/>
@@ -1487,18 +1529,24 @@ footer {
     </div>
 
 
-    <div class="nav-item"
-         onclick="openTelegram()">
+    <div
+        class="nav-item"
+        onclick="openTelegram()"
+    >
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="1.8"
-             stroke-linecap="round"
-             stroke-linejoin="round">
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        >
 
             <circle cx="12" cy="12" r="9"/>
+
             <path d="M8 12h8"/>
+
             <path d="m13 8 4 4-4 4"/>
 
         </svg>
@@ -1516,36 +1564,50 @@ footer {
 
 <script>
 
+
 /* =========================================================
    HIDDEN ADMIN LOGIN
    5 QUICK TAPS ON THE LOGO
 ========================================================= */
 
 let tapCount = 0;
+
 let tapTimer;
+
 
 document
     .getElementById("secretLogo")
-    .addEventListener("click", function () {
+    .addEventListener(
+        "click",
+        function () {
 
-        tapCount++;
+            tapCount++;
 
-        clearTimeout(tapTimer);
-
-        tapTimer = setTimeout(function () {
-            tapCount = 0;
-        }, 3000);
+            clearTimeout(tapTimer);
 
 
-        if (tapCount >= 5) {
+            tapTimer =
+                setTimeout(
+                    function () {
 
-            tapCount = 0;
+                        tapCount = 0;
 
-            window.location.href = "admin-login.html";
+                    },
+                    3000
+                );
+
+
+            if (tapCount >= 5) {
+
+                tapCount = 0;
+
+                window.location.href =
+                    "admin-login.html";
+
+            }
 
         }
-
-    });
+    );
 
 
 /* =========================================================
@@ -1563,7 +1625,9 @@ function trackShipment() {
 
     if (!input) {
 
-        alert("Please enter your tracking number.");
+        alert(
+            "Please enter your tracking number."
+        );
 
         document
             .getElementById("trackingInput")
@@ -1574,9 +1638,38 @@ function trackShipment() {
     }
 
 
+    /*
+     * Clean tracking URL
+     *
+     * Example:
+     *
+     * fedexstack.com/TRK-LAG-NC00XQ70
+     *
+     * GitHub Pages 404.html will catch
+     * the path and send it to track.html.
+     */
+
+    const code =
+        input
+            .toUpperCase();
+
+
+    if (
+        !/^TRK-LAG-[A-Z0-9]+$/i.test(code)
+    ) {
+
+        alert(
+            "Please enter a valid tracking number."
+        );
+
+        return;
+
+    }
+
+
     window.location.href =
-        "track.html?code=" +
-        encodeURIComponent(input);
+        "/" +
+        encodeURIComponent(code);
 
 }
 
@@ -1587,15 +1680,18 @@ function trackShipment() {
 
 document
     .getElementById("trackingInput")
-    .addEventListener("keydown", function(event) {
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-        if (event.key === "Enter") {
+            if (event.key === "Enter") {
 
-            trackShipment();
+                trackShipment();
+
+            }
 
         }
-
-    });
+    );
 
 
 /* =========================================================
@@ -1605,18 +1701,28 @@ document
 function focusTracking() {
 
     const input =
-        document.getElementById("trackingInput");
+        document.getElementById(
+            "trackingInput"
+        );
+
 
     input.scrollIntoView({
+
         behavior: "smooth",
+
         block: "center"
+
     });
 
-    setTimeout(function() {
 
-        input.focus();
+    setTimeout(
+        function() {
 
-    }, 500);
+            input.focus();
+
+        },
+        500
+    );
 
 }
 
@@ -1628,8 +1734,9 @@ function focusTracking() {
 function openTelegram() {
 
     window.open(
-        "https://t.me/YOUR_TELEGRAM_USERNAME",
-        "_blank"
+        "https://t.me/rfedexstack",
+        "_blank",
+        "noopener,noreferrer"
     );
 
 }
@@ -1643,8 +1750,8 @@ function openTelegram() {
 
 <script
     type="module"
-    src="./js/script.js">
-</script>
+    src="./js/script.js"
+></script>
 
 
 </body>
