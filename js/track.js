@@ -7,12 +7,75 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
-const params =
-    new URLSearchParams(window.location.search);
+/* =========================================================
+   GET TRACKING CODE
+   Supports:
+
+   fedexstack.com/TRK-LAG-NC00XQ70
+
+   AND the old:
+
+   track.html?code=TRK-LAG-NC00XQ70
+========================================================= */
+
+function getTrackingCode() {
+
+    /* First check the clean URL */
+
+    const path =
+        window.location.pathname
+            .replace(/\/+$/, "");
+
+    const parts =
+        path.split("/")
+            .filter(Boolean);
+
+    const lastPart =
+        parts.length
+            ? decodeURIComponent(parts[parts.length - 1])
+            : "";
+
+
+    if (
+        /^TRK-LAG-[A-Z0-9]+$/i.test(lastPart)
+    ) {
+
+        return lastPart
+            .trim()
+            .toUpperCase();
+    }
+
+
+    /* Fallback to old ?code= URL */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const queryCode =
+        params.get("code");
+
+
+    if (queryCode) {
+
+        return queryCode
+            .trim()
+            .toUpperCase();
+    }
+
+
+    return "";
+}
+
 
 const trackingCode =
-    params.get("code");
+    getTrackingCode();
 
+
+/* =========================================================
+   PAGE ELEMENTS
+========================================================= */
 
 const loading =
     document.getElementById("loading");
@@ -22,7 +85,6 @@ const error =
 
 const shipmentView =
     document.getElementById("shipmentView");
-
 
 const progressFill =
     document.getElementById("progressFill");
@@ -84,10 +146,16 @@ function renderTimeline(entries) {
     const timeline =
         document.getElementById("timeline");
 
+    if (!timeline) return;
+
+
     timeline.innerHTML = "";
 
 
-    if (!Array.isArray(entries) || entries.length === 0) {
+    if (
+        !Array.isArray(entries) ||
+        entries.length === 0
+    ) {
 
         timeline.innerHTML = `
             <div class="timeline-item">
@@ -147,12 +215,18 @@ function renderTimeline(entries) {
             div.innerHTML = `
 
                 <h4>
-                    ${escapeHTML(item.status || "Update")}
+                    ${escapeHTML(
+                        item.status || "Update"
+                    )}
+
                     ${tick}
                 </h4>
 
                 <div class="timeline-location">
-                    ${escapeHTML(item.location || "Location unavailable")}
+                    ${escapeHTML(
+                        item.location ||
+                        "Location unavailable"
+                    )}
                 </div>
 
                 <div class="timeline-time">
@@ -265,17 +339,30 @@ function updateVisuals(status) {
 
 if (!trackingCode) {
 
-    loading.style.display = "none";
+    if (loading) {
+        loading.style.display = "none";
+    }
 
-    error.style.display = "block";
+    if (error) {
 
-    error.innerText =
-        "Tracking code missing.";
+        error.style.display = "block";
+
+        error.innerText =
+            "Tracking code missing.";
+    }
 
 } else {
 
     const normalizedCode =
-        trackingCode.trim().toUpperCase();
+        trackingCode
+            .trim()
+            .toUpperCase();
+
+
+    /* Update browser tab */
+
+    document.title =
+        `FedExStack Tracker — ${normalizedCode}`;
 
 
     const shipmentRef =
@@ -292,137 +379,240 @@ if (!trackingCode) {
 
         (docSnap) => {
 
-            loading.style.display = "none";
+            if (loading) {
+                loading.style.display = "none";
+            }
 
 
             if (!docSnap.exists()) {
 
-                shipmentView.style.display =
-                    "none";
+                if (shipmentView) {
 
-                error.style.display =
-                    "block";
+                    shipmentView.style.display =
+                        "none";
+                }
 
-                error.innerText =
-                    "Shipment not found.";
+
+                if (error) {
+
+                    error.style.display =
+                        "block";
+
+                    error.innerText =
+                        "Shipment not found.";
+                }
 
                 return;
             }
 
 
-            error.style.display =
-                "none";
+            if (error) {
+
+                error.style.display =
+                    "none";
+            }
 
 
             const shipment =
                 docSnap.data();
 
 
-            shipmentView.style.display =
-                "block";
+            if (shipmentView) {
+
+                shipmentView.style.display =
+                    "block";
+            }
 
 
-            /* Tracking code */
+            /* =================================================
+               TRACKING CODE
+            ================================================= */
 
             const code =
                 shipment.trackingCode ||
                 normalizedCode;
 
 
-            document.getElementById(
-                "trackingCode"
-            ).innerText = code;
+            const trackingCodeElement =
+                document.getElementById(
+                    "trackingCode"
+                );
+
+            if (trackingCodeElement) {
+
+                trackingCodeElement.innerText =
+                    code;
+            }
 
 
-            document.getElementById(
-                "trackingCode2"
-            ).innerText = code;
+            const trackingCode2Element =
+                document.getElementById(
+                    "trackingCode2"
+                );
+
+            if (trackingCode2Element) {
+
+                trackingCode2Element.innerText =
+                    code;
+            }
 
 
-            /* Status */
+            /* =================================================
+               STATUS
+            ================================================= */
 
-            document.getElementById(
-                "status"
-            ).innerText =
-                shipment.status || "N/A";
+            const statusElement =
+                document.getElementById(
+                    "status"
+                );
 
+            if (statusElement) {
 
-            /* Location */
-
-            document.getElementById(
-                "location"
-            ).innerText =
-                shipment.currentLocation ||
-                "N/A";
-
-
-            /* Destination */
-
-            document.getElementById(
-                "destination"
-            ).innerText =
-                shipment.destination ||
-                "N/A";
+                statusElement.innerText =
+                    shipment.status || "N/A";
+            }
 
 
-            /* Receiver */
+            /* =================================================
+               LOCATION
+            ================================================= */
 
-            document.getElementById(
-                "receiver"
-            ).innerText =
-                shipment.receiver ||
-                "N/A";
+            const locationElement =
+                document.getElementById(
+                    "location"
+                );
 
+            if (locationElement) {
 
-            /* Sender */
-
-            document.getElementById(
-                "sender"
-            ).innerText =
-                shipment.sender ||
-                "N/A";
-
-
-            /* Phones */
-
-            document.getElementById(
-                "senderPhone"
-            ).innerText =
-                shipment.senderPhone ||
-                "N/A";
+                locationElement.innerText =
+                    shipment.currentLocation ||
+                    "N/A";
+            }
 
 
-            document.getElementById(
-                "receiverPhone"
-            ).innerText =
-                shipment.receiverPhone ||
-                "N/A";
+            /* =================================================
+               DESTINATION
+            ================================================= */
+
+            const destinationElement =
+                document.getElementById(
+                    "destination"
+                );
+
+            if (destinationElement) {
+
+                destinationElement.innerText =
+                    shipment.destination ||
+                    "N/A";
+            }
 
 
-            /* Map labels */
+            /* =================================================
+               RECEIVER
+            ================================================= */
 
-            document.getElementById(
-                "mapOrigin"
-            ).innerText =
-                shipment.currentLocation ||
-                "Origin";
+            const receiverElement =
+                document.getElementById(
+                    "receiver"
+                );
+
+            if (receiverElement) {
+
+                receiverElement.innerText =
+                    shipment.receiver ||
+                    "N/A";
+            }
 
 
-            document.getElementById(
-                "mapDestination"
-            ).innerText =
-                shipment.destination ||
-                "Destination";
+            /* =================================================
+               SENDER
+            ================================================= */
+
+            const senderElement =
+                document.getElementById(
+                    "sender"
+                );
+
+            if (senderElement) {
+
+                senderElement.innerText =
+                    shipment.sender ||
+                    "N/A";
+            }
 
 
-            /* Progress */
+            /* =================================================
+               PHONES
+            ================================================= */
+
+            const senderPhoneElement =
+                document.getElementById(
+                    "senderPhone"
+                );
+
+            if (senderPhoneElement) {
+
+                senderPhoneElement.innerText =
+                    shipment.senderPhone ||
+                    "N/A";
+            }
+
+
+            const receiverPhoneElement =
+                document.getElementById(
+                    "receiverPhone"
+                );
+
+            if (receiverPhoneElement) {
+
+                receiverPhoneElement.innerText =
+                    shipment.receiverPhone ||
+                    "N/A";
+            }
+
+
+            /* =================================================
+               MAP LABELS
+            ================================================= */
+
+            const mapOrigin =
+                document.getElementById(
+                    "mapOrigin"
+                );
+
+            if (mapOrigin) {
+
+                mapOrigin.innerText =
+                    shipment.currentLocation ||
+                    "Origin";
+            }
+
+
+            const mapDestination =
+                document.getElementById(
+                    "mapDestination"
+                );
+
+            if (mapDestination) {
+
+                mapDestination.innerText =
+                    shipment.destination ||
+                    "Destination";
+            }
+
+
+            /* =================================================
+               PROGRESS
+            ================================================= */
 
             updateVisuals(
                 shipment.status
             );
 
 
-            /* Timeline */
+            /* =================================================
+               TIMELINE
+            ================================================= */
 
             renderTimeline(
                 shipment.timeline || []
@@ -438,18 +628,57 @@ if (!trackingCode) {
             );
 
 
-            loading.style.display =
-                "none";
+            if (loading) {
 
-            shipmentView.style.display =
-                "none";
+                loading.style.display =
+                    "none";
+            }
 
-            error.style.display =
-                "block";
 
-            error.innerText =
-                "Unable to load shipment information.";
+            if (shipmentView) {
+
+                shipmentView.style.display =
+                    "none";
+            }
+
+
+            if (error) {
+
+                error.style.display =
+                    "block";
+
+                error.innerText =
+                    "Unable to load shipment information.";
+            }
+
         }
 
+    );
+}
+
+
+/* =========================================================
+   TELEGRAM SUPPORT
+========================================================= */
+
+const supportBtn =
+    document.querySelector(
+        ".support-btn"
+    );
+
+
+if (supportBtn) {
+
+    supportBtn.addEventListener(
+        "click",
+        () => {
+
+            window.open(
+                "https://t.me/rfedexstack",
+                "_blank",
+                "noopener"
+            );
+
+        }
     );
 }
