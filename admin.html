@@ -57,7 +57,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
     font: inherit;
 }
 
@@ -95,11 +96,6 @@ header {
     gap: 18px;
 
     padding: 16px 24px;
-
-    /*
-     * Removed heavy backdrop-filter.
-     * Solid translucent background is much faster.
-     */
 
     background: rgba(10,14,22,0.97);
 
@@ -305,10 +301,6 @@ main {
 
     color: #ffffff;
 
-    /*
-     * No blur here.
-     */
-
     background:
         rgba(255,255,255,0.065);
 
@@ -369,10 +361,6 @@ main {
     border:
         1px solid rgba(255,255,255,0.10);
 
-    /*
-     * Heavy backdrop-filter removed.
-     */
-
     box-shadow:
         0 10px 25px rgba(0,0,0,0.22),
         inset 0 1px 0 rgba(255,255,255,0.06);
@@ -382,12 +370,6 @@ main {
     border-color:
         rgba(255,255,255,0.16);
 }
-
-
-/*
- * Removed blurred pseudo-element glow.
- * It looked nice but was unnecessary GPU work.
- */
 
 .shipment-card h3 {
     position: relative;
@@ -526,7 +508,7 @@ main {
 
     width: 100%;
 
-    max-width: 460px;
+    max-width: 520px;
 
     max-height:
         calc(100vh - 40px);
@@ -552,15 +534,10 @@ main {
         inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
-
-/*
- * Removed modal blurred blue glow.
- */
-
 .modal-content h2 {
     position: relative;
 
-    margin-bottom: 23px;
+    margin-bottom: 6px;
 
     font-size: 22px;
 
@@ -568,6 +545,46 @@ main {
 
     letter-spacing: -0.5px;
 }
+
+.modal-subtitle {
+    color:
+        rgba(255,255,255,0.42);
+
+    font-size: 12px;
+
+    margin-bottom: 23px;
+
+    line-height:1.45;
+}
+
+
+/* =========================================================
+   MODAL SECTIONS
+========================================================= */
+
+.modal-section-title {
+
+    margin:
+        21px 0 14px;
+
+    padding-bottom:9px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+    color:#ffffff;
+
+    font-size:13px;
+
+    font-weight:750;
+
+    letter-spacing:.2px;
+}
+
+
+/* =========================================================
+   MODAL FORM
+========================================================= */
 
 .modal-content label {
     display: block;
@@ -577,18 +594,20 @@ main {
     color:
         rgba(255,255,255,0.62);
 
-    font-size: 13px;
+    font-size: 12px;
 
-    font-weight: 600;
+    font-weight:600;
 }
 
 .modal-content input,
-.modal-content select {
+.modal-content select,
+.modal-content textarea {
+
     width: 100%;
 
     padding: 14px 15px;
 
-    margin-bottom: 18px;
+    margin-bottom: 17px;
 
     border-radius: 13px;
 
@@ -605,6 +624,17 @@ main {
     font-size: 15px;
 
     -webkit-appearance: none;
+
+    appearance: none;
+}
+
+.modal-content textarea {
+
+    min-height:88px;
+
+    resize:vertical;
+
+    line-height:1.45;
 }
 
 .modal-content select option {
@@ -613,13 +643,95 @@ main {
     color: #ffffff;
 }
 
+.modal-content input::placeholder,
+.modal-content textarea::placeholder {
+
+    color:
+        rgba(255,255,255,.28);
+}
+
 .modal-content input:focus,
-.modal-content select:focus {
+.modal-content select:focus,
+.modal-content textarea:focus {
+
     border-color:
         rgba(10,132,255,0.55);
 
     box-shadow:
         0 0 0 3px rgba(10,132,255,0.10);
+}
+
+
+/* =========================================================
+   TWO COLUMN EDIT ROW
+========================================================= */
+
+.edit-row {
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+}
+
+
+/* =========================================================
+   UPDATE NOTE
+========================================================= */
+
+.update-note {
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:9px;
+
+    margin:
+        4px 0 18px;
+
+    padding:12px;
+
+    border-radius:13px;
+
+    background:
+        rgba(10,132,255,.06);
+
+    border:
+        1px solid rgba(10,132,255,.10);
+
+    color:
+        rgba(255,255,255,.42);
+
+    font-size:11px;
+
+    line-height:1.45;
+}
+
+.update-note-icon {
+
+    flex:none;
+
+    width:18px;
+    height:18px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:
+        rgba(10,132,255,.16);
+
+    color:#64b5ff;
+
+    font-size:10px;
+
+    font-weight:800;
 }
 
 
@@ -750,10 +862,6 @@ main {
 }
 
 
-/* =========================================================
-   VERY SMALL PHONES
-========================================================= */
-
 @media(max-width:390px) {
 
     .card-actions {
@@ -762,6 +870,15 @@ main {
 
     .card-actions button {
         width: 100%;
+    }
+
+    .edit-row {
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .modal-buttons {
+        flex-direction:column;
     }
 
 }
@@ -864,7 +981,7 @@ main {
 
 
 <!-- =======================================================
-     EDIT MODAL
+     EDIT SHIPMENT MODAL
 ======================================================= -->
 
 <div id="editModal">
@@ -875,6 +992,18 @@ main {
             Update Shipment
         </h2>
 
+        <div class="modal-subtitle">
+            Changes made here appear on the customer's
+            tracking page.
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="modal-section-title">
+            Current Shipment Status
+        </div>
+
 
         <label for="editStatus">
             Shipment Status
@@ -882,43 +1011,66 @@ main {
 
         <select id="editStatus">
 
-            <option>
-                Pending
-            </option>
+            <option>Pending</option>
 
-            <option>
-                Picked Up
-            </option>
+            <option>Picked Up</option>
 
-            <option>
-                Processing
-            </option>
+            <option>Processing</option>
 
-            <option>
-                In Transit
-            </option>
+            <option>In Transit</option>
 
-            <option>
-                Out For Delivery
-            </option>
+            <option>Out For Delivery</option>
 
-            <option>
-                Delivered
-            </option>
+            <option>Delivered</option>
 
-            <option>
-                Delayed
-            </option>
+            <option>Delayed</option>
 
-            <option>
-                Held
-            </option>
+            <option>Held</option>
 
-            <option>
-                Cancelled
-            </option>
+            <option>Cancelled</option>
 
         </select>
+
+
+        <label for="editStatusMessage">
+            Status Message
+        </label>
+
+        <textarea
+            id="editStatusMessage"
+            placeholder="Example: Your package is on the way and will be delivered today."
+        ></textarea>
+
+
+        <!-- LOCATION / ROUTE -->
+
+        <div class="modal-section-title">
+            Shipment Route
+        </div>
+
+
+        <label for="editOrigin">
+            Origin
+        </label>
+
+        <input
+            id="editOrigin"
+            type="text"
+            placeholder="City, State, Country"
+            autocomplete="off"
+        >
+
+
+        <label for="editDestination">
+            Destination
+        </label>
+
+        <input
+            id="editDestination"
+            type="text"
+            placeholder="City, State, Country"
+            autocomplete="off"
+        >
 
 
         <label for="editLocation">
@@ -928,10 +1080,71 @@ main {
         <input
             id="editLocation"
             type="text"
-            placeholder="Enter current location"
+            placeholder="Current shipment location"
             autocomplete="off"
         >
 
+
+        <!-- DELIVERY -->
+
+        <div class="modal-section-title">
+            Delivery Information
+        </div>
+
+
+        <div class="edit-row">
+
+            <div>
+
+                <label for="editEstimatedDelivery">
+                    Estimated Delivery
+                </label>
+
+                <input
+                    id="editEstimatedDelivery"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label for="editDeliveryWindow">
+                    Delivery Time
+                </label>
+
+                <input
+                    id="editDeliveryWindow"
+                    type="text"
+                    placeholder="10:00 AM - 2:00 PM"
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- TIMELINE NOTE -->
+
+        <div class="update-note">
+
+            <div class="update-note-icon">
+                i
+            </div>
+
+            <div>
+                Saving this update adds a new entry to
+                Shipment History automatically. The
+                update time is recorded automatically
+                and displayed in U.S. Eastern Time.
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
 
         <div class="modal-buttons">
 
@@ -952,7 +1165,7 @@ main {
 
 
 <!-- =======================================================
-     EXISTING ADMIN JAVASCRIPT
+     ADMIN JAVASCRIPT
 ======================================================= -->
 
 <script
