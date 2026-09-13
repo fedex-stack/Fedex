@@ -25,7 +25,7 @@ protectAdminPage();
 
 
 /* =========================================================
-   GLOBAL STATE
+   STATE
 ========================================================= */
 
 let activeShipmentCode = null;
@@ -77,7 +77,7 @@ if(logoutBtn){
 
 
 /* =========================================================
-   CREATE SHIPMENT PAGE
+   CREATE SHIPMENT
 ========================================================= */
 
 if(createBtn){
@@ -95,7 +95,7 @@ if(createBtn){
 
 
 /* =========================================================
-   CLOSE EDIT MODAL
+   CLOSE MODAL
 ========================================================= */
 
 if(closeModalBtn){
@@ -237,61 +237,52 @@ function openEditShipment(shipment){
         shipment.trackingCode;
 
 
-    const editStatus =
-        document.getElementById(
-            "editStatus"
-        );
-
-    const editLocation =
-        document.getElementById(
-            "editLocation"
-        );
-
-
-    if(editStatus){
-
-        editStatus.value =
-            shipment.status || STATUS.PENDING;
-    }
-
-
-    if(editLocation){
-
-        editLocation.value =
-            shipment.currentLocation || "";
-    }
-
-
-    /*
-       These fields are optional for now.
-
-       Once the Edit Shipment modal is expanded,
-       the same IDs will automatically be used.
-    */
-
-    setOptionalValue(
-        "editOrigin",
-        shipment.origin
+    setValue(
+        "editStatus",
+        shipment.status ||
+        STATUS.PENDING
     );
 
-    setOptionalValue(
-        "editDestination",
-        shipment.destination
-    );
 
-    setOptionalValue(
+    setValue(
         "editStatusMessage",
-        shipment.statusMessage
+        shipment.statusMessage ||
+        ""
     );
 
-    setOptionalValue(
+
+    setValue(
+        "editOrigin",
+        shipment.origin ||
+        ""
+    );
+
+
+    setValue(
+        "editDestination",
+        shipment.destination ||
+        ""
+    );
+
+
+    setValue(
+        "editLocation",
+        shipment.currentLocation ||
+        ""
+    );
+
+
+    setValue(
         "editEstimatedDelivery",
-        shipment.estimatedDelivery
+        shipment.estimatedDelivery ||
+        ""
     );
 
-    setOptionalValue(
+
+    setValue(
         "editDeliveryWindow",
-        shipment.deliveryWindow
+        shipment.deliveryWindow ||
+        ""
     );
 
 
@@ -304,7 +295,7 @@ function openEditShipment(shipment){
 
 
 /* =========================================================
-   FIRESTORE SHIPMENT LISTENER
+   FIRESTORE LISTENER
 ========================================================= */
 
 if(shipmentsContainer){
@@ -383,6 +374,7 @@ if(searchInput){
                                 shipment.receiver || ""
                             ).toUpperCase();
 
+
                         return (
                             code.includes(keyword) ||
                             sender.includes(keyword) ||
@@ -403,7 +395,7 @@ if(searchInput){
 
 
 /* =========================================================
-   EDIT / UPDATE SHIPMENT
+   SAVE SHIPMENT UPDATE
 ========================================================= */
 
 if(saveUpdateBtn){
@@ -412,40 +404,69 @@ if(saveUpdateBtn){
         "click",
         async () => {
 
-            const statusElement =
-                document.getElementById(
+            const status =
+                getValue(
                     "editStatus"
                 );
 
-            const locationElement =
-                document.getElementById(
+            const statusMessage =
+                getValue(
+                    "editStatusMessage"
+                );
+
+            const origin =
+                getValue(
+                    "editOrigin"
+                );
+
+            const destination =
+                getValue(
+                    "editDestination"
+                );
+
+            const location =
+                getValue(
                     "editLocation"
                 );
 
+            const estimatedDelivery =
+                getValue(
+                    "editEstimatedDelivery"
+                );
 
-            const status =
-                statusElement
-                    ? statusElement.value
-                    : STATUS.PENDING;
+            const deliveryWindow =
+                getValue(
+                    "editDeliveryWindow"
+                );
 
 
-            const location =
-                locationElement
-                    ? locationElement.value.trim()
-                    : "";
-
+            /* -----------------------------------------
+               VALIDATION
+            ----------------------------------------- */
 
             if(
                 !activeShipmentCode ||
+                !status ||
                 !location
             ){
 
                 showToast(
-                    "Missing update data"
+                    "Status and location are required"
                 );
 
                 return;
             }
+
+
+            /* -----------------------------------------
+               DISABLE BUTTON
+            ----------------------------------------- */
+
+            saveUpdateBtn.disabled =
+                true;
+
+            saveUpdateBtn.textContent =
+                "Saving...";
 
 
             try{
@@ -459,15 +480,24 @@ if(saveUpdateBtn){
 
 
                 /*
-                   Every Admin update becomes
-                   a new shipment-history event.
+                 * Date.now() stores the exact current
+                 * moment.
+                 *
+                 * The tracker converts this timestamp
+                 * into U.S. Eastern Time.
+                 */
 
-                   Date.now() records the actual
-                   moment of the update.
+                const timelineUpdate = {
 
-                   track.js converts this timestamp
-                   to U.S. Eastern Time.
-                */
+                    status,
+
+                    location,
+
+                    createdAt:
+                        Date.now()
+
+                };
+
 
                 await updateDoc(
                     shipmentRef,
@@ -475,23 +505,26 @@ if(saveUpdateBtn){
 
                         status,
 
+                        statusMessage,
+
+                        origin,
+
+                        destination,
+
                         currentLocation:
                             location,
+
+                        estimatedDelivery,
+
+                        deliveryWindow,
 
                         updatedAt:
                             serverTimestamp(),
 
                         timeline:
-                            arrayUnion({
-
-                                status,
-
-                                location,
-
-                                createdAt:
-                                    Date.now()
-
-                            })
+                            arrayUnion(
+                                timelineUpdate
+                            )
 
                     }
                 );
@@ -512,6 +545,7 @@ if(saveUpdateBtn){
             }catch(error){
 
                 console.error(
+                    "Update failed:",
                     error
                 );
 
@@ -519,6 +553,13 @@ if(saveUpdateBtn){
                     "Update failed"
                 );
 
+            }finally{
+
+                saveUpdateBtn.disabled =
+                    false;
+
+                saveUpdateBtn.textContent =
+                    "Save Update";
             }
 
         }
@@ -541,11 +582,6 @@ if(createShipmentBtn){
     createShipmentBtn.addEventListener(
         "click",
         async () => {
-
-
-            /* -----------------------------------------
-               READ FORM
-            ----------------------------------------- */
 
             const sender =
                 getValue("sender");
@@ -610,10 +646,6 @@ if(createShipmentBtn){
             }
 
 
-            /* -----------------------------------------
-               DISABLE BUTTON
-            ----------------------------------------- */
-
             createShipmentBtn.disabled =
                 true;
 
@@ -623,17 +655,13 @@ if(createShipmentBtn){
 
             try{
 
-                /* -------------------------------------
-                   GENERATE TRACKING CODE
-                ------------------------------------- */
-
                 const trackingCode =
                     generateTrackingCode();
 
 
-                /* -------------------------------------
-                   INITIAL TIMELINE EVENT
-                ------------------------------------- */
+                /*
+                 * First shipment history event.
+                 */
 
                 const initialTimeline = {
 
@@ -647,10 +675,6 @@ if(createShipmentBtn){
 
                 };
 
-
-                /* -------------------------------------
-                   SHIPMENT DATA
-                ------------------------------------- */
 
                 const shipmentData = {
 
@@ -694,10 +718,6 @@ if(createShipmentBtn){
                 };
 
 
-                /* -------------------------------------
-                   SAVE TO FIRESTORE
-                ------------------------------------- */
-
                 await setDoc(
                     doc(
                         db,
@@ -707,10 +727,6 @@ if(createShipmentBtn){
                     shipmentData
                 );
 
-
-                /* -------------------------------------
-                   SUCCESS
-                ------------------------------------- */
 
                 showToast(
                     "Shipment created"
@@ -769,10 +785,7 @@ function getValue(id){
 }
 
 
-function setOptionalValue(
-    id,
-    value
-){
+function setValue(id,value){
 
     const element =
         document.getElementById(id);
