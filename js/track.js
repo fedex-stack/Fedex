@@ -1,5 +1,4 @@
 import { db } from "./firebase.js";
-import { formatDate } from "./utils.js";
 
 import {
     doc,
@@ -8,368 +7,52 @@ import {
 
 
 /* =========================================================
-   GET TRACKING CODE
-   Supports:
-
-   https://fedexstack.com/TRK-LAG-NC00XQ70
-
-   GitHub Pages:
-   https://fedex-stack.github.io/Fedex/TRK-LAG-NC00XQ70
-
-   AND old:
-   track.html?code=TRK-LAG-NC00XQ70
+   TRACKING CODE
 ========================================================= */
 
-function getTrackingCode() {
+function getTrackingCode(){
 
-    /* Check clean URL first */
-
-    const path =
+    const pathParts =
         window.location.pathname
-            .replace(/\/+$/, "");
-
-    const parts =
-        path.split("/")
+            .split("/")
             .filter(Boolean);
 
     const lastPart =
-        parts.length
-            ? decodeURIComponent(parts[parts.length - 1])
-            : "";
+        pathParts[pathParts.length - 1] || "";
 
-
-    if (
-        /^TRK-LAG-[A-Z0-9]+$/i.test(lastPart)
-    ) {
-
-        return lastPart
-            .trim()
-            .toUpperCase();
+    if(/^TRK-LAG-[A-Z0-9]+$/i.test(lastPart)){
+        return decodeURIComponent(lastPart).toUpperCase();
     }
 
-
-    /* Fallback to old ?code= URL */
-
     const params =
-        new URLSearchParams(
-            window.location.search
-        );
+        new URLSearchParams(window.location.search);
 
     const queryCode =
         params.get("code");
 
-
-    if (queryCode) {
-
-        return queryCode
-            .trim()
-            .toUpperCase();
+    if(queryCode){
+        return queryCode.trim().toUpperCase();
     }
-
 
     return "";
 }
 
 
-const trackingCode =
-    getTrackingCode();
-
-
 /* =========================================================
-   PAGE ELEMENTS
+   RESTORE CLEAN URL
 ========================================================= */
 
-const loading =
-    document.getElementById("loading");
+function restoreCleanURL(code){
 
-const error =
-    document.getElementById("error");
-
-const shipmentView =
-    document.getElementById("shipmentView");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const truck =
-    document.getElementById("truck");
-
-const mapTruck =
-    document.getElementById("mapTruck");
-
-
-/* =========================================================
-   STATUS PROGRESS
-========================================================= */
-
-function getProgress(status) {
-
-    switch (status) {
-
-        case "Pending":
-            return 10;
-
-        case "Picked Up":
-            return 25;
-
-        case "Processing":
-            return 40;
-
-        case "In Transit":
-            return 65;
-
-        case "Out For Delivery":
-            return 90;
-
-        case "Delivered":
-            return 100;
-
-        case "Delayed":
-            return 55;
-
-        case "Held":
-            return 45;
-
-        case "Cancelled":
-            return 0;
-
-        default:
-            return 0;
-    }
-}
-
-
-/* =========================================================
-   TIMESTAMP HELPER
-========================================================= */
-
-function getTimestamp(value) {
-
-    if (!value) return 0;
-
-
-    if (
-        typeof value.toMillis === "function"
-    ) {
-
-        return value.toMillis();
-    }
-
-
-    if (
-        typeof value.toDate === "function"
-    ) {
-
-        return value.toDate().getTime();
-    }
-
-
-    if (typeof value === "number") {
-
-        return value;
-    }
-
-
-    const parsed =
-        new Date(value).getTime();
-
-
-    return isNaN(parsed)
-        ? 0
-        : parsed;
-}
-
-
-/* =========================================================
-   BASIC HTML ESCAPING
-========================================================= */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-/* =========================================================
-   TIMELINE
-========================================================= */
-
-function renderTimeline(entries) {
-
-    const timeline =
-        document.getElementById("timeline");
-
-    if (!timeline) return;
-
-
-    timeline.innerHTML = "";
-
-
-    if (
-        !Array.isArray(entries) ||
-        entries.length === 0
-    ) {
-
-        timeline.innerHTML = `
-            <div class="timeline-item">
-
-                <h4>Shipment Created</h4>
-
-                <div class="timeline-location">
-                    Tracking information is being prepared.
-                </div>
-
-                <div class="timeline-time">
-                    No timeline updates yet
-                </div>
-
-            </div>
-        `;
-
-        return;
-    }
-
-
-    entries
-        .slice()
-        .sort((a, b) => {
-
-            const aTime =
-                getTimestamp(a.createdAt);
-
-            const bTime =
-                getTimestamp(b.createdAt);
-
-            return bTime - aTime;
-
-        })
-        .forEach((item) => {
-
-            const div =
-                document.createElement("div");
-
-            div.className =
-                "timeline-item";
-
-
-            let tick = "";
-
-
-            if (
-                item.status === "Out For Delivery" ||
-                item.status === "Delivered"
-            ) {
-
-                tick =
-                    `<span class="tick">✓</span>`;
-            }
-
-
-            div.innerHTML = `
-
-                <h4>
-                    ${escapeHTML(
-                        item.status || "Update"
-                    )}
-
-                    ${tick}
-                </h4>
-
-                <div class="timeline-location">
-                    ${escapeHTML(
-                        item.location ||
-                        "Location unavailable"
-                    )}
-                </div>
-
-                <div class="timeline-time">
-                    ${formatDate(item.createdAt)}
-                </div>
-
-            `;
-
-
-            timeline.appendChild(div);
-
-        });
-}
-
-
-/* =========================================================
-   VISUAL PROGRESS
-========================================================= */
-
-function updateVisuals(status) {
-
-    const progress =
-        getProgress(status);
-
-
-    if (progressFill) {
-
-        progressFill.style.width =
-            progress + "%";
-    }
-
-
-    if (truck) {
-
-        truck.style.left =
-            `calc(${progress}% - 0px)`;
-    }
-
-
-    if (mapTruck) {
-
-        const mapProgress =
-            10 + (progress * 0.80);
-
-        mapTruck.style.left =
-            `calc(${mapProgress}% - 17px)`;
-    }
-}
-
-
-/* =========================================================
-   CLEAN URL
-========================================================= */
-
-/*
-   When GitHub Pages sends:
-
-   /Fedex/TRK-LAG-C969J9SO
-
-   the 404.html file redirects internally to:
-
-   /Fedex/track.html?code=TRK-LAG-C969J9SO
-
-   This changes the browser address back to:
-
-   /Fedex/TRK-LAG-C969J9SO
-
-   without reloading the page.
-*/
-
-function restoreCleanURL(code) {
-
-    if (!code) return;
-
+    if(!code) return;
 
     const cleanPath =
-        "/Fedex/" +
-        encodeURIComponent(code);
+        "/Fedex/" + encodeURIComponent(code);
 
-
-    if (
+    if(
         window.location.pathname !== cleanPath ||
         window.location.search
-    ) {
-
+    ){
         window.history.replaceState(
             {},
             "",
@@ -380,367 +63,719 @@ function restoreCleanURL(code) {
 
 
 /* =========================================================
-   LOAD SHIPMENT
+   HELPERS
 ========================================================= */
 
-if (!trackingCode) {
+function escapeHTML(value){
 
-    if (loading) {
-
-        loading.style.display =
-            "none";
+    if(value === null || value === undefined){
+        return "";
     }
 
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
 
-    if (error) {
 
-        error.style.display =
-            "block";
+function getTimestamp(value){
 
-        error.innerText =
-            "Tracking code missing.";
+    if(!value){
+        return null;
     }
 
-} else {
+    if(typeof value.toMillis === "function"){
+        return value.toMillis();
+    }
 
-    const normalizedCode =
-        trackingCode
+    if(value instanceof Date){
+        return value.getTime();
+    }
+
+    if(typeof value === "number"){
+        return value;
+    }
+
+    if(typeof value === "string"){
+
+        const time =
+            new Date(value).getTime();
+
+        return Number.isNaN(time)
+            ? null
+            : time;
+    }
+
+    if(
+        typeof value === "object" &&
+        typeof value.seconds === "number"
+    ){
+
+        return (
+            value.seconds * 1000 +
+            Math.floor(
+                (value.nanoseconds || 0) / 1000000
+            )
+        );
+    }
+
+    return null;
+}
+
+
+/* =========================================================
+   U.S. EASTERN TIME
+========================================================= */
+
+function formatEasternTime(value){
+
+    const timestamp =
+        getTimestamp(value);
+
+    if(!timestamp){
+        return "Time unavailable";
+    }
+
+    try{
+
+        return new Intl.DateTimeFormat(
+            "en-US",
+            {
+                month:"short",
+                day:"numeric",
+                year:"numeric",
+                hour:"numeric",
+                minute:"2-digit",
+                hour12:true,
+                timeZone:"America/New_York",
+                timeZoneName:"short"
+            }
+        ).format(new Date(timestamp));
+
+    }catch(error){
+
+        return new Date(timestamp)
+            .toLocaleString("en-US");
+    }
+}
+
+
+function formatShortDate(value){
+
+    const timestamp =
+        getTimestamp(value);
+
+    if(!timestamp){
+        return "—";
+    }
+
+    try{
+
+        return new Intl.DateTimeFormat(
+            "en-US",
+            {
+                month:"short",
+                day:"numeric",
+                timeZone:"America/New_York"
+            }
+        ).format(new Date(timestamp));
+
+    }catch(error){
+
+        return "—";
+    }
+}
+
+
+/* =========================================================
+   DEFAULT STATUS MESSAGES
+========================================================= */
+
+function defaultStatusMessage(status){
+
+    const messages = {
+
+        "Pending":
+            "Your shipment has been received and is being prepared.",
+
+        "Picked Up":
+            "Your package has been picked up and is on its way.",
+
+        "Processing":
+            "Your shipment is currently being processed.",
+
+        "In Transit":
+            "Your package is currently in transit.",
+
+        "Out For Delivery":
+            "Your package is on the way and will be delivered today.",
+
+        "Delivered":
+            "Your package has been successfully delivered.",
+
+        "Delayed":
+            "Your shipment has been delayed. Please check back for updates.",
+
+        "Held":
+            "Your shipment is currently being held for further processing.",
+
+        "Cancelled":
+            "This shipment has been cancelled."
+
+    };
+
+    return messages[status] ||
+        "Your shipment is currently being processed.";
+}
+
+
+/* =========================================================
+   STATUS NORMALIZATION
+========================================================= */
+
+function normalizeStatus(status){
+
+    if(!status){
+        return "Pending";
+    }
+
+    const text =
+        String(status)
             .trim()
-            .toUpperCase();
+            .toLowerCase();
+
+    const statuses = [
+        "Pending",
+        "Picked Up",
+        "Processing",
+        "In Transit",
+        "Out For Delivery",
+        "Delivered",
+        "Delayed",
+        "Held",
+        "Cancelled"
+    ];
+
+    return statuses.find(
+        item => item.toLowerCase() === text
+    ) || status;
+}
 
 
-    /* Restore clean URL */
+/* =========================================================
+   PROGRESS
+========================================================= */
 
-    restoreCleanURL(
-        normalizedCode
-    );
+const progressMap = {
+
+    "Pending":10,
+    "Picked Up":25,
+    "Processing":40,
+    "In Transit":65,
+    "Out For Delivery":90,
+    "Delivered":100,
+
+    "Delayed":55,
+    "Held":45,
+    "Cancelled":0
+};
 
 
-    /* Update browser tab */
+function updateVisuals(status){
 
-    document.title =
-        `FedExStack Tracker — ${normalizedCode}`;
+    const progress =
+        progressMap[status] ?? 10;
+
+    const progressFill =
+        document.getElementById("progressFill");
+
+    if(progressFill){
+        progressFill.style.width =
+            `${progress}%`;
+    }
+
+    const items =
+        document.querySelectorAll(
+            ".progress-item"
+        );
+
+    const order = [
+        "Pending",
+        "Picked Up",
+        "Processing",
+        "In Transit",
+        "Out For Delivery",
+        "Delivered"
+    ];
+
+    const currentIndex =
+        order.indexOf(status);
+
+    items.forEach(item => {
+
+        item.classList.remove(
+            "completed",
+            "current"
+        );
+
+        const itemStatus =
+            item.dataset.status;
+
+        const itemIndex =
+            order.indexOf(itemStatus);
+
+        if(
+            currentIndex >= 0 &&
+            itemIndex < currentIndex
+        ){
+
+            item.classList.add("completed");
+
+        }else if(itemStatus === status){
+
+            item.classList.add("current");
+        }
+
+    });
+}
 
 
-    /* Firestore shipment */
+/* =========================================================
+   STATUS DATES
+========================================================= */
 
-    const shipmentRef =
-        doc(
-            db,
-            "shipments",
-            normalizedCode
+function updateProgressDates(timeline){
+
+    document
+        .querySelectorAll(".progress-date")
+        .forEach(element => {
+
+            element.textContent = "—";
+
+        });
+
+
+    timeline.forEach(item => {
+
+        const status =
+            normalizeStatus(item.status);
+
+        const id =
+            "date-" +
+            status.replace(/\s+/g,"-");
+
+        const element =
+            document.getElementById(id);
+
+        if(element && item.createdAt){
+
+            element.textContent =
+                formatShortDate(
+                    item.createdAt
+                );
+        }
+
+    });
+}
+
+
+/* =========================================================
+   SHIPMENT HISTORY
+========================================================= */
+
+function renderTimeline(entries){
+
+    const timelineElement =
+        document.getElementById("timeline");
+
+    if(!timelineElement){
+        return;
+    }
+
+    if(
+        !Array.isArray(entries) ||
+        entries.length === 0
+    ){
+
+        timelineElement.innerHTML = `
+            <div class="loading">
+                No shipment history available yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const sorted =
+        [...entries].sort(
+            (a,b) => {
+
+                const timeA =
+                    getTimestamp(a.createdAt) || 0;
+
+                const timeB =
+                    getTimestamp(b.createdAt) || 0;
+
+                return timeB - timeA;
+            }
         );
 
 
-    onSnapshot(
+    timelineElement.innerHTML =
+        sorted.map((item,index) => {
 
-        shipmentRef,
+            const status =
+                normalizeStatus(item.status);
 
-        (docSnap) => {
+            const location =
+                item.location ||
+                "Location unavailable";
 
-            if (loading) {
-
-                loading.style.display =
-                    "none";
-            }
-
-
-            if (!docSnap.exists()) {
-
-                if (shipmentView) {
-
-                    shipmentView.style.display =
-                        "none";
-                }
-
-
-                if (error) {
-
-                    error.style.display =
-                        "block";
-
-                    error.innerText =
-                        "Shipment not found.";
-                }
-
-                return;
-            }
-
-
-            if (error) {
-
-                error.style.display =
-                    "none";
-            }
-
-
-            const shipment =
-                docSnap.data();
-
-
-            if (shipmentView) {
-
-                shipmentView.style.display =
-                    "block";
-            }
-
-
-            /* =================================================
-               TRACKING CODE
-            ================================================= */
-
-            const code =
-                shipment.trackingCode ||
-                normalizedCode;
-
-
-            const trackingCodeElement =
-                document.getElementById(
-                    "trackingCode"
+            const time =
+                formatEasternTime(
+                    item.createdAt
                 );
 
-            if (trackingCodeElement) {
+            return `
+                <div class="timeline-item ${
+                    index === 0
+                        ? "current"
+                        : ""
+                }">
 
-                trackingCodeElement.innerText =
-                    code;
-            }
+                    <div class="timeline-track"></div>
+
+                    <div class="timeline-dot"></div>
+
+                    <div class="timeline-content">
+
+                        <div class="timeline-status">
+                            ${escapeHTML(status)}
+                        </div>
+
+                        <div class="timeline-location">
+                            ${escapeHTML(location)}
+                        </div>
+
+                    </div>
+
+                    <div class="timeline-time">
+                        ${escapeHTML(time)}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
 
 
-            const trackingCode2Element =
-                document.getElementById(
-                    "trackingCode2"
+/* =========================================================
+   COPY TRACKING NUMBER
+========================================================= */
+
+function setupCopyButton(code){
+
+    const button =
+        document.getElementById(
+            "copyTracking"
+        );
+
+    if(!button){
+        return;
+    }
+
+    button.addEventListener(
+        "click",
+        async () => {
+
+            try{
+
+                await navigator.clipboard.writeText(
+                    code
                 );
 
-            if (trackingCode2Element) {
+                const original =
+                    button.textContent;
 
-                trackingCode2Element.innerText =
-                    code;
-            }
+                button.textContent = "✓";
 
+                setTimeout(() => {
 
-            /* =================================================
-               STATUS
-            ================================================= */
+                    button.textContent =
+                        original;
 
-            const statusElement =
-                document.getElementById(
-                    "status"
+                },1200);
+
+            }catch(error){
+
+                console.error(
+                    "Copy failed:",
+                    error
                 );
-
-            if (statusElement) {
-
-                statusElement.innerText =
-                    shipment.status ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               LOCATION
-            ================================================= */
-
-            const locationElement =
-                document.getElementById(
-                    "location"
-                );
-
-            if (locationElement) {
-
-                locationElement.innerText =
-                    shipment.currentLocation ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               DESTINATION
-            ================================================= */
-
-            const destinationElement =
-                document.getElementById(
-                    "destination"
-                );
-
-            if (destinationElement) {
-
-                destinationElement.innerText =
-                    shipment.destination ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               RECEIVER
-            ================================================= */
-
-            const receiverElement =
-                document.getElementById(
-                    "receiver"
-                );
-
-            if (receiverElement) {
-
-                receiverElement.innerText =
-                    shipment.receiver ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               SENDER
-            ================================================= */
-
-            const senderElement =
-                document.getElementById(
-                    "sender"
-                );
-
-            if (senderElement) {
-
-                senderElement.innerText =
-                    shipment.sender ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               PHONES
-            ================================================= */
-
-            const senderPhoneElement =
-                document.getElementById(
-                    "senderPhone"
-                );
-
-            if (senderPhoneElement) {
-
-                senderPhoneElement.innerText =
-                    shipment.senderPhone ||
-                    "N/A";
-            }
-
-
-            const receiverPhoneElement =
-                document.getElementById(
-                    "receiverPhone"
-                );
-
-            if (receiverPhoneElement) {
-
-                receiverPhoneElement.innerText =
-                    shipment.receiverPhone ||
-                    "N/A";
-            }
-
-
-            /* =================================================
-               MAP LABELS
-            ================================================= */
-
-            const mapOrigin =
-                document.getElementById(
-                    "mapOrigin"
-                );
-
-            if (mapOrigin) {
-
-                mapOrigin.innerText =
-                    shipment.currentLocation ||
-                    "Origin";
-            }
-
-
-            const mapDestination =
-                document.getElementById(
-                    "mapDestination"
-                );
-
-            if (mapDestination) {
-
-                mapDestination.innerText =
-                    shipment.destination ||
-                    "Destination";
-            }
-
-
-            /* =================================================
-               PROGRESS
-            ================================================= */
-
-            updateVisuals(
-                shipment.status
-            );
-
-
-            /* =================================================
-               TIMELINE
-            ================================================= */
-
-            renderTimeline(
-                shipment.timeline || []
-            );
-
-        },
-
-        (firebaseError) => {
-
-            console.error(
-                "Shipment listener error:",
-                firebaseError
-            );
-
-
-            if (loading) {
-
-                loading.style.display =
-                    "none";
-            }
-
-
-            if (shipmentView) {
-
-                shipmentView.style.display =
-                    "none";
-            }
-
-
-            if (error) {
-
-                error.style.display =
-                    "block";
-
-                error.innerText =
-                    "Unable to load shipment information.";
             }
 
         }
-
     );
 }
 
 
 /* =========================================================
-   TELEGRAM SUPPORT
+   SET TEXT SAFELY
 ========================================================= */
 
-const supportBtn =
-    document.querySelector(
-        ".support-btn"
+function setText(id,value){
+
+    const element =
+        document.getElementById(id);
+
+    if(element){
+
+        element.textContent =
+            value || "—";
+    }
+}
+
+
+/* =========================================================
+   LOAD SHIPMENT
+========================================================= */
+
+function loadShipment(code){
+
+    if(!code){
+
+        document.body.innerHTML = `
+            <div class="error">
+                Invalid tracking number.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    restoreCleanURL(code);
+
+    document.title =
+        `${code} — FedEx Tracker`;
+
+
+    setText(
+        "trackingCode",
+        code
     );
 
 
-if (supportBtn) {
+    setText(
+        "trackingCode2",
+        code
+    );
 
-    supportBtn.addEventListener(
-        "click",
-        () => {
 
-            window.open(
-                "https://t.me/rfedexstack",
-                "_blank",
-                "noopener"
+    setupCopyButton(code);
+
+
+    const shipmentRef =
+        doc(
+            db,
+            "shipments",
+            code
+        );
+
+
+    onSnapshot(
+        shipmentRef,
+
+        snapshot => {
+
+            if(!snapshot.exists()){
+
+                document.querySelector(
+                    ".content"
+                ).innerHTML = `
+                    <div class="error">
+                        Shipment not found.<br><br>
+                        Please check your tracking number.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const shipment =
+                snapshot.data();
+
+
+            /* CURRENT STATUS */
+
+            const status =
+                normalizeStatus(
+                    shipment.status
+                );
+
+
+            setText(
+                "status",
+                status
             );
+
+
+            /* STATUS MESSAGE */
+
+            setText(
+                "statusMessage",
+                shipment.statusMessage ||
+                defaultStatusMessage(status)
+            );
+
+
+            /* ORIGIN */
+
+            const origin =
+                shipment.origin ||
+                shipment.mapOrigin ||
+                "—";
+
+
+            setText(
+                "origin",
+                origin
+            );
+
+
+            setText(
+                "mapOrigin",
+                origin
+            );
+
+
+            /* DESTINATION */
+
+            const destination =
+                shipment.destination ||
+                shipment.mapDestination ||
+                "—";
+
+
+            setText(
+                "destination",
+                destination
+            );
+
+
+            setText(
+                "mapDestination",
+                destination
+            );
+
+
+            /* DELIVERY ESTIMATE */
+
+            setText(
+                "estimatedDelivery",
+                shipment.estimatedDelivery ||
+                shipment.deliveryDate ||
+                "—"
+            );
+
+
+            /* DELIVERY TIME */
+
+            setText(
+                "deliveryWindow",
+                shipment.deliveryWindow ||
+                shipment.deliveryTime ||
+                "—"
+            );
+
+
+            /* PROGRESS */
+
+            updateVisuals(status);
+
+
+            /* HISTORY */
+
+            const timeline =
+                Array.isArray(
+                    shipment.timeline
+                )
+                    ? shipment.timeline
+                    : [];
+
+
+            renderTimeline(
+                timeline
+            );
+
+
+            updateProgressDates(
+                timeline
+            );
+
+
+            /* IF CURRENT STATUS IS NOT IN
+               STANDARD PROGRESS, KEEP THE
+               PROGRESS VISUAL REASONABLE */
+
+            if(
+                status === "Delayed" ||
+                status === "Held"
+            ){
+
+                const fill =
+                    document.getElementById(
+                        "progressFill"
+                    );
+
+                if(fill){
+                    fill.style.width =
+                        `${progressMap[status]}%`;
+                }
+            }
+
+        },
+
+        error => {
+
+            console.error(
+                "Shipment listener error:",
+                error
+            );
+
+            const content =
+                document.querySelector(
+                    ".content"
+                );
+
+            if(content){
+
+                content.innerHTML = `
+                    <div class="error">
+                        Unable to load shipment information.
+                        Please try again later.
+                    </div>
+                `;
+            }
 
         }
     );
 }
+
+
+/* =========================================================
+   START
+========================================================= */
+
+const trackingCode =
+    getTrackingCode();
+
+loadShipment(
+    trackingCode
+);
