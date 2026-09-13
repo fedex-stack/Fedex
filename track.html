@@ -1,1549 +1,1049 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
->
-
-<title>Track Shipment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FedEx Tracker</title>
 
 <style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "SF Pro Text",
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-
-    -webkit-font-smoothing: antialiased;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
+html,body{
+    min-height:100%;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:#eef2f7;
+    color:#17213d;
+}
 
-    min-height: 100vh;
+body{
+    padding-bottom:30px;
+}
 
-    color: #172554;
+button,
+a{
+    -webkit-tap-highlight-color:transparent;
+}
 
+.app{
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    background:#f4f7fb;
+    overflow:hidden;
+}
+
+/* HEADER */
+.header{
+    height:86px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    border-bottom:1px solid #e8edf4;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.brand-icon{
+    width:48px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.brand-icon svg{
+    width:48px;
+    height:34px;
+}
+
+.brand-text{
+    line-height:1;
+}
+
+.brand-text strong{
+    display:block;
+    font-size:25px;
+    color:#4b168c;
+    font-weight:800;
+}
+
+.brand-text span{
+    display:block;
+    color:#173d9a;
+    font-size:17px;
+    font-weight:700;
+    margin-top:2px;
+}
+
+.menu{
+    width:42px;
+    height:42px;
+    border:0;
+    background:transparent;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.menu-lines{
+    width:28px;
+}
+
+.menu-lines span{
+    display:block;
+    height:3px;
+    background:#18213b;
+    margin:5px 0;
+    border-radius:5px;
+}
+
+/* HERO */
+.hero{
+    position:relative;
+    min-height:250px;
+    padding:22px 26px 28px;
+    overflow:hidden;
+    color:#fff;
     background:
-        radial-gradient(
-            circle at 50% -10%,
-            #dce7ff 0%,
-            #f4f7fc 38%,
-            #f8f9fb 100%
-        );
-
-    padding: 0 14px 40px;
+        radial-gradient(circle at 88% 20%,rgba(95,54,255,.75),transparent 38%),
+        linear-gradient(120deg,#082f76 0%,#172a8f 45%,#3819a4 100%);
 }
 
-.container {
-
-    max-width: 900px;
-
-    margin: auto;
-}
-
-
-/* =========================
-   HEADER
-========================= */
-
-.header {
-
-    height: 75px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-}
-
-.back-btn {
-
-    width: 44px;
-    height: 44px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    border: 1px solid rgba(255,255,255,.85);
-
-    background: rgba(255,255,255,.72);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    color: #172b86;
-
-    cursor: pointer;
-}
-
-.back-btn svg {
-
-    width: 22px;
-    height: 22px;
-}
-
-.header-title {
-
-    text-align: center;
-}
-
-.header-title strong {
-
-    display: block;
-
-    color: #172b86;
-
-    font-size: 19px;
-
-    font-weight: 800;
-}
-
-.header-title span {
-
-    display: block;
-
-    color: #8791a7;
-
-    font-size: 10px;
-
-    margin-top: 3px;
-
-    letter-spacing: .6px;
-}
-
-.header-space {
-
-    width: 44px;
-}
-
-
-/* =========================
-   MAIN CARD
-========================= */
-
-.card {
-
+.hero::after{
+    content:"";
+    position:absolute;
+    right:-30px;
+    bottom:-15px;
+    width:260px;
+    height:150px;
     background:
-        rgba(255,255,255,.73);
-
-    border: 1px solid rgba(255,255,255,.9);
-
-    border-radius: 25px;
-
-    padding: 22px;
-
-    margin-bottom: 16px;
-
-    box-shadow:
-        0 15px 40px rgba(28,48,100,.08);
-
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+        linear-gradient(145deg,transparent 25%,rgba(255,255,255,.08) 26%,transparent 27%);
+    opacity:.7;
 }
 
+.back{
+    position:relative;
+    z-index:3;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:0;
+    background:none;
+    color:#fff;
+    font-size:15px;
+    margin-bottom:23px;
+    cursor:pointer;
+}
 
-/* =========================
-   STATUS CARD
-========================= */
+.back-arrow{
+    font-size:27px;
+    line-height:12px;
+    font-weight:300;
+}
 
-.status-card {
+.tracking-row{
+    position:relative;
+    z-index:3;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
-    overflow: hidden;
+.tracking-number{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:.2px;
+}
 
-    position: relative;
+.copy-btn{
+    border:0;
+    background:transparent;
+    color:#fff;
+    width:28px;
+    height:30px;
+    cursor:pointer;
+    font-size:22px;
+}
 
+.status-pill{
+    position:relative;
+    z-index:3;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:25px;
+    padding:10px 16px;
+    border-radius:30px;
+    background:#13b978;
+    color:#fff;
+    font-size:17px;
+    font-weight:750;
+    box-shadow:0 5px 15px rgba(0,0,0,.18);
+}
+
+.status-icon{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#fff;
+    color:#0cae70;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+    font-weight:900;
+}
+
+.status-message{
+    position:relative;
+    z-index:3;
+    max-width:340px;
+    margin-top:15px;
+    font-size:15px;
+    line-height:1.55;
+    font-weight:500;
+}
+
+/* TRUCK ILLUSTRATION */
+.hero-truck{
+    position:absolute;
+    right:-20px;
+    bottom:5px;
+    width:245px;
+    height:125px;
+    z-index:1;
+    opacity:.9;
+}
+
+.truck-body{
+    position:absolute;
+    right:22px;
+    bottom:23px;
+    width:180px;
+    height:75px;
+    background:linear-gradient(180deg,#fff,#e7eaf0);
+    border-radius:6px 12px 5px 5px;
+    transform:skew(-4deg);
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+.truck-logo{
+    position:absolute;
+    left:16px;
+    top:15px;
+    color:#4b168c;
+    font-size:25px;
+    font-weight:900;
+}
+
+.truck-logo small{
+    display:block;
+    font-size:11px;
+    color:#273b9e;
+    margin-top:-4px;
+}
+
+.truck-cab{
+    position:absolute;
+    right:0;
+    bottom:23px;
+    width:62px;
+    height:61px;
+    background:linear-gradient(145deg,#eef1f5,#b9c0cc);
+    border-radius:7px 15px 7px 4px;
+}
+
+.truck-window{
+    position:absolute;
+    right:9px;
+    top:8px;
+    width:37px;
+    height:23px;
+    background:#253454;
+    border-radius:3px 8px 3px 3px;
+}
+
+.wheel{
+    position:absolute;
+    bottom:4px;
+    width:31px;
+    height:31px;
+    background:#171b27;
+    border:6px solid #707783;
+    border-radius:50%;
+}
+
+.wheel.one{left:42px;}
+.wheel.two{right:23px;}
+
+/* MAIN CARDS */
+.content{
+    position:relative;
+    z-index:5;
+    margin-top:-1px;
+    padding:0 14px;
+}
+
+.card{
+    background:rgba(255,255,255,.96);
+    border:1px solid #e8edf4;
+    border-radius:23px;
+    box-shadow:0 5px 18px rgba(31,49,87,.07);
+    margin-bottom:14px;
+}
+
+/* ROUTE */
+.route-card{
+    padding:20px 17px;
+}
+
+.route-grid{
+    display:grid;
+    grid-template-columns:1fr 34px 1fr;
+    align-items:center;
+}
+
+.route-side{
+    min-width:0;
+}
+
+.route-arrow{
+    text-align:center;
+    color:#172b70;
+    font-size:26px;
+}
+
+.route-top{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.pin{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    background:#edf2ff;
+    color:#19378f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+    font-size:17px;
+}
+
+.route-label{
+    font-size:13px;
+    color:#687692;
+    margin-bottom:3px;
+}
+
+.route-value{
+    font-size:16px;
+    font-weight:800;
+    line-height:1.3;
+    word-break:break-word;
+}
+
+.route-caption{
+    font-size:13px;
+    color:#74809a;
+    margin-top:4px;
+}
+
+.route-divider{
+    height:1px;
+    background:#edf0f5;
+    margin:18px 0;
+}
+
+.delivery-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.delivery-box{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding-right:12px;
+}
+
+.delivery-box + .delivery-box{
+    border-left:1px solid #e6eaf0;
+    padding-left:17px;
+    padding-right:0;
+}
+
+.delivery-icon{
+    width:27px;
+    flex:none;
+    font-size:23px;
+    color:#16275d;
+}
+
+.delivery-label{
+    font-size:13px;
+    color:#697692;
+    margin-bottom:4px;
+}
+
+.delivery-value{
+    font-size:16px;
+    font-weight:800;
+    line-height:1.35;
+}
+
+.local-time{
+    color:#697692;
+    font-size:12px;
+    font-weight:600;
+    margin-top:2px;
+}
+
+/* PROGRESS */
+.progress-card{
+    padding:24px 15px 19px;
+}
+
+.progress-line{
+    position:relative;
+    height:6px;
+    background:#dce4f0;
+    border-radius:10px;
+    margin:4px 23px 0;
+}
+
+.progress-fill{
+    position:absolute;
+    left:0;
+    top:0;
+    height:100%;
+    width:0%;
+    background:#13ae76;
+    border-radius:10px;
+    transition:width .35s ease;
+}
+
+.progress-items{
+    position:relative;
+    margin-top:-17px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.progress-item{
+    width:64px;
+    text-align:center;
+    position:relative;
+}
+
+.progress-dot{
+    width:34px;
+    height:34px;
+    margin:0 auto 9px;
+    border-radius:50%;
+    background:#dce5f3;
+    border:3px solid #dce5f3;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:900;
+}
+
+.progress-item.completed .progress-dot{
+    background:#12ae76;
+    border-color:#12ae76;
+}
+
+.progress-item.current .progress-dot{
+    width:42px;
+    height:42px;
+    margin-top:-4px;
+    background:#4a18c7;
+    border-color:#4a18c7;
+    box-shadow:0 5px 14px rgba(74,24,199,.25);
+    font-size:19px;
+}
+
+.progress-label{
+    font-size:12px;
+    line-height:1.2;
+    color:#50607d;
+    font-weight:600;
+}
+
+.progress-item.current .progress-label{
+    color:#18213d;
+    font-weight:800;
+}
+
+.progress-date{
+    font-size:11px;
+    color:#72809a;
+    margin-top:3px;
+}
+
+/* HISTORY */
+.history-card{
+    padding:19px 16px 15px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    color:#17213d;
+    margin-bottom:16px;
+}
+
+.title-icon{
+    font-size:22px;
+}
+
+.timeline{
+    position:relative;
+    padding-left:4px;
+}
+
+.timeline-item{
+    position:relative;
+    display:grid;
+    grid-template-columns:28px 1fr auto;
+    gap:8px;
+    min-height:65px;
+}
+
+.timeline-track{
+    position:absolute;
+    left:9px;
+    top:21px;
+    bottom:-4px;
+    width:2px;
+    background:#dce3ed;
+}
+
+.timeline-item:last-child .timeline-track{
+    display:none;
+}
+
+.timeline-dot{
+    position:relative;
+    z-index:2;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    margin-top:4px;
+    border:3px solid #fff;
+    background:#13ad76;
+    box-shadow:0 0 0 2px #13ad76;
+}
+
+.timeline-item.current .timeline-dot{
+    background:#fff;
+    box-shadow:0 0 0 2px #4b1cc5;
+}
+
+.timeline-content{
+    padding-bottom:14px;
+}
+
+.timeline-status{
+    font-size:15px;
+    font-weight:800;
+    color:#1c2948;
+}
+
+.timeline-location{
+    margin-top:3px;
+    color:#65728c;
+    font-size:12px;
+    line-height:1.3;
+}
+
+.timeline-time{
+    font-size:11px;
+    color:#71809c;
+    white-space:nowrap;
+    text-align:right;
+    padding-top:2px;
+}
+
+/* MAP */
+.map-card{
+    padding:0;
+    overflow:hidden;
+}
+
+.map{
+    position:relative;
+    height:125px;
+    overflow:hidden;
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.92),
-            rgba(238,243,255,.76)
-        );
+        linear-gradient(20deg,transparent 45%,rgba(57,150,86,.15) 46%,transparent 48%),
+        linear-gradient(150deg,transparent 43%,rgba(80,150,80,.12) 44%,transparent 48%),
+        #d9edf4;
 }
 
-.status-card::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 180px;
-    height: 180px;
-
-    right: -80px;
-    top: -80px;
-
-    border-radius: 50%;
-
+.map::before{
+    content:"";
+    position:absolute;
+    inset:0;
     background:
-        radial-gradient(
-            circle,
-            rgba(71,71,220,.12),
-            transparent 70%
-        );
-
-    pointer-events: none;
+        radial-gradient(ellipse at 20% 45%,#c6e5c9 0 12%,transparent 13%),
+        radial-gradient(ellipse at 65% 35%,#c6e5c9 0 14%,transparent 15%),
+        radial-gradient(ellipse at 88% 65%,#c6e5c9 0 10%,transparent 11%);
+    opacity:.8;
 }
 
-.live-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 8px 12px;
-
-    border-radius: 30px;
-
-    background: rgba(43,197,103,.10);
-
-    border: 1px solid rgba(43,197,103,.20);
-
-    color: #159447;
-
-    font-size: 11px;
-
-    font-weight: 750;
-
-    margin-bottom: 14px;
+.route-line{
+    position:absolute;
+    left:14%;
+    right:16%;
+    top:60%;
+    height:4px;
+    border-radius:8px;
+    background:#2878df;
+    transform:rotate(-9deg);
+    transform-origin:center;
 }
 
-.live-dot {
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #21c56a;
-
-    box-shadow:
-        0 0 0 4px rgba(33,197,106,.12);
+.map-point{
+    position:absolute;
+    z-index:2;
+    top:49%;
+    width:19px;
+    height:19px;
+    border-radius:50% 50% 50% 0;
+    transform:rotate(-45deg);
+    background:#16a970;
 }
 
-.status-title {
-
-    position: relative;
-
-    z-index: 2;
-
-    color: #17255c;
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-    letter-spacing: -1px;
-
-    margin-bottom: 8px;
+.map-point span{
+    display:block;
+    width:7px;
+    height:7px;
+    margin:6px;
+    border-radius:50%;
+    background:#fff;
 }
 
-.status-message {
-
-    position: relative;
-
-    z-index: 2;
-
-    color: #68738c;
-
-    font-size: 13px;
-
-    line-height: 1.55;
-
-    margin-bottom: 15px;
-
-    max-width: 650px;
+.map-point.origin{
+    left:13%;
 }
 
-.status-code {
-
-    color: #79839a;
-
-    font-size: 12px;
-
-    margin-bottom: 20px;
+.map-point.destination{
+    right:16%;
+    background:#ec4e66;
 }
 
-.status-code strong {
-
-    color: #3d4a69;
+.map-truck{
+    position:absolute;
+    z-index:3;
+    left:48%;
+    top:43%;
+    font-size:24px;
+    transform:rotate(-8deg);
 }
 
-
-/* =========================
-   PROGRESS
-========================= */
-
-.progress-wrapper {
-
-    position: relative;
-
-    padding-top: 25px;
+.map-label{
+    position:absolute;
+    z-index:4;
+    font-size:12px;
+    font-weight:700;
+    color:#26344e;
+    top:74%;
 }
 
-.progress-bar {
-
-    height: 8px;
-
-    width: 100%;
-
-    background: #e3e7ef;
-
-    border-radius: 20px;
-
-    position: relative;
+.map-label.origin{
+    left:10%;
 }
 
-.progress-fill {
-
-    width: 0%;
-
-    height: 100%;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #3d36d8,
-            #2f8bea,
-            #29c878
-        );
-
-    transition: width 1s ease;
-
-    box-shadow:
-        0 0 14px rgba(54,103,220,.25);
+.map-label.destination{
+    right:11%;
 }
 
-#truck {
-
-    position: absolute;
-
-    top: 3px;
-
-    left: 0%;
-
-    width: 35px;
-    height: 35px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: white;
-
-    border: 2px solid #433bd3;
-
-    box-shadow:
-        0 6px 16px rgba(40,50,130,.18);
-
-    transition: left 1s ease;
-
-    transform: translateX(-50%);
+/* TELEGRAM */
+.telegram-button{
+    width:100%;
+    min-height:55px;
+    border:0;
+    border-top:1px solid #e8edf4;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    color:#1677d2;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    text-decoration:none;
 }
 
-#truck svg {
-
-    width: 19px;
-    height: 19px;
-
-    color: #3730b7;
+.telegram-icon{
+    width:31px;
+    height:31px;
+    border-radius:50%;
+    background:#168bd4;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
 }
 
-.progress-labels {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-top: 12px;
-
-    color: #8992a5;
-
-    font-size: 9px;
-
-    font-weight: 650;
+/* LOADING */
+.loading{
+    padding:50px 20px;
+    text-align:center;
+    color:#66738d;
 }
 
-
-/* =========================
-   ROUTE
-========================= */
-
-.route-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    margin-bottom: 18px;
+.error{
+    margin:20px 14px;
+    padding:20px;
+    border-radius:18px;
+    background:#fff;
+    color:#b42318;
+    text-align:center;
+    font-weight:700;
 }
 
-.route-column {
-
-    flex: 1;
-}
-
-.route-label {
-
-    color: #929bad;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: .7px;
-
-    margin-bottom: 6px;
-}
-
-.route-value {
-
-    color: #27345f;
-
-    font-size: 14px;
-
-    font-weight: 800;
-
-    word-break: break-word;
-}
-
-.route-arrow {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: #5369cf;
-
-    font-size: 22px;
-
-    padding-top: 13px;
-}
-
-
-/* =========================
-   DELIVERY INFO
-========================= */
-
-.delivery-box {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 12px;
-
-    margin-top: 15px;
-}
-
-.delivery-item {
-
-    padding: 14px;
-
-    border-radius: 16px;
-
-    background:
-        rgba(242,245,251,.75);
-
-    border:
-        1px solid rgba(40,60,120,.06);
-}
-
-.delivery-label {
-
-    display: block;
-
-    color: #929bad;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
-    text-transform: uppercase;
-
-    letter-spacing: .5px;
-
-    margin-bottom: 6px;
-}
-
-.delivery-value {
-
-    display: block;
-
-    color: #27345f;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    word-break: break-word;
-}
-
-
-/* =========================
-   MAP
-========================= */
-
-.map {
-
-    position: relative;
-
-    height: 180px;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e9effd,
-            #f7f9fd
-        );
-
-    border:
-        1px solid rgba(53,76,145,.08);
-}
-
-.map::before,
-.map::after {
-
-    content: "";
-
-    position: absolute;
-
-    background: rgba(83,103,160,.09);
-}
-
-.map::before {
-
-    width: 100%;
-    height: 1px;
-
-    top: 32%;
-}
-
-.map::after {
-
-    height: 100%;
-    width: 1px;
-
-    left: 45%;
-}
-
-.road {
-
-    position: absolute;
-
-    left: 10%;
-    right: 10%;
-
-    top: 50%;
-
-    height: 2px;
-
-    border-top:
-        2px dashed rgba(71,84,150,.28);
-
-    transform: rotate(-7deg);
-}
-
-.origin-dot,
-.destination-dot {
-
-    position: absolute;
-
-    width: 15px;
-    height: 15px;
-
-    border-radius: 50%;
-
-    z-index: 3;
-}
-
-.origin-dot {
-
-    left: 9%;
-    top: 62%;
-
-    background: #4436d7;
-
-    box-shadow:
-        0 0 0 6px rgba(68,54,215,.12);
-}
-
-.destination-dot {
-
-    right: 9%;
-    top: 36%;
-
-    background: #23b86b;
-
-    box-shadow:
-        0 0 0 6px rgba(35,184,107,.12);
-}
-
-#mapTruck {
-
-    position: absolute;
-
-    top: 47%;
-    left: 10%;
-
-    width: 34px;
-    height: 34px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: white;
-
-    border: 2px solid #4436d7;
-
-    z-index: 4;
-
-    transition: left 1s ease;
-
-    box-shadow:
-        0 7px 16px rgba(40,50,130,.15);
-}
-
-#mapTruck svg {
-
-    width: 18px;
-    height: 18px;
-
-    color: #4436d7;
-}
-
-.map-label {
-
-    position: absolute;
-
-    z-index: 5;
-
-    background: rgba(255,255,255,.78);
-
-    padding: 6px 9px;
-
-    border-radius: 9px;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    color: #465170;
-
-    backdrop-filter: blur(10px);
-}
-
-.origin-label {
-
-    left: 7%;
-    bottom: 12%;
-}
-
-.destination-label {
-
-    right: 5%;
-    top: 12%;
-}
-
-
-/* =========================
-   DETAILS
-========================= */
-
-.card-title {
-
-    color: #1a285f;
-
-    font-size: 17px;
-
-    font-weight: 800;
-
-    margin-bottom: 16px;
-}
-
-.detail-row {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 13px 0;
-
-    border-bottom:
-        1px solid rgba(28,43,90,.07);
-}
-
-.detail-row:last-child {
-
-    border-bottom: none;
-
-    padding-bottom: 0;
-}
-
-.detail-label {
-
-    color: #8a93a7;
-
-    font-size: 12px;
-}
-
-.detail-value {
-
-    color: #27345f;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    text-align: right;
-
-    word-break: break-word;
-}
-
-
-/* =========================
-   TIMELINE
-========================= */
-
-.timeline {
-
-    position: relative;
-
-    padding-left: 27px;
-}
-
-.timeline::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 6px;
-
-    top: 8px;
-
-    bottom: 8px;
-
-    width: 2px;
-
-    background: #e1e5ed;
-}
-
-.timeline-item {
-
-    position: relative;
-
-    margin-bottom: 13px;
-
-    padding: 15px;
-
-    border-radius: 16px;
-
-    background:
-        rgba(242,245,251,.74);
-
-    border:
-        1px solid rgba(40,60,120,.06);
-}
-
-.timeline-item:last-child {
-
-    margin-bottom: 0;
-}
-
-.timeline-item::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: -27px;
-
-    top: 20px;
-
-    width: 12px;
-    height: 12px;
-
-    border-radius: 50%;
-
-    background: #4436d7;
-
-    border: 3px solid #f7f9fd;
-
-    box-shadow:
-        0 0 0 2px #4436d7;
-}
-
-.timeline-item h4 {
-
-    color: #293766;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    margin-bottom: 5px;
-}
-
-.timeline-location {
-
-    color: #78829a;
-
-    font-size: 11px;
-
-    margin-bottom: 5px;
-}
-
-.timeline-time {
-
-    color: #9aa2b3;
-
-    font-size: 10px;
-}
-
-.tick {
-
-    color: #20ad61;
-
-    margin-left: 5px;
-}
-
-
-/* =========================
-   LOADING / ERROR
-========================= */
-
-#loading {
-
-    text-align: center;
-
-    padding: 70px 20px;
-
-    color: #7d879b;
-
-    font-size: 14px;
-}
-
-#error {
-
-    display: none;
-
-    text-align: center;
-
-    padding: 35px 20px;
-
-    color: #d33c4b;
-
-    background: rgba(255,255,255,.7);
-
-    border-radius: 20px;
-
-    margin-bottom: 20px;
-}
-
-
-/* =========================
-   SUPPORT
-========================= */
-
-.support-bar {
-
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 10px;
-}
-
-.support-btn {
-
-    flex: 1;
-
-    height: 50px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    border-radius: 15px;
-
-    color: white;
-
-    font-size: 12px;
-
-    font-weight: 750;
-
-    text-decoration: none;
-
-    box-shadow:
-        0 8px 20px rgba(40,60,130,.12);
-}
-
-.telegram-btn {
-
-    background: #229ed9;
-}
-
-.email-btn {
-
-    background: #5369cf;
-}
-
-.support-btn svg {
-
-    width: 18px;
-    height: 18px;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:600px) {
-
-    body {
-
-        padding:
-            0 10px 25px;
+/* MOBILE */
+@media(max-width:380px){
+    .hero{
+        padding-left:20px;
+        padding-right:20px;
     }
 
-    .header {
-
-        height: 68px;
+    .tracking-number{
+        font-size:20px;
     }
 
-    .card {
-
-        padding: 18px;
-
-        border-radius: 21px;
+    .status-message{
+        max-width:260px;
     }
 
-    .status-title {
-
-        font-size: 23px;
+    .progress-item{
+        width:54px;
     }
 
-    .route-header {
-
-        gap: 8px;
+    .progress-label{
+        font-size:10px;
     }
 
-    .route-value {
-
-        font-size: 12px;
-    }
-
-    .delivery-box {
-
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-    .map {
-
-        height: 145px;
-    }
-
-    .detail-row {
-
-        align-items: flex-start;
-    }
-
-    .detail-label {
-
-        max-width: 42%;
-    }
-
-    .detail-value {
-
-        max-width: 58%;
-    }
-
-    .support-bar {
-
-        position: sticky;
-
-        bottom: 10px;
-
-        z-index: 50;
+    .timeline-time{
+        font-size:10px;
     }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
+<div class="app">
 
-<div class="container">
-
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
+    <!-- HEADER -->
     <header class="header">
 
-        <button
-            class="back-btn"
-            onclick="history.back()"
-            aria-label="Go back">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 80 55" fill="none">
+                    <path d="M3 24h37l8-12h16l12 12v19H3V24Z"
+                          fill="#173b9b"/>
+                    <path d="M45 22h17l7 7H41l4-7Z"
+                          fill="#173b9b"/>
+                    <circle cx="20" cy="45" r="7" fill="#173b9b"/>
+                    <circle cx="62" cy="45" r="7" fill="#173b9b"/>
+                    <path d="M0 14h22M0 21h15M8 7h20"
+                          stroke="#173b9b"
+                          stroke-width="5"
+                          stroke-linecap="round"/>
+                </svg>
+            </div>
 
-            <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round">
-
-                <path d="M19 12H5"/>
-                <path d="m12 19-7-7 7-7"/>
-
-            </svg>
-
-        </button>
-
-
-        <div class="header-title">
-
-            <strong>
-                Track Shipment
-            </strong>
-
-            <span>
-                LIVE SHIPMENT MONITORING
-            </span>
-
+            <div class="brand-text">
+                <strong>FedEx</strong>
+                <span>Tracker</span>
+            </div>
         </div>
 
-
-        <div class="header-space"></div>
+        <button class="menu" aria-label="Menu">
+            <div class="menu-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
 
     </header>
 
 
-    <div id="loading">
-        Loading shipment...
-    </div>
+    <!-- HERO -->
+    <section class="hero">
 
+        <button class="back" onclick="history.back()">
+            <span class="back-arrow">‹</span>
+            Back
+        </button>
 
-    <div id="error"></div>
-
-
-    <main
-        id="shipmentView"
-        style="display:none;"
-    >
-
-
-        <!-- =========================
-             STATUS
-        ========================= -->
-
-        <section class="card status-card">
-
-
-            <div class="live-badge">
-
-                <span class="live-dot"></span>
-
-                Live Tracking Active
-
+        <div class="tracking-row">
+            <div class="tracking-number" id="trackingCode">
+                Loading...
             </div>
 
+            <button class="copy-btn" id="copyTracking" title="Copy tracking number">
+                ▣
+            </button>
+        </div>
 
-            <div
-                class="status-title"
-                id="status">
-                —
+        <div class="status-pill">
+            <span class="status-icon">✓</span>
+            <span id="status">Loading...</span>
+        </div>
+
+        <p class="status-message" id="statusMessage">
+            Loading shipment status...
+        </p>
+
+        <div class="hero-truck" aria-hidden="true">
+            <div class="truck-body">
+                <div class="truck-logo">
+                    FedEx
+                    <small>TRACKING</small>
+                </div>
             </div>
 
-
-            <div
-                class="status-message"
-                id="statusMessage">
-                Shipment information is being updated.
+            <div class="truck-cab">
+                <div class="truck-window"></div>
             </div>
 
+            <div class="wheel one"></div>
+            <div class="wheel two"></div>
+        </div>
 
-            <div class="status-code">
-
-                Tracking:
-
-                <strong id="trackingCode">
-                    —
-                </strong>
-
-            </div>
+    </section>
 
 
-            <div class="progress-wrapper">
+    <!-- MAIN CONTENT -->
+    <main class="content">
 
+        <!-- ROUTE / DELIVERY -->
+        <section class="card route-card">
 
-                <div class="progress-bar">
+            <div class="route-grid">
 
+                <div class="route-side">
+                    <div class="route-top">
+                        <div class="pin">●</div>
 
-                    <div
-                        class="progress-fill"
-                        id="progressFill">
+                        <div>
+                            <div class="route-label">From</div>
+                            <div class="route-value" id="origin">
+                                —
+                            </div>
+                            <div class="route-caption">
+                                Origin
+                            </div>
+                        </div>
                     </div>
+                </div>
 
+                <div class="route-arrow">→</div>
 
-                    <div id="truck">
+                <div class="route-side">
+                    <div class="route-top">
+                        <div class="pin">●</div>
 
+                        <div>
+                            <div class="route-label">To</div>
+                            <div class="route-value" id="destination">
+                                —
+                            </div>
+                            <div class="route-caption">
+                                Destination
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round">
+            </div>
 
-                            <path d="M3 6h11v10H3z"/>
-                            <path d="M14 9h4l3 3v4h-7z"/>
-                            <circle cx="7" cy="18" r="2"/>
-                            <circle cx="18" cy="18" r="2"/>
+            <div class="route-divider"></div>
 
-                        </svg>
+            <div class="delivery-grid">
 
+                <div class="delivery-box">
+
+                    <div class="delivery-icon">▣</div>
+
+                    <div>
+                        <div class="delivery-label">
+                            Estimated Delivery
+                        </div>
+
+                        <div class="delivery-value" id="estimatedDelivery">
+                            —
+                        </div>
                     </div>
 
                 </div>
 
+                <div class="delivery-box">
 
-                <div class="progress-labels">
+                    <div class="delivery-icon">◷</div>
 
-                    <span>Shipment</span>
+                    <div>
+                        <div class="delivery-label">
+                            Delivery Time
+                        </div>
 
-                    <span>In Transit</span>
+                        <div class="delivery-value" id="deliveryWindow">
+                            —
+                        </div>
 
-                    <span>Destination</span>
+                        <div class="local-time">
+                            Local Time
+                        </div>
+                    </div>
 
                 </div>
-
 
             </div>
 
         </section>
 
 
-        <!-- =========================
-             ROUTE
-        ========================= -->
+        <!-- PROGRESS -->
+        <section class="card progress-card">
 
-        <section class="card">
-
-
-            <div class="card-title">
-                Shipment Route
+            <div class="progress-line">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
 
+            <div class="progress-items">
 
-            <div class="route-header">
-
-
-                <div class="route-column">
-
-                    <div class="route-label">
-                        From
-                    </div>
-
-                    <div
-                        class="route-value"
-                        id="origin">
-                        —
-                    </div>
-
+                <div class="progress-item" data-status="Pending">
+                    <div class="progress-dot">✓</div>
+                    <div class="progress-label">Pending</div>
+                    <div class="progress-date" id="date-Pending">—</div>
                 </div>
 
-
-                <div class="route-arrow">
-                    →
+                <div class="progress-item" data-status="Picked Up">
+                    <div class="progress-dot">✓</div>
+                    <div class="progress-label">Picked Up</div>
+                    <div class="progress-date" id="date-Picked-Up">—</div>
                 </div>
 
-
-                <div class="route-column">
-
-                    <div class="route-label">
-                        To
-                    </div>
-
-                    <div
-                        class="route-value"
-                        id="destination">
-                        —
-                    </div>
-
+                <div class="progress-item" data-status="Processing">
+                    <div class="progress-dot">✓</div>
+                    <div class="progress-label">Processing</div>
+                    <div class="progress-date" id="date-Processing">—</div>
                 </div>
 
-
-            </div>
-
-
-            <div class="delivery-box">
-
-
-                <div class="delivery-item">
-
-                    <span class="delivery-label">
-                        Estimated Delivery
-                    </span>
-
-                    <span
-                        class="delivery-value"
-                        id="estimatedDelivery">
-                        —
-                    </span>
-
+                <div class="progress-item" data-status="In Transit">
+                    <div class="progress-dot">✓</div>
+                    <div class="progress-label">In Transit</div>
+                    <div class="progress-date" id="date-In-Transit">—</div>
                 </div>
 
-
-                <div class="delivery-item">
-
-                    <span class="delivery-label">
-                        Delivery Window
-                    </span>
-
-                    <span
-                        class="delivery-value"
-                        id="deliveryWindow">
-                        —
-                    </span>
-
+                <div class="progress-item" data-status="Out For Delivery">
+                    <div class="progress-dot">▣</div>
+                    <div class="progress-label">Out for<br>Delivery</div>
+                    <div class="progress-date" id="date-Out-For-Delivery">—</div>
                 </div>
 
+                <div class="progress-item" data-status="Delivered">
+                    <div class="progress-dot">•</div>
+                    <div class="progress-label">Delivered</div>
+                    <div class="progress-date" id="date-Delivered">—</div>
+                </div>
 
             </div>
 
         </section>
 
 
-        <!-- =========================
-             LIVE ROUTE
-        ========================= -->
-
-        <section class="card">
-
+        <!-- SHIPMENT HISTORY -->
+        <section class="card history-card">
 
             <div class="card-title">
-                Live Route
-            </div>
-
-
-            <div class="map">
-
-
-                <div class="road"></div>
-
-
-                <div class="origin-dot"></div>
-
-
-                <div class="destination-dot"></div>
-
-
-                <div
-                    class="map-label origin-label"
-                    id="mapOrigin">
-                    Origin
-                </div>
-
-
-                <div
-                    class="map-label destination-label"
-                    id="mapDestination">
-                    Destination
-                </div>
-
-
-                <div id="mapTruck">
-
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round">
-
-                        <path d="M3 6h11v10H3z"/>
-                        <path d="M14 9h4l3 3v4h-7z"/>
-                        <circle cx="7" cy="18" r="2"/>
-                        <circle cx="18" cy="18" r="2"/>
-
-                    </svg>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             SHIPMENT DETAILS
-        ========================= -->
-
-        <section class="card">
-
-
-            <div class="card-title">
-                Shipment Details
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Tracking Code
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="trackingCode2">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Current Location
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="location">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Destination
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="destinationDetails">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Receiver
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="receiver">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Sender
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="sender">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Sender Contact
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="senderPhone">
-                    —
-                </span>
-
-            </div>
-
-
-            <div class="detail-row">
-
-                <span class="detail-label">
-                    Receiver Contact
-                </span>
-
-                <span
-                    class="detail-value"
-                    id="receiverPhone">
-                    —
-                </span>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- =========================
-             SHIPMENT HISTORY
-        ========================= -->
-
-        <section class="card">
-
-
-            <div class="card-title">
+                <span class="title-icon">◷</span>
                 Shipment History
             </div>
 
-
-            <div
-                id="timeline"
-                class="timeline">
+            <div id="timeline" class="timeline">
+                <div class="loading">
+                    Loading shipment history...
+                </div>
             </div>
-
 
         </section>
 
 
-        <!-- =========================
-             SUPPORT
-        ========================= -->
+        <!-- ROUTE MAP -->
+        <section class="card map-card">
 
-        <section class="support-bar">
+            <div class="map">
 
+                <div class="route-line"></div>
+
+                <div class="map-point origin">
+                    <span></span>
+                </div>
+
+                <div class="map-point destination">
+                    <span></span>
+                </div>
+
+                <div class="map-truck" id="mapTruck">
+                    ▰
+                </div>
+
+                <div class="map-label origin" id="mapOrigin">
+                    —
+                </div>
+
+                <div class="map-label destination" id="mapDestination">
+                    —
+                </div>
+
+            </div>
 
             <a
+                class="telegram-button"
                 href="https://t.me/rfedexstack"
                 target="_blank"
                 rel="noopener"
-                class="support-btn telegram-btn">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="currentColor">
-
-                    <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
-
-                </svg>
-
-                Telegram Support
-
+            >
+                <span class="telegram-icon">➤</span>
+                Contact Support on Telegram
             </a>
-
-
-            <a
-                href="mailto:fedexstacklogistics@gmail.com"
-                class="support-btn email-btn">
-
-                <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round">
-
-                    <rect
-                        x="3"
-                        y="5"
-                        width="18"
-                        height="14"
-                        rx="2"/>
-
-                    <path d="m3 7 9 6 9-6"/>
-
-                </svg>
-
-                Email Support
-
-            </a>
-
 
         </section>
 
-
     </main>
-
 
 </div>
 
 
-<script
-    type="module"
-    src="./js/track.js">
-</script>
-
+<script type="module" src="./js/track.js"></script>
 
 </body>
-
 </html>
