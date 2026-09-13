@@ -8,10 +8,6 @@
 
 <style>
 
-/* =========================================================
-   GLOBAL
-========================================================= */
-
 *{
     margin:0;
     padding:0;
@@ -44,35 +40,19 @@ body{
             #05070b 100%
         );
 
-    padding:
-        20px 14px 50px;
+    padding:20px 14px 50px;
 }
-
-
-/* =========================================================
-   CONTAINER
-========================================================= */
 
 .container{
-
     width:100%;
-
     max-width:650px;
-
     margin:auto;
 }
-
-
-/* =========================================================
-   TOP NAV
-========================================================= */
 
 .topbar{
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 
     margin-bottom:20px;
@@ -84,24 +64,18 @@ body{
     height:44px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
     border-radius:14px;
 
-    border:
-        1px solid rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.12);
 
-    background:
-        rgba(255,255,255,.07);
+    background:rgba(255,255,255,.07);
 
     color:#ffffff;
 
     cursor:pointer;
-
-    -webkit-backdrop-filter:blur(20px);
-    backdrop-filter:blur(20px);
 
     box-shadow:
         inset 0 1px 0 rgba(255,255,255,.08);
@@ -112,13 +86,11 @@ body{
 }
 
 .back-btn svg{
-
     width:20px;
     height:20px;
 }
 
 .top-title{
-
     text-align:center;
 }
 
@@ -127,10 +99,7 @@ body{
     display:block;
 
     font-size:13px;
-
     font-weight:750;
-
-    letter-spacing:.2px;
 }
 
 .top-title span{
@@ -139,8 +108,7 @@ body{
 
     margin-top:3px;
 
-    color:
-        rgba(255,255,255,.40);
+    color:rgba(255,255,255,.40);
 
     font-size:9px;
 
@@ -148,19 +116,12 @@ body{
 }
 
 .top-space{
-
     width:44px;
 }
-
-
-/* =========================================================
-   MAIN GLASS CARD
-========================================================= */
 
 .form-card{
 
     position:relative;
-
     overflow:hidden;
 
     padding:27px;
@@ -174,22 +135,12 @@ body{
             rgba(255,255,255,.045)
         );
 
-    border:
-        1px solid rgba(255,255,255,.12);
-
-    -webkit-backdrop-filter:
-        blur(30px) saturate(170%);
-
-    backdrop-filter:
-        blur(30px) saturate(170%);
+    border:1px solid rgba(255,255,255,.12);
 
     box-shadow:
         0 22px 55px rgba(0,0,0,.38),
         inset 0 1px 0 rgba(255,255,255,.10);
 }
-
-
-/* decorative glow */
 
 .form-card::before{
 
@@ -205,18 +156,12 @@ body{
 
     border-radius:50%;
 
-    background:
-        rgba(10,132,255,.14);
+    background:rgba(10,132,255,.14);
 
     filter:blur(40px);
 
     pointer-events:none;
 }
-
-
-/* =========================================================
-   TITLE
-========================================================= */
 
 .heading{
 
@@ -238,18 +183,12 @@ body{
 
 .heading p{
 
-    color:
-        rgba(255,255,255,.48);
+    color:rgba(255,255,255,.48);
 
     font-size:13px;
 
     line-height:1.5;
 }
-
-
-/* =========================================================
-   FORM GROUP
-========================================================= */
 
 .form-group{
 
@@ -264,43 +203,38 @@ label{
 
     margin-bottom:8px;
 
-    color:
-        rgba(255,255,255,.62);
+    color:rgba(255,255,255,.62);
 
     font-size:12px;
 
     font-weight:650;
 }
 
-
-/* =========================================================
-   INPUTS
-========================================================= */
-
-input{
+input,
+textarea,
+select{
 
     width:100%;
 
     min-height:50px;
 
-    padding:
-        14px 15px;
+    padding:14px 15px;
 
     border-radius:14px;
 
-    border:
-        1px solid rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.10);
 
     outline:none;
 
     color:#ffffff;
 
-    background:
-        rgba(255,255,255,.065);
+    background:rgba(255,255,255,.065);
 
     font-size:15px;
 
     -webkit-appearance:none;
+
+    appearance:none;
 
     transition:
         border-color .18s ease,
@@ -308,43 +242,63 @@ input{
         background .18s ease;
 }
 
-input::placeholder{
+textarea{
 
-    color:
-        rgba(255,255,255,.28);
+    min-height:90px;
+
+    resize:vertical;
+
+    line-height:1.5;
 }
 
-input:focus{
+select option{
+    color:#111827;
+    background:#ffffff;
+}
 
-    background:
-        rgba(255,255,255,.085);
+input::placeholder,
+textarea::placeholder{
 
-    border-color:
-        rgba(10,132,255,.60);
+    color:rgba(255,255,255,.28);
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+
+    background:rgba(255,255,255,.085);
+
+    border-color:rgba(10,132,255,.60);
 
     box-shadow:
         0 0 0 3px rgba(10,132,255,.10);
 }
 
-
-/* =========================================================
-   TWO COLUMN ROW
-========================================================= */
-
 .form-row{
 
     display:grid;
 
-    grid-template-columns:
-        1fr 1fr;
+    grid-template-columns:1fr 1fr;
 
     gap:12px;
 }
 
+.section-title{
 
-/* =========================================================
-   CREATE BUTTON
-========================================================= */
+    margin:
+        25px 0 16px;
+
+    padding-bottom:10px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    color:#ffffff;
+
+    font-size:14px;
+
+    font-weight:750;
+}
 
 #createShipmentBtn{
 
@@ -392,15 +346,16 @@ input:focus{
 #createShipmentBtn:active{
 
     transform:scale(.98);
-
-    box-shadow:
-        0 6px 16px rgba(255,102,0,.20);
 }
 
+#createShipmentBtn:disabled{
 
-/* =========================================================
-   INFO NOTE
-========================================================= */
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
 
 .form-note{
 
@@ -416,14 +371,11 @@ input:focus{
 
     border-radius:14px;
 
-    background:
-        rgba(10,132,255,.06);
+    background:rgba(10,132,255,.06);
 
-    border:
-        1px solid rgba(10,132,255,.10);
+    border:1px solid rgba(10,132,255,.10);
 
-    color:
-        rgba(255,255,255,.42);
+    color:rgba(255,255,255,.42);
 
     font-size:11px;
 
@@ -444,8 +396,7 @@ input:focus{
 
     border-radius:50%;
 
-    background:
-        rgba(10,132,255,.15);
+    background:rgba(10,132,255,.15);
 
     color:#64b5ff;
 
@@ -454,17 +405,10 @@ input:focus{
     font-weight:800;
 }
 
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
 @media(max-width:600px){
 
     body{
-
-        padding:
-            13px 10px 35px;
+        padding:13px 10px 35px;
     }
 
     .form-card{
@@ -475,24 +419,21 @@ input:focus{
     }
 
     .heading h1{
-
         font-size:24px;
     }
 
     .form-row{
-
         grid-template-columns:1fr;
-
         gap:0;
     }
 
-    input{
-
+    input,
+    textarea,
+    select{
         min-height:51px;
     }
 
     #createShipmentBtn{
-
         min-height:53px;
     }
 }
@@ -503,16 +444,11 @@ input:focus{
 
 <body>
 
-
 <div class="container">
 
-
-    <!-- =====================================================
-         TOP BAR
-    ====================================================== -->
+    <!-- TOP BAR -->
 
     <div class="topbar">
-
 
         <button
             class="back-btn"
@@ -549,13 +485,9 @@ input:focus{
     </div>
 
 
-
-    <!-- =====================================================
-         FORM
-    ====================================================== -->
+    <!-- FORM -->
 
     <div class="form-card">
-
 
         <div class="heading">
 
@@ -571,8 +503,12 @@ input:focus{
         </div>
 
 
+        <!-- CUSTOMER INFORMATION -->
 
-        <!-- SENDER -->
+        <div class="section-title">
+            Customer Information
+        </div>
+
 
         <div class="form-group">
 
@@ -589,9 +525,6 @@ input:focus{
         </div>
 
 
-
-        <!-- RECEIVER -->
-
         <div class="form-group">
 
             <label for="receiver">
@@ -607,8 +540,27 @@ input:focus{
         </div>
 
 
+        <!-- ROUTE -->
 
-        <!-- DESTINATION -->
+        <div class="section-title">
+            Shipment Route
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="origin">
+                Origin
+            </label>
+
+            <input
+                id="origin"
+                type="text"
+                placeholder="City, State, Country"
+                autocomplete="off">
+
+        </div>
+
 
         <div class="form-group">
 
@@ -625,9 +577,6 @@ input:focus{
         </div>
 
 
-
-        <!-- CURRENT LOCATION -->
-
         <div class="form-group">
 
             <label for="location">
@@ -643,54 +592,113 @@ input:focus{
         </div>
 
 
+        <!-- DELIVERY -->
 
-        <!-- SHIPMENT TYPE -->
+        <div class="section-title">
+            Delivery Information
+        </div>
 
-        <div class="form-group">
 
-            <label for="shipmentType">
-                Shipment Type
-            </label>
+        <div class="form-row">
 
-            <input
-                id="shipmentType"
-                type="text"
-                placeholder="Parcel / Document / Box"
-                autocomplete="off">
+            <div class="form-group">
+
+                <label for="estimatedDelivery">
+                    Estimated Delivery
+                </label>
+
+                <input
+                    id="estimatedDelivery"
+                    type="date">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="deliveryWindow">
+                    Delivery Time
+                </label>
+
+                <input
+                    id="deliveryWindow"
+                    type="text"
+                    placeholder="10:00 AM - 2:00 PM"
+                    autocomplete="off">
+
+            </div>
 
         </div>
 
 
+        <!-- STATUS -->
 
-        <!-- WEIGHT -->
+        <div class="section-title">
+            Shipment Status
+        </div>
+
 
         <div class="form-group">
 
-            <label for="weight">
-                Weight
+            <label for="statusMessage">
+                Status Message
             </label>
 
-            <input
-                id="weight"
-                type="text"
-                placeholder="e.g. 12kg"
-                autocomplete="off">
+            <textarea
+                id="statusMessage"
+                placeholder="Example: Your package is on the way and will be delivered today."
+            ></textarea>
 
         </div>
 
+
+        <!-- SHIPMENT DETAILS -->
+
+        <div class="section-title">
+            Shipment Details
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="shipmentType">
+                    Shipment Type
+                </label>
+
+                <input
+                    id="shipmentType"
+                    type="text"
+                    placeholder="Parcel / Document / Box"
+                    autocomplete="off">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="weight">
+                    Weight
+                </label>
+
+                <input
+                    id="weight"
+                    type="text"
+                    placeholder="e.g. 12kg"
+                    autocomplete="off">
+
+            </div>
+
+        </div>
 
 
         <!-- CREATE -->
 
         <button id="createShipmentBtn">
-
             Create Shipment
-
         </button>
 
-
-
-        <!-- NOTE -->
 
         <div class="form-note">
 
@@ -700,27 +708,22 @@ input:focus{
 
             <div>
                 A unique tracking number will be generated
-                automatically when this shipment is created.
+                automatically. The shipment will begin with
+                a Pending history update and its timestamp
+                will be recorded automatically.
             </div>
 
         </div>
-
 
     </div>
 
 </div>
 
 
-
-<!-- =========================================================
-     EXISTING ADMIN JAVASCRIPT
-========================================================= -->
-
 <script
     type="module"
     src="./js/admin.js">
 </script>
-
 
 </body>
 </html>
