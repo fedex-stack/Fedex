@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
 
 <title>Track Shipment</title>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -24,7 +32,9 @@
 }
 
 body {
+
     min-height: 100vh;
+
     color: #172554;
 
     background:
@@ -39,7 +49,9 @@ body {
 }
 
 .container {
+
     max-width: 900px;
+
     margin: auto;
 }
 
@@ -49,18 +61,23 @@ body {
 ========================= */
 
 .header {
+
     height: 75px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 }
 
 .back-btn {
+
     width: 44px;
     height: 44px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -79,15 +96,18 @@ body {
 }
 
 .back-btn svg {
+
     width: 22px;
     height: 22px;
 }
 
 .header-title {
+
     text-align: center;
 }
 
 .header-title strong {
+
     display: block;
 
     color: #172b86;
@@ -98,6 +118,7 @@ body {
 }
 
 .header-title span {
+
     display: block;
 
     color: #8791a7;
@@ -110,6 +131,7 @@ body {
 }
 
 .header-space {
+
     width: 44px;
 }
 
@@ -119,6 +141,7 @@ body {
 ========================= */
 
 .card {
+
     background:
         rgba(255,255,255,.73);
 
@@ -143,6 +166,7 @@ body {
 ========================= */
 
 .status-card {
+
     overflow: hidden;
 
     position: relative;
@@ -156,6 +180,7 @@ body {
 }
 
 .status-card::after {
+
     content: "";
 
     position: absolute;
@@ -179,6 +204,7 @@ body {
 }
 
 .live-badge {
+
     display: inline-flex;
 
     align-items: center;
@@ -203,6 +229,7 @@ body {
 }
 
 .live-dot {
+
     width: 7px;
     height: 7px;
 
@@ -215,7 +242,9 @@ body {
 }
 
 .status-title {
+
     position: relative;
+
     z-index: 2;
 
     color: #17255c;
@@ -226,10 +255,28 @@ body {
 
     letter-spacing: -1px;
 
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+}
+
+.status-message {
+
+    position: relative;
+
+    z-index: 2;
+
+    color: #68738c;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
+    margin-bottom: 15px;
+
+    max-width: 650px;
 }
 
 .status-code {
+
     color: #79839a;
 
     font-size: 12px;
@@ -238,6 +285,7 @@ body {
 }
 
 .status-code strong {
+
     color: #3d4a69;
 }
 
@@ -247,12 +295,14 @@ body {
 ========================= */
 
 .progress-wrapper {
+
     position: relative;
 
     padding-top: 25px;
 }
 
 .progress-bar {
+
     height: 8px;
 
     width: 100%;
@@ -265,6 +315,7 @@ body {
 }
 
 .progress-fill {
+
     width: 0%;
 
     height: 100%;
@@ -279,14 +330,14 @@ body {
             #29c878
         );
 
-    transition:
-        width 1s ease;
+    transition: width 1s ease;
 
     box-shadow:
         0 0 14px rgba(54,103,220,.25);
 }
 
 #truck {
+
     position: absolute;
 
     top: 3px;
@@ -310,14 +361,13 @@ body {
     box-shadow:
         0 6px 16px rgba(40,50,130,.18);
 
-    transition:
-        left 1s ease;
+    transition: left 1s ease;
 
-    transform:
-        translateX(-50%);
+    transform: translateX(-50%);
 }
 
 #truck svg {
+
     width: 19px;
     height: 19px;
 
@@ -325,6 +375,7 @@ body {
 }
 
 .progress-labels {
+
     display: flex;
 
     justify-content: space-between;
@@ -340,52 +391,122 @@ body {
 
 
 /* =========================
-   DETAILS
+   ROUTE
 ========================= */
 
-.card-title {
-    color: #1a285f;
+.route-header {
 
-    font-size: 17px;
-
-    font-weight: 800;
-
-    margin-bottom: 16px;
-}
-
-.detail-row {
     display: flex;
 
     justify-content: space-between;
 
-    gap: 15px;
+    gap: 20px;
 
-    padding: 13px 0;
-
-    border-bottom:
-        1px solid rgba(28,43,90,.07);
+    margin-bottom: 18px;
 }
 
-.detail-row:last-child {
-    border-bottom: none;
+.route-column {
 
-    padding-bottom: 0;
+    flex: 1;
 }
 
-.detail-label {
-    color: #8a93a7;
+.route-label {
 
-    font-size: 12px;
-}
+    color: #929bad;
 
-.detail-value {
-    color: #27345f;
-
-    font-size: 12px;
+    font-size: 10px;
 
     font-weight: 700;
 
-    text-align: right;
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+
+    margin-bottom: 6px;
+}
+
+.route-value {
+
+    color: #27345f;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    word-break: break-word;
+}
+
+.route-arrow {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #5369cf;
+
+    font-size: 22px;
+
+    padding-top: 13px;
+}
+
+
+/* =========================
+   DELIVERY INFO
+========================= */
+
+.delivery-box {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.delivery-item {
+
+    padding: 14px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(242,245,251,.75);
+
+    border:
+        1px solid rgba(40,60,120,.06);
+}
+
+.delivery-label {
+
+    display: block;
+
+    color: #929bad;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    margin-bottom: 6px;
+}
+
+.delivery-value {
+
+    display: block;
+
+    color: #27345f;
+
+    font-size: 13px;
+
+    font-weight: 800;
 
     word-break: break-word;
 }
@@ -396,6 +517,7 @@ body {
 ========================= */
 
 .map {
+
     position: relative;
 
     height: 180px;
@@ -417,6 +539,7 @@ body {
 
 .map::before,
 .map::after {
+
     content: "";
 
     position: absolute;
@@ -425,6 +548,7 @@ body {
 }
 
 .map::before {
+
     width: 100%;
     height: 1px;
 
@@ -432,6 +556,7 @@ body {
 }
 
 .map::after {
+
     height: 100%;
     width: 1px;
 
@@ -439,6 +564,7 @@ body {
 }
 
 .road {
+
     position: absolute;
 
     left: 10%;
@@ -451,12 +577,12 @@ body {
     border-top:
         2px dashed rgba(71,84,150,.28);
 
-    transform:
-        rotate(-7deg);
+    transform: rotate(-7deg);
 }
 
 .origin-dot,
 .destination-dot {
+
     position: absolute;
 
     width: 15px;
@@ -468,6 +594,7 @@ body {
 }
 
 .origin-dot {
+
     left: 9%;
     top: 62%;
 
@@ -478,6 +605,7 @@ body {
 }
 
 .destination-dot {
+
     right: 9%;
     top: 36%;
 
@@ -488,6 +616,7 @@ body {
 }
 
 #mapTruck {
+
     position: absolute;
 
     top: 47%;
@@ -497,6 +626,7 @@ body {
     height: 34px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -508,15 +638,14 @@ body {
 
     z-index: 4;
 
-    transition:
-        left 1s ease,
-        top 1s ease;
+    transition: left 1s ease;
 
     box-shadow:
         0 7px 16px rgba(40,50,130,.15);
 }
 
 #mapTruck svg {
+
     width: 18px;
     height: 18px;
 
@@ -524,6 +653,7 @@ body {
 }
 
 .map-label {
+
     position: absolute;
 
     z-index: 5;
@@ -544,13 +674,72 @@ body {
 }
 
 .origin-label {
+
     left: 7%;
     bottom: 12%;
 }
 
 .destination-label {
+
     right: 5%;
     top: 12%;
+}
+
+
+/* =========================
+   DETAILS
+========================= */
+
+.card-title {
+
+    color: #1a285f;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    margin-bottom: 16px;
+}
+
+.detail-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid rgba(28,43,90,.07);
+}
+
+.detail-row:last-child {
+
+    border-bottom: none;
+
+    padding-bottom: 0;
+}
+
+.detail-label {
+
+    color: #8a93a7;
+
+    font-size: 12px;
+}
+
+.detail-value {
+
+    color: #27345f;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: right;
+
+    word-break: break-word;
 }
 
 
@@ -559,12 +748,14 @@ body {
 ========================= */
 
 .timeline {
+
     position: relative;
 
     padding-left: 27px;
 }
 
 .timeline::before {
+
     content: "";
 
     position: absolute;
@@ -581,6 +772,7 @@ body {
 }
 
 .timeline-item {
+
     position: relative;
 
     margin-bottom: 13px;
@@ -589,17 +781,20 @@ body {
 
     border-radius: 16px;
 
-    background: rgba(242,245,251,.74);
+    background:
+        rgba(242,245,251,.74);
 
     border:
         1px solid rgba(40,60,120,.06);
 }
 
 .timeline-item:last-child {
+
     margin-bottom: 0;
 }
 
 .timeline-item::before {
+
     content: "";
 
     position: absolute;
@@ -622,6 +817,7 @@ body {
 }
 
 .timeline-item h4 {
+
     color: #293766;
 
     font-size: 13px;
@@ -632,6 +828,7 @@ body {
 }
 
 .timeline-location {
+
     color: #78829a;
 
     font-size: 11px;
@@ -640,12 +837,14 @@ body {
 }
 
 .timeline-time {
+
     color: #9aa2b3;
 
     font-size: 10px;
 }
 
 .tick {
+
     color: #20ad61;
 
     margin-left: 5px;
@@ -657,6 +856,7 @@ body {
 ========================= */
 
 #loading {
+
     text-align: center;
 
     padding: 70px 20px;
@@ -667,6 +867,7 @@ body {
 }
 
 #error {
+
     display: none;
 
     text-align: center;
@@ -688,6 +889,7 @@ body {
 ========================= */
 
 .support-bar {
+
     display: flex;
 
     gap: 10px;
@@ -696,6 +898,7 @@ body {
 }
 
 .support-btn {
+
     flex: 1;
 
     height: 50px;
@@ -723,14 +926,17 @@ body {
 }
 
 .telegram-btn {
+
     background: #229ed9;
 }
 
 .email-btn {
+
     background: #5369cf;
 }
 
 .support-btn svg {
+
     width: 18px;
     height: 18px;
 }
@@ -743,40 +949,66 @@ body {
 @media(max-width:600px) {
 
     body {
-        padding: 0 10px 25px;
+
+        padding:
+            0 10px 25px;
     }
 
     .header {
+
         height: 68px;
     }
 
     .card {
+
         padding: 18px;
 
         border-radius: 21px;
     }
 
     .status-title {
+
         font-size: 23px;
     }
 
+    .route-header {
+
+        gap: 8px;
+    }
+
+    .route-value {
+
+        font-size: 12px;
+    }
+
+    .delivery-box {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
     .map {
+
         height: 145px;
     }
 
     .detail-row {
+
         align-items: flex-start;
     }
 
     .detail-label {
+
         max-width: 42%;
     }
 
     .detail-value {
+
         max-width: 58%;
     }
 
     .support-bar {
+
         position: sticky;
 
         bottom: 10px;
@@ -784,15 +1016,21 @@ body {
         z-index: 50;
     }
 }
+
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="container">
 
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
 
     <header class="header">
 
@@ -801,12 +1039,13 @@ body {
             onclick="history.back()"
             aria-label="Go back">
 
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round">
 
                 <path d="M19 12H5"/>
                 <path d="m12 19-7-7 7-7"/>
@@ -818,9 +1057,13 @@ body {
 
         <div class="header-title">
 
-            <strong>Track Shipment</strong>
+            <strong>
+                Track Shipment
+            </strong>
 
-            <span>LIVE SHIPMENT MONITORING</span>
+            <span>
+                LIVE SHIPMENT MONITORING
+            </span>
 
         </div>
 
@@ -838,12 +1081,18 @@ body {
     <div id="error"></div>
 
 
-    <main id="shipmentView" style="display:none;">
+    <main
+        id="shipmentView"
+        style="display:none;"
+    >
 
 
-        <!-- STATUS -->
+        <!-- =========================
+             STATUS
+        ========================= -->
 
         <section class="card status-card">
+
 
             <div class="live-badge">
 
@@ -857,6 +1106,14 @@ body {
             <div
                 class="status-title"
                 id="status">
+                —
+            </div>
+
+
+            <div
+                class="status-message"
+                id="statusMessage">
+                Shipment information is being updated.
             </div>
 
 
@@ -873,21 +1130,26 @@ body {
 
             <div class="progress-wrapper">
 
+
                 <div class="progress-bar">
+
 
                     <div
                         class="progress-fill"
                         id="progressFill">
                     </div>
 
+
                     <div id="truck">
 
-                        <svg viewBox="0 0 24 24"
-                             fill="none"
-                             stroke="currentColor"
-                             stroke-width="1.8"
-                             stroke-linecap="round"
-                             stroke-linejoin="round">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
 
                             <path d="M3 6h11v10H3z"/>
                             <path d="M14 9h4l3 3v4h-7z"/>
@@ -904,31 +1166,133 @@ body {
                 <div class="progress-labels">
 
                     <span>Shipment</span>
+
                     <span>In Transit</span>
+
                     <span>Destination</span>
 
                 </div>
+
 
             </div>
 
         </section>
 
 
-        <!-- MAP -->
+        <!-- =========================
+             ROUTE
+        ========================= -->
 
         <section class="card">
+
+
+            <div class="card-title">
+                Shipment Route
+            </div>
+
+
+            <div class="route-header">
+
+
+                <div class="route-column">
+
+                    <div class="route-label">
+                        From
+                    </div>
+
+                    <div
+                        class="route-value"
+                        id="origin">
+                        —
+                    </div>
+
+                </div>
+
+
+                <div class="route-arrow">
+                    →
+                </div>
+
+
+                <div class="route-column">
+
+                    <div class="route-label">
+                        To
+                    </div>
+
+                    <div
+                        class="route-value"
+                        id="destination">
+                        —
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="delivery-box">
+
+
+                <div class="delivery-item">
+
+                    <span class="delivery-label">
+                        Estimated Delivery
+                    </span>
+
+                    <span
+                        class="delivery-value"
+                        id="estimatedDelivery">
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="delivery-item">
+
+                    <span class="delivery-label">
+                        Delivery Window
+                    </span>
+
+                    <span
+                        class="delivery-value"
+                        id="deliveryWindow">
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LIVE ROUTE
+        ========================= -->
+
+        <section class="card">
+
 
             <div class="card-title">
                 Live Route
             </div>
 
+
             <div class="map">
+
 
                 <div class="road"></div>
 
+
                 <div class="origin-dot"></div>
 
+
                 <div class="destination-dot"></div>
+
 
                 <div
                     class="map-label origin-label"
@@ -936,20 +1300,24 @@ body {
                     Origin
                 </div>
 
+
                 <div
                     class="map-label destination-label"
                     id="mapDestination">
                     Destination
                 </div>
 
+
                 <div id="mapTruck">
 
-                    <svg viewBox="0 0 24 24"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="1.8"
-                         stroke-linecap="round"
-                         stroke-linejoin="round">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
 
                         <path d="M3 6h11v10H3z"/>
                         <path d="M14 9h4l3 3v4h-7z"/>
@@ -960,14 +1328,18 @@ body {
 
                 </div>
 
+
             </div>
 
         </section>
 
 
-        <!-- DETAILS -->
+        <!-- =========================
+             SHIPMENT DETAILS
+        ========================= -->
 
         <section class="card">
+
 
             <div class="card-title">
                 Shipment Details
@@ -1012,7 +1384,7 @@ body {
 
                 <span
                     class="detail-value"
-                    id="destination">
+                    id="destinationDetails">
                     —
                 </span>
 
@@ -1078,37 +1450,47 @@ body {
 
             </div>
 
+
         </section>
 
 
-        <!-- TIMELINE -->
+        <!-- =========================
+             SHIPMENT HISTORY
+        ========================= -->
 
         <section class="card">
 
+
             <div class="card-title">
-                Shipment Progress
+                Shipment History
             </div>
+
 
             <div
                 id="timeline"
                 class="timeline">
             </div>
 
+
         </section>
 
 
-        <!-- SUPPORT -->
+        <!-- =========================
+             SUPPORT
+        ========================= -->
 
         <section class="support-bar">
 
+
             <a
-                href="https://t.me/fedexstack"
+                href="https://t.me/rfedexstack"
                 target="_blank"
                 rel="noopener"
                 class="support-btn telegram-btn">
 
-                <svg viewBox="0 0 24 24"
-                     fill="currentColor">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor">
 
                     <path d="M21.4 3.3 18.2 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.6 13.6.7 12.1c-1.1-.3-1.1-1 .2-1.5L20 3c.9-.3 1.7.2 1.4.3z"/>
 
@@ -1123,14 +1505,21 @@ body {
                 href="mailto:fedexstacklogistics@gmail.com"
                 class="support-btn email-btn">
 
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
 
-                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"/>
+
                     <path d="m3 7 9 6 9-6"/>
 
                 </svg>
@@ -1139,9 +1528,12 @@ body {
 
             </a>
 
+
         </section>
 
+
     </main>
+
 
 </div>
 
@@ -1151,5 +1543,7 @@ body {
     src="./js/track.js">
 </script>
 
+
 </body>
+
 </html>
